@@ -4,11 +4,13 @@ import MainContainer from './navigation/MainContainer';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <MainContainer/>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <MainContainer/>
+
+    // Commented out this because the main App should only control the initializing of the app
+    // <View style={styles.container}>
+    //   <Text>Open up App.tsx to start working on your app!</Text>
+    //   <StatusBar style="auto" />
+    // </View>
   );
 }
 

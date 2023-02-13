@@ -7,7 +7,13 @@ import { auth } from '../../firebase';
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text> Hei! </Text>
+      <Text
+                onPress={() => navigation.navigate('Home')}
+                style={{ fontSize: 26, fontWeight: 'bold'}}
+                >
+                    This is the home screen.
+            </Text>
+
       <View style={styles.buttonContainer}>
         <Button
           title="Sign out"
@@ -36,6 +42,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
+    flex: 1,
   },
   buttonContainer: {
     alignItems: 'center',

@@ -40,8 +40,14 @@ export default function MainStack(){
                 }}
             >
 
-                <Tab.Screen name={homeName} component={HomeScreen}/>
-                <Tab.Screen name={profileName} component={ProfileScreen}/>
+                <Tab.Screen name={homeName} 
+                component={HomeScreen}
+                options={{ headerShown: false }}
+                />
+                <Tab.Screen name={profileName} 
+                component={ProfileScreen}
+                options={{ headerShown: false }}
+                />
 
             </Tab.Navigator>
         </NavigationContainer>

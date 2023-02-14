@@ -4,8 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import HomeScreen from './HomeScreen';
-import ProfileScreen from './ProfileScreen';
+import HomeScreen from '../screens/mainNavScreens/HomeScreen';
+import ProfileScreen from '../screens/mainNavScreens/ProfileScreen';
 
 // Screen Names
 const homeName:any = "Home";
@@ -13,7 +13,7 @@ const profileName:any = "Profile";
 
 const Tab:any = createBottomTabNavigator();
 
-export default function MainContainer(){
+export default function MainStack(){
     return(
         <NavigationContainer>
             <Tab.Navigator 
@@ -40,8 +40,14 @@ export default function MainContainer(){
                 }}
             >
 
-                <Tab.Screen name={homeName} component={HomeScreen}/>
-                <Tab.Screen name={profileName} component={ProfileScreen}/>
+                <Tab.Screen name={homeName} 
+                component={HomeScreen}
+                options={{ headerShown: false }}
+                />
+                <Tab.Screen name={profileName} 
+                component={ProfileScreen}
+                options={{ headerShown: false }}
+                />
 
             </Tab.Navigator>
         </NavigationContainer>

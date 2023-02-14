@@ -1,6 +1,6 @@
-import { Button } from '@rneui/themed';
+import { Button, Image, Text } from '@rneui/themed';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 /**
  * Auth landing screen. Here the user can choose between
@@ -9,17 +9,31 @@ import { StyleSheet, View } from 'react-native';
 function AuthLandingScreen({ navigation }) {
   return (
     <View style={styles.container}>
+      <Image
+      source={require("../../assets/images/man_running.jpg")}
+      containerStyle={styles.item}
+      style={{width: '100%', height: '100%'}}
+      resizeMode="cover"
+      PlaceholderContent={<ActivityIndicator />}
+      />
       <View style={styles.buttonContainer}>
+      <Text adjustsFontSizeToFit={true} 
+      style={{fontSize: 32, fontWeight: 'bold',
+      textAlign:'center', color: 'gray', width: '100%',
+      marginBottom: 10}}>
+      TAKE THE FIRST STEP
+      </Text>
+
       <Button 
       title="Sign in"
       loading={false}
       loadingProps={{ size: 'small', color: 'white' }}
       buttonStyle={{
-        backgroundColor: 'rgba(0,0,0,1)',
+        backgroundColor: '#25A073',
         borderRadius: 5,
         height: 55,
       }}
-      titleStyle={{ fontWeight: 'bold', fontSize: 18 }}
+      titleStyle={{ fontWeight: 'bold', fontSize: 18, color: 'white' }}
       containerStyle={{
         marginHorizontal: 50,
         height: 55,
@@ -35,11 +49,11 @@ function AuthLandingScreen({ navigation }) {
       type="outline"
       buttonStyle={{
         borderRadius: 5,
-        borderWidth: 1,
-        borderColor: '0,0,0,1',
+        borderWidth: 2,
+        borderColor: '#25A073',
         height: 55,
       }}
-      titleStyle={{ color: 'rgba(0,0,0,1)', fontWeight: 'regular', fontSize: 18 }}
+      titleStyle={{ color: '#25A073', fontWeight: 'regular', fontSize: 18 }}
       containerStyle={{
         marginHorizontal: 50,
         height: 55,
@@ -56,14 +70,21 @@ function AuthLandingScreen({ navigation }) {
 // --- Styles
 const styles = StyleSheet.create({
     container: {
-      justifyContent: 'center',
       alignItems: 'center',
-      marginTop: 25,
+      backgroundColor: '#121212',
+      flex: 1,
     },
     buttonContainer: {
+      marginTop: 20,
       justifyContent: 'center',
       alignItems: 'center',
       width: '100%'
+    },
+    item: {
+      marginTop: 80,
+      aspectRatio: 1,
+      width: '90%',
+      borderRadius: 5,
     },
   });
 

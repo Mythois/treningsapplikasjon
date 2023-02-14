@@ -1,4 +1,4 @@
-import { Button } from '@rneui/themed';
+import { Button, Text } from '@rneui/themed';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, TextInput, StyleSheet, View } from 'react-native';
@@ -10,15 +10,35 @@ function LoginScreen({ navigation }) {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <View style={styles.navButtonContainer}>
+        <Button 
+        title="< Back"
+        titleStyle={{color:"#25A073", fontWeight: 'bold'}}
+        onPress={navigation.goBack}
+        containerStyle={{borderRadius: 5}}
+        buttonStyle={{borderColor: "#25A073",
+      borderWidth: 2, borderRadius: 5}}
+        type="outline"
+        />
+      </View>
+      <Text adjustsFontSizeToFit={true} 
+      style={{fontSize: 40, fontWeight: 'bold',
+      textAlign: 'left', color: 'lightgray', width: '100%', 
+      paddingLeft: 20}}>
+      WELCOME BACK
+      </Text>
+
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
+          placeholderTextColor={"gray"}
           onChangeText={text => setEmail(text)}
           value={email}
           style={styles.input}
         />
         <TextInput
           placeholder="Password"
+          placeholderTextColor={"gray"}
           onChangeText={text => setPassword(text)}
           value={password}
           style={styles.input}
@@ -32,7 +52,7 @@ function LoginScreen({ navigation }) {
           loading={false}
           loadingProps={{ size: 'small', color: 'white' }}
           buttonStyle={{
-            backgroundColor: 'rgba(0,0,0,1)',
+            backgroundColor: '#25A073',
             borderRadius: 5,
             height: 55,
           }}
@@ -52,21 +72,23 @@ function LoginScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    backgroundColor: "#121212",
+    flex: 1,
     alignItems: 'center',
-    marginTop: 40,
   },
   inputContainer: {
     width: '90%',
     marginTop: 20,
   },
   input: {
-    backgroundColor: 'white',
     paddingHorizontal: 15,
     paddingVertical: 15,
     borderRadius: 10,
-    marginTop: 5,
+    marginTop: 10,
     width: '100%',
+    borderColor: "gray",
+    borderWidth: 3,
+    color: "white"
   },
   buttonContainer: {
     width: '100%',
@@ -74,6 +96,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 40,
   },
+  navButtonContainer: {
+    marginTop: 40,
+    width: '100%',
+    alignItems: 'flex-start',
+    padding: 20,
+  }
 });
 
 export default LoginScreen;

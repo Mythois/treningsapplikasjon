@@ -11,9 +11,17 @@ export default function AuthStack() {
     return(
     <NavigationContainer>
         <Stack.Navigator>
-            <Stack.Screen name="Auth" component={AuthLandingScreen}/>
-            <Stack.Screen name="Login" component={LoginScreen}/>
-            <Stack.Screen name="Register" component={RegisterScreen}/>
+            <Stack.Screen name="Auth" 
+            component={AuthLandingScreen}
+            options={{ headerShown: false }}
+            />
+            <Stack.Screen name="Login" component={LoginScreen}
+            options={{ headerShown: false }}
+            />
+            <Stack.Screen name="Register"
+            component={RegisterScreen}
+            options={{ headerShown: false }}
+            />
         </Stack.Navigator>
     </NavigationContainer>
     );

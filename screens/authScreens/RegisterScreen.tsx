@@ -91,11 +91,7 @@ function RegisterScreen({ navigation }) {
           }}
           onPress={async () => {
             setLoading(true);
-            if (await checkForm(name, username, email, password) === true) {
-                
-            } else {
-                alert("Invalid input.")
-            }
+            await createUser(name, username, email, password);
             setLoading(false);
           }}
         />

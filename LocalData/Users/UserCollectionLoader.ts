@@ -1,4 +1,4 @@
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, query, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase";
 import { WorkoutUser } from "./WorkoutUser";
 
@@ -46,12 +46,18 @@ export default class UsersCollectionLoader {
     }
 
     /**
-     * Search for users by their username
+     * Search for users by their username. This method is to be used in search functions by input.
+     * @param s the search keyword
+     * @returns an array of the matching users.
      */
-    public searchUsers(search: string): WorkoutUser[] {
+    public searchUsers(s: string): WorkoutUser[] {
         const returnUsers: WorkoutUser[] = []
+        const search = s.toLowerCase();
+        if (search.length < 2) { return returnUsers; }
         this.users.forEach(user => {
-            if (user.username.includes(search)) 
+            const un = user.username.toLowerCase();
+            const name = user.name.toLowerCase();
+            if (un.includes(search) || name.includes(search)) 
                 returnUsers.push(user);
         })
         return returnUsers;

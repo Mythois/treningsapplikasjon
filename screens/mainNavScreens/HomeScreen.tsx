@@ -36,7 +36,7 @@ function HomeScreen({ navigation }) {
                 onPress={() => navigation.navigate('Home')}
                 style={{ fontSize: 26, fontWeight: 'bold'}}
                 >
-                    This is the home screen.
+                    These are the newest feeds!!
             </Text>
 
       <View style={styles.buttonContainer}>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import {View, Text, StyleSheet, FlatList, ScrollView} from 'react-native';
 import FeedsListItem from './FeedsListItem';
 
@@ -128,27 +128,39 @@ interface Filters {
 const defaultFilters: Filters = {typeOfFeed: 'All', isImage: false}
 
 
-export default function FeedsContainer() {
+function FeedsContainer(props,ref) {
     
     // Contains the current items
-    const [itemsState, setItems] = useState(Feeds);
+    const [itemsState, setItems] = useState([]);
+    useEffect(() => {
+        refresh();
+    }, []);
 
     // Managing what to load
     const [loadFilters, setFilters] = useState(defaultFilters);
 
     // Refreshes all items in the item list
     function refresh() {
+        setItems([]);
+        for (var i=0;i<10;i++){
+            loadNewItems();
+        }
         alert('refreshed');
     }
 
-    // Loading new items without deleting the existing ones
+    // Loading new items without deleting the existing ones        <---------------- Must make a better load function
     function loadNewItems() {
         setItems(currentItems => [...currentItems, Feeds[0]]);
     }
 
     function isCloseToBottom({contentOffset, contentSize, layoutMeasurement}) {
-        return layoutMeasurement.height + contentOffset.y >= contentSize.height - 20;
+        return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1000;
     }
+
+    // Allow the parent to call refresh
+    useImperativeHandle(ref, () => ({
+        refresh: () => { refresh() }
+    }));
 
     return (
         <View style={styles.container}>
@@ -160,6 +172,8 @@ export default function FeedsContainer() {
         </View>
     )
 };
+
+export default forwardRef(FeedsContainer);
 
 const styles = StyleSheet.create({
     container: {

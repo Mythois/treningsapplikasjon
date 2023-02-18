@@ -1,43 +1,51 @@
 import { Button } from '@rneui/themed';
 import { signOut } from 'firebase/auth';
-import React from 'react'
-import { Text, StyleSheet, View, SafeAreaView, ScrollView } from 'react-native'
+import React, { useRef } from 'react'
+import { Text, StyleSheet, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native'
 import { auth } from '../../firebase';
 import FeedsContainer from './feeds/FeedsContainer';
 
 function HomeScreen({ navigation }) {
+
+  // Controling the feeds
+  const childRef: any = useRef();
+
+  function handlePressTopTab() {
+    childRef.current.refresh();
+  }
+
   return (
     <View style={styles.container}>
       {/* This is the top section */}
       <SafeAreaView>
         <ScrollView horizontal={true}>
-          <View style={styles.feedTab}>
+          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab())}>
             <Text style={styles.feedTabText}>All</Text>
-          </View>
-          <View style={styles.feedTab}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab())}>
             <Text style={styles.feedTabText}>Discover</Text>
-          </View>
-          <View style={styles.feedTab}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab())}>
             <Text style={styles.feedTabText}>Friend</Text>
-          </View>
-          <View style={styles.feedTab}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab())}>
             <Text style={styles.feedTabText}>Group</Text>
-          </View>
-          <View style={styles.feedTab}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab())}>
             <Text style={styles.feedTabText}>Myself</Text>
-          </View>
+          </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
       {/* This is the feed section */}
       <View>
-        <FeedsContainer></FeedsContainer>
+        <FeedsContainer ref={childRef}></FeedsContainer>
       </View>
       <Text
-                onPress={() => navigation.navigate('Home')}
-                style={{ fontSize: 26, fontWeight: 'bold'}}
-                >
-                    These are the newest feeds!!
-            </Text>
+          onPress={() => navigation.navigate('Home')}
+          style={{ fontSize: 26, fontWeight: 'bold'}}
+          >
+              These are the newest feeds!!!
+      </Text>
 
       <View style={styles.buttonContainer}>
         <Button

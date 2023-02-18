@@ -39,7 +39,6 @@ export default function SearchScreen({navigation}) {
                 onChangeText={text => {
                     setSearch(text);
                     if (text !== '') {
-                        console.log(text);
                         if (!LocalData.usersCollection.loaded) {
                             LocalData.usersCollection.load((firUsers) => {
                                 setUsers(LocalData.usersCollection.searchUsers(text));

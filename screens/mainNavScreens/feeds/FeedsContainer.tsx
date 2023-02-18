@@ -13,31 +13,31 @@ const Feeds = [
     {
         id: 2,
         posterName: 'bfdgfgd',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
+        feedText: 'sdfjsd fskdfjsj jkd dksdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
     }, 
     {
         id: 3,
         posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
+        feedText: 'sdfjsd fskdfjsj jkd dsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  kfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
     }, 
     {
         id: 4,
         posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
+        feedText: 'sdfjsd fskdfjsj jkd dkfjekdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd f dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkgsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  hodfighorip hgoidh goui dh',
         likes: 24,
     }, 
     {
         id: 5,
         posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
+        feedText: 'sdfjsd fskdfjsj sdfjsdsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs   fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
     }, 
     {
         id: 6,
         posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
+        feedText: 'sdfjsdsdfjsd fskdfjsjkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd  jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs   fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
     }, 
     {
@@ -49,13 +49,13 @@ const Feeds = [
     {
         id: 8,
         posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
+        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fighorip hgoidh goui dh',
         likes: 24,
     }, 
     {
         id: 9,
         posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
+        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  djgh odjkghodsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fighorip hgoidh goui dh',
         likes: 24,
     },  
     {
@@ -67,19 +67,19 @@ const Feeds = [
     {
         id: 11,
         posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
+        feedText: 'sdfjsd fskdfjsj jkd dkfjkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd ef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
     },
     {
         id: 12,
         posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
+        feedText: 'sdfjsd fskdfjsj jkkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd d dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
     }, 
     {
         id: 13,
         posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
+        feedText: 'sdfjsd fskdfjsj jkdkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd  dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
     }, 
     {
@@ -91,7 +91,7 @@ const Feeds = [
     {
         id: 15,
         posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
+        feedText: 'sdfjsd fskdfjsj jkkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd d dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
     }, 
     {
@@ -103,7 +103,7 @@ const Feeds = [
     {
         id: 17,
         posterName: 'CCCCCC',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
+        feedText: 'sdfjsd fskdfjsj jkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd kd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
     },
     {
@@ -165,7 +165,7 @@ function FeedsContainer(props,ref) {
     return (
         <View style={styles.container}>
             <ScrollView onScroll={({nativeEvent}) => {if(isCloseToBottom(nativeEvent)){loadNewItems()}}}>
-                <FlatList data={itemsState} renderItem={({item}) => (
+                <FlatList style={styles.list} data={itemsState} numColumns={2} renderItem={({item}) => (
                     <FeedsListItem name={item.posterName} text={item.feedText} likes={item.likes}></FeedsListItem>
                 )}/>
             </ScrollView>
@@ -177,7 +177,10 @@ export default forwardRef(FeedsContainer);
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'rgb(220, 150, 150)',
+        backgroundColor: 'rgb(20, 20, 20)',
         height: 550,
-    }
+    },
+    list: {
+        position: 'relative',
+    },
 });

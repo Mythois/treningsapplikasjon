@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, Touchable, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Touchable, TouchableOpacity, Dimensions} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 interface Props {
@@ -7,6 +7,8 @@ interface Props {
     text: String,
     likes: number,
 }
+
+const windowWidth = Dimensions.get('window').width;
 
 export default function FeedsListItem(data: Props) {
     const [iconState, setIcon] = useState('heart-outline');
@@ -28,17 +30,17 @@ export default function FeedsListItem(data: Props) {
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={handlePressName}>
-                <Text>
+                <Text style={styles.header}>
                     {data.name}
                 </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handlePressContent}>
+            <TouchableOpacity style={styles.content} onPress={handlePressContent}>
                 <Text>
                     {data.text}
                 </Text>
             </TouchableOpacity>
-            <Ionicons name={iconState} size={25} onPress={handlePressLike}/>
-            <Text>
+            <Ionicons name={iconState} style={styles.likesIcon} size={20} onPress={handlePressLike}/>
+            <Text style={styles.likesText}>
                 {data.likes.toString()}
             </Text>
         </View>
@@ -47,8 +49,35 @@ export default function FeedsListItem(data: Props) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'grey',
-        margin: 8,
+        backgroundColor: '#404040',
+        margin: 12,
         padding: 7,
+        width: (windowWidth / 2) - 40,
+        flex: 1,
+        borderRadius: 15,
+    },
+    header: {
+        color: '#cccccc',
+        fontSize: 20,
+    },
+    content: {
+        
+    },
+    likesIcon: {
+        color: '#cccccc',
+        position: 'absolute',
+        right: 30,
+        bottom: 8,
+        zIndex: 3,
+        elevation: 3,
+    },
+    likesText: {
+        color: '#909090',
+        fontSize: 13,
+        position: 'absolute',
+        right: 10,
+        bottom: 10,
+        zIndex: 3,
+        elevation: 3,
     }
 });

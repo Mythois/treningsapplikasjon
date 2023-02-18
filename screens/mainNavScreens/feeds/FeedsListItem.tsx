@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {View, Text, StyleSheet, Touchable, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -9,6 +9,7 @@ interface Props {
 }
 
 export default function FeedsListItem(data: Props) {
+    const [iconState, setIcon] = useState('heart-outline');
     const handlePressName = () => {
         alert(data.name)
     };
@@ -16,7 +17,12 @@ export default function FeedsListItem(data: Props) {
         alert(data.text)
     }
     const handlePressLike = () => {
-        alert('pressed heart')
+        // Toggle between like and unlike
+        if(iconState === 'heart') {
+            setIcon('heart-outline')
+        } else {
+            setIcon('heart')
+        }
     }
 
     return (
@@ -31,7 +37,7 @@ export default function FeedsListItem(data: Props) {
                     {data.text}
                 </Text>
             </TouchableOpacity>
-            <Ionicons name={'heart'} size={25} onPress={handlePressLike}/>
+            <Ionicons name={iconState} size={25} onPress={handlePressLike}/>
             <Text>
                 {data.likes.toString()}
             </Text>

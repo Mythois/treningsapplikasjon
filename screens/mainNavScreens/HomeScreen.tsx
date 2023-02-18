@@ -1,8 +1,9 @@
 import { Button } from '@rneui/themed';
 import { signOut } from 'firebase/auth';
-import React, { Component } from 'react'
+import React from 'react'
 import { Text, StyleSheet, View, SafeAreaView, ScrollView } from 'react-native'
 import { auth } from '../../firebase';
+import FeedsContainer from './feeds/FeedsContainer';
 
 function HomeScreen({ navigation }) {
   return (
@@ -29,7 +30,7 @@ function HomeScreen({ navigation }) {
       </SafeAreaView>
       {/* This is the feed section */}
       <View>
-
+        <FeedsContainer></FeedsContainer>
       </View>
       <Text
                 onPress={() => navigation.navigate('Home')}

@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import {View, Text, StyleSheet, FlatList, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, FlatList, ScrollView, Dimensions} from 'react-native';
 import FeedsListItem from './FeedsListItem';
 
 // Placeholder for feeds
@@ -148,9 +148,11 @@ function FeedsContainer(props,ref) {
         alert('refreshed');
     }
 
-    // Loading new items without deleting the existing ones        <---------------- Must make a better load function
+    // Fetch new feed from database without deleting the existing ones        <---------------- Must make a better load function
     function loadNewItems() {
         setItems(currentItems => [...currentItems, Feeds[0]]);
+
+        // If nothing is returned, then tell the user that there are no more feeds
     }
 
     function isCloseToBottom({contentOffset, contentSize, layoutMeasurement}) {
@@ -175,10 +177,12 @@ function FeedsContainer(props,ref) {
 
 export default forwardRef(FeedsContainer);
 
+const windowHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'rgb(20, 20, 20)',
-        height: 550,
+        backgroundColor: 'rgb(200, 200, 200)',
+        height: windowHeight - 80 - 20,
     },
     list: {
         position: 'relative',

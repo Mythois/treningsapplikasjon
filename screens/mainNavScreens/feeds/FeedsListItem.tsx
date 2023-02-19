@@ -28,8 +28,8 @@ export default function FeedsListItem(data: Props) {
     }
 
     return (
-        <View style={styles.container}>
-            <TouchableOpacity onPress={handlePressName}>
+        <View style={[styles.container, styles.elevation]}>
+            <TouchableOpacity onPress={handlePressName} style={styles.top}>
                 <Text style={styles.header}>
                     {data.name}
                 </Text>
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#404040',
         margin: 12,
-        padding: 7,
         width: (windowWidth / 2) - 40,
         flex: 1,
         borderRadius: 15,
@@ -60,8 +59,15 @@ const styles = StyleSheet.create({
         color: '#cccccc',
         fontSize: 20,
     },
+    top: {
+        backgroundColor: 'rgba(40, 40, 40, 0.3)',
+        padding: 5,
+        paddingLeft: 8,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+    },
     content: {
-        
+        margin: 20,
     },
     likesIcon: {
         color: '#cccccc',
@@ -79,5 +85,15 @@ const styles = StyleSheet.create({
         bottom: 10,
         zIndex: 3,
         elevation: 3,
-    }
+    },
+    shadowProp: {
+        shadowColor: '#171717',
+        shadowOffset: {width: -2, height: 4},
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+    },
+    elevation: {
+        elevation: 20,
+        shadowColor: '#000000',
+    },
 });

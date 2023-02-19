@@ -35,8 +35,8 @@ export default function MainStack(){
                 tabBarOptions={{
                     activeTintColor: 'tomato',
                     inactiveTintColor: 'grey',
-                    labelStyle: { fontSize: 10 },
-                    tabStyle: { backgroundColor: 'rgba(10, 10, 10, 1)' }
+                    labelStyle: { fontSize: 8 },
+                    tabStyle: { backgroundColor: 'rgba(10, 10, 10, 1)', },
                 }}
             >
 

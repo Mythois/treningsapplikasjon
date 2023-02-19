@@ -40,7 +40,7 @@ function HomeScreen({ navigation }) {
       <View>
         <FeedsContainer ref={childRef}></FeedsContainer>
       </View>
-      <Text
+      {/* <Text
           onPress={() => navigation.navigate('Home')}
           style={{ fontSize: 26, fontWeight: 'bold'}}
           >
@@ -65,17 +65,16 @@ function HomeScreen({ navigation }) {
           }}
           onPress={() => signOut(auth)}
         />
-      </View>
+      </View> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // alignItems: 'center',
-    // justifyContent: 'center',
     width: '100%',
     flex: 1,
+    backgroundColor: 'rgb(30, 30, 30)',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -84,12 +83,15 @@ const styles = StyleSheet.create({
   },
   feedTab: {
     padding: 10,
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     marginTop: 30,
+    backgroundColor: 'rgb(30, 30, 30)',
+    height: 49,
   },
   feedTabText: {
-    fontSize: 28,
-  }
+    fontSize: 24,
+    color: 'rgb(230, 230, 230)',
+  },
 })
 export default HomeScreen;
 

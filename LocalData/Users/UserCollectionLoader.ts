@@ -34,6 +34,7 @@ export default class UsersCollectionLoader {
         const q = query(this.collectionRef);
         const querySnapshot = await getDocs(q)
         .then((docs) => {
+            this.users.push(LocalData.currentUser);
             docs.forEach((doc) => {
                 const u = new WorkoutUser(doc.data());
                 if (u.username != "" &&

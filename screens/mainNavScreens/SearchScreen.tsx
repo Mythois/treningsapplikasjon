@@ -1,4 +1,4 @@
-import { Avatar, Input } from '@rneui/themed';
+import { Avatar, Icon, Input } from '@rneui/themed';
 import * as React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { WorkoutUser } from '../../LocalData/Users/WorkoutUser';
@@ -11,7 +11,7 @@ export default function SearchScreen({navigation}) {
 
     const renderItem = ({ item }: { item: WorkoutUser }) => (
         <View style={{ flexDirection: 'row', justifyContent:"space-around", alignContent:"flex-start",
-        paddingHorizontal:28, paddingVertical: 8, flex: 1, width:"100%", alignItems:"center"}}>
+        paddingLeft:28, paddingVertical: 8, flex: 1, width:"100%", alignItems:"center"}}>
             <Avatar
             rounded
             icon={{
@@ -24,6 +24,9 @@ export default function SearchScreen({navigation}) {
           <View style={{ flex: 1, marginLeft: 16, width:"100%" }}>
             <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>{item.name}</Text>
             <Text style={{ color: 'white' }}>{item.username}</Text>
+          </View>
+          <View style={{ flex: 1, width: "100%", alignContent:"flex-end"}}>
+            <Icon type='font-awesome' name="chevron-right" size={20} color="white"/>
           </View>
         </View>
       );
@@ -44,7 +47,6 @@ export default function SearchScreen({navigation}) {
                                 setUsers(LocalData.usersCollection.searchUsers(text));
                             })
                         } else {
-                            console.log(LocalData.usersCollection.searchUsers(text));
                             setUsers(LocalData.usersCollection.searchUsers(text));
                         }
                     } else {

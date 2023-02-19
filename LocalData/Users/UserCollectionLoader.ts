@@ -1,5 +1,6 @@
 import { collection, getDocs, query, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase";
+import { LocalData } from "../LocalData";
 import { WorkoutUser } from "./WorkoutUser";
 
 
@@ -28,13 +29,16 @@ export default class UsersCollectionLoader {
      */
     async load(completion: (documents: WorkoutUser[]) => void) {
         if (this.loaded) { return; }
+        this.users = [];
         // Creating a loading query
         const q = query(this.collectionRef);
         const querySnapshot = await getDocs(q)
         .then((docs) => {
             docs.forEach((doc) => {
                 const u = new WorkoutUser(doc.data());
-                if (u.username != "") this.users.push(u);
+                if (u.username != "" &&
+                u.username != LocalData.currentUser.username) 
+                    this.users.push(u);
             })
             completion(this.users);
         })

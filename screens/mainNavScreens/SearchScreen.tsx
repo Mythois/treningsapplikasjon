@@ -62,7 +62,11 @@ export default function SearchScreen({navigation}) {
                     keyExtractor={(item, index) => index.toString()}
                 />
             ) : (
-                <Text style={{color: 'white'}}>No users found.</Text>
+                (search.length > 1) ? (
+                    <Text style={{color: 'white'}}>No users found.</Text>
+                ) : (
+                    <Text style={{color: 'white'}}>Type in two or more characters to search.</Text>
+                )
             )}
         </View>
     );

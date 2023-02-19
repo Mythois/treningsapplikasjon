@@ -4,8 +4,14 @@ import { doc, getDoc } from "firebase/firestore";
 import UsersCollectionLoader from "./Users/UserCollectionLoader";
 
 export class LocalData {
+  /**
+   * The WorkoutUser instance of the user currently signed in to the application
+   */
   static currentUser: WorkoutUser = new WorkoutUser({});
   
+  /**
+   * A CollectionLoader to load the instances of users in the app.
+   */
   static usersCollection: UsersCollectionLoader = new UsersCollectionLoader();
     
   static async initCurrentUser() {

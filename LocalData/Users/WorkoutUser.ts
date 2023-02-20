@@ -24,7 +24,7 @@ export class WorkoutUser {
     if (Array.isArray(data.friends)) {
         this.friends = [];
         data.friends.forEach((groupID: any) => {
-            this.groups.push(groupID)
+            this.friends.push(groupID)
         })
     }
   }
@@ -36,7 +36,7 @@ export class WorkoutUser {
    * @param followBy the id of the user to follow this user.
    */
   followUser(followBy: WorkoutUser) {
-    
+
   }
 
   /**

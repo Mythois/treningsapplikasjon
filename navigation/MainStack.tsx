@@ -5,7 +5,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from '../screens/mainNavScreens/HomeScreen';
 import ProfileScreen from '../screens/mainNavScreens/ProfileScreen';
-import SearchScreen from '../screens/mainNavScreens/SearchScreen';
+import SearchScreen from '../screens/mainNavScreens/friendsScreens/SearchScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import FriendProfileScreen from '../screens/mainNavScreens/friendsScreens/FriendProfileScreen';
+import SearchStack from '../screens/mainNavScreens/friendsScreens/SearchStack';
 
 // Screen Names
 const homeName:any = "Home";
@@ -17,6 +20,7 @@ const Tab:any = createBottomTabNavigator();
 export default function MainStack(){
     return(
         <NavigationContainer>
+
             <Tab.Navigator 
                 initialRouteName={homeName} 
                 screenOptions={({route}) => ({
@@ -62,7 +66,7 @@ export default function MainStack(){
                 options={{ headerShown: false }}
                 />
                 <Tab.Screen name={searchName} 
-                component={SearchScreen}
+                component={SearchStack}
                 options={{ headerShown: false }}
                 />
                 <Tab.Screen name={profileName} 
@@ -71,6 +75,7 @@ export default function MainStack(){
                 />
 
             </Tab.Navigator>
+            
         </NavigationContainer>
     );
 }

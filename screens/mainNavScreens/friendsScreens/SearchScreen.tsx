@@ -3,24 +3,18 @@ import * as React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { WorkoutUser } from '../../../LocalData/Users/WorkoutUser';
 import { LocalData } from '../../../LocalData/LocalData';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../types';
-
-type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'FriendProfileScreen'>;
 
 // Export page
 export default function SearchScreen({navigation}) {
     const [users, setUsers] = React.useState<WorkoutUser[]>([]);
     const [search, setSearch] = React.useState('');
-    const nav = useNavigation<ProfileScreenNavigationProp>();
 
     const renderItem = ({ item }: { item: WorkoutUser }) => (
         <TouchableOpacity 
         style={{ flexDirection: 'row', justifyContent:"space-around", alignContent:"flex-start",
         paddingLeft:28, paddingVertical: 8, flex: 1, width:"100%", alignItems:"center"}}
         onPress={() => {
-            nav.navigate('FriendProfileScreen', { user: item });
+            navigation.navigate('FriendProfileScreen', { user: item });
         }}>
             <Avatar
             rounded

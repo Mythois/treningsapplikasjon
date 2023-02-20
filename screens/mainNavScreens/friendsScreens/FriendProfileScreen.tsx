@@ -1,15 +1,17 @@
-import { NavigationContainer, RouteProp } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import { Icon, Text } from '@rneui/themed';
 import { TouchableOpacity, View } from 'react-native';
 import * as React from 'react';
 import { RootStackParamList } from '../../../types';
 import {StyleSheet,} from 'react-native';
 import { Avatar } from '@rneui/themed';
+import { LocalData } from '../../../LocalData/LocalData';
 
 type FriendProfileScreenRouteProp = RouteProp<RootStackParamList, 'FriendProfileScreen'>;
 
 export default function FriendProfileScreen({ route, navigation }: { route: FriendProfileScreenRouteProp, navigation: any }) {
     const { user } = route.params;
+    const [follows, setFollows] = React.useState<boolean>(LocalData.currentUser.friends.includes(user.id));
 
     return (
         <View style={styles.container}>

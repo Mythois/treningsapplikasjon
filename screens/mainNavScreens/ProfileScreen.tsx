@@ -4,6 +4,7 @@ import React, { useRef } from 'react'
 import { Text, StyleSheet, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native'
 import { auth } from '../../firebase';
 import FeedsContainer from './profile/ProgramsContainer';
+import HeaderContainer from './profile/HeaderContainer';
 
 function HomeScreen({ navigation }) {
 
@@ -18,6 +19,7 @@ function HomeScreen({ navigation }) {
     <View style={styles.container}>
       {/* This is the top section */}
       <SafeAreaView>
+        {/*
         <ScrollView horizontal={true}>
           <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab())}>
             <Text style={styles.feedTabText}>All</Text>
@@ -35,10 +37,12 @@ function HomeScreen({ navigation }) {
             <Text style={styles.feedTabText}>Myself</Text>
           </TouchableOpacity>
         </ScrollView>
+  */}
+        <HeaderContainer ref={childRef}></HeaderContainer>
       </SafeAreaView>
       {/* This is the feed section */}
       <View>
-        <FeedsContainer ref={childRef}></FeedsContainer>
+        <FeedsContainer></FeedsContainer>
       </View>
       {/* <Text
           onPress={() => navigation.navigate('Home')}
@@ -89,6 +93,10 @@ const styles = StyleSheet.create({
     height: 49,
   },
   feedTabText: {
+    fontSize: 24,
+    color: 'rgb(230, 230, 230)',
+  },
+  headerText: {
     fontSize: 24,
     color: 'rgb(230, 230, 230)',
   },

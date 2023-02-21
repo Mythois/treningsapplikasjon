@@ -10,8 +10,8 @@ export class WorkoutUser {
   /**
    * Takes in the data from firebase to initialize a user instance. 
    */
-  constructor(id: string, data: any) {
-    if (data) {
+  constructor(data: any, id?: string) {
+    if (data && id) {
       this.id = id
       this.name = typeof data.name === "string" ? data.name : "";
       this.username = typeof data.username === "string" ? data.username : "";

@@ -19,6 +19,11 @@ export default function FriendProfileScreen({ route, navigation }: { route: Frie
             onPress={navigation.goBack}>
             <Icon type='font-awesome' name="chevron-left" size={20} color="white"/>
             </TouchableOpacity>
+            <TouchableOpacity style={{width: "100%", alignContent:"flex-start", paddingLeft: 315, paddingTop: 10, flexDirection: 'row'}}>
+                <Text style={{color: 'white', fontSize: 20}}>
+                    Follow
+                </Text>
+            </TouchableOpacity>
             <View style={{ flexDirection: 'row', alignContent:"center",
             paddingVertical: 2, paddingLeft: 22, width:"100%", alignItems:"center"}}>
             <Avatar

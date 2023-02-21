@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import {View, Text, StyleSheet, FlatList, ScrollView, Dimensions} from 'react-native';
+import { View, Text, StyleSheet, FlatList, ScrollView, Dimensions } from 'react-native';
 import FeedsListItem from './FeedsListItem';
 
 // Placeholder for feeds
@@ -15,31 +15,31 @@ const Feeds = [
         posterName: 'bfdgfgd',
         feedText: 'sdfjsd fskdfjsj jkd dksdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
-    }, 
+    },
     {
         id: 3,
         posterName: 'Aaaaaa',
         feedText: 'sdfjsd fskdfjsj jkd dsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  kfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
-    }, 
+    },
     {
         id: 4,
         posterName: 'Aaaaaa',
         feedText: 'sdfjsd fskdfjsj jkd dkfjekdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd f dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkgsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  hodfighorip hgoidh goui dh',
         likes: 24,
-    }, 
+    },
     {
         id: 5,
         posterName: 'Aaaaaa',
         feedText: 'sdfjsd fskdfjsj sdfjsdsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs   fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
-    }, 
+    },
     {
         id: 6,
         posterName: 'Aaaaaa',
         feedText: 'sdfjsdsdfjsd fskdfjsjkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd  jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs   fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
-    }, 
+    },
     {
         id: 7,
         posterName: 'Aaaaaa',
@@ -51,13 +51,13 @@ const Feeds = [
         posterName: 'Aaaaaa',
         feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fighorip hgoidh goui dh',
         likes: 24,
-    }, 
+    },
     {
         id: 9,
         posterName: 'Aaaaaa',
         feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  djgh odjkghodsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fighorip hgoidh goui dh',
         likes: 24,
-    },  
+    },
     {
         id: 10,
         posterName: 'Aaaaaa',
@@ -75,31 +75,31 @@ const Feeds = [
         posterName: 'Aaaaaa',
         feedText: 'sdfjsd fskdfjsj jkkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd d dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
-    }, 
+    },
     {
         id: 13,
         posterName: 'Aaaaaa',
         feedText: 'sdfjsd fskdfjsj jkdkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd  dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
-    }, 
+    },
     {
         id: 14,
         posterName: 'Aaaaaa',
         feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
-    }, 
+    },
     {
         id: 15,
         posterName: 'Aaaaaa',
         feedText: 'sdfjsd fskdfjsj jkkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd d dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
-    }, 
+    },
     {
         id: 16,
         posterName: 'Aaaaaa',
         feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
-    }, 
+    },
     {
         id: 17,
         posterName: 'CCCCCC',
@@ -111,13 +111,13 @@ const Feeds = [
         posterName: 'Aaaaaa',
         feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
-    }, 
+    },
     {
         id: 19,
         posterName: 'FFFFFF',
         feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
         likes: 24,
-    },  
+    },
 ];
 
 interface Filters {
@@ -125,11 +125,11 @@ interface Filters {
     isImage: boolean,
 }
 
-const defaultFilters: Filters = {typeOfFeed: 'All', isImage: false}
+const defaultFilters: Filters = { typeOfFeed: 'All', isImage: false }
 
 
-function FeedsContainer(props,ref) {
-    
+function FeedsContainer(props, ref) {
+
     // Contains the current items
     const [itemsState, setItems] = useState([]);
     useEffect(() => {
@@ -142,7 +142,7 @@ function FeedsContainer(props,ref) {
     // Refreshes all items in the item list
     function refresh() {
         setItems([]);
-        for (var i=0;i<10;i++){
+        for (var i = 0; i < 10; i++) {
             loadNewItems();
         }
         alert('refreshed');
@@ -155,7 +155,7 @@ function FeedsContainer(props,ref) {
         // If nothing is returned, then tell the user that there are no more feeds
     }
 
-    function isCloseToBottom({contentOffset, contentSize, layoutMeasurement}) {
+    function isCloseToBottom({ contentOffset, contentSize, layoutMeasurement }) {
         return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1000;
     }
 
@@ -166,10 +166,10 @@ function FeedsContainer(props,ref) {
 
     return (
         <View style={styles.container}>
-            <ScrollView onScroll={({nativeEvent}) => {if(isCloseToBottom(nativeEvent)){loadNewItems()}}}>
-                <FlatList style={styles.list} data={itemsState} numColumns={2} renderItem={({item}) => (
+            <ScrollView onScroll={({ nativeEvent }) => { if (isCloseToBottom(nativeEvent)) { loadNewItems() } }}>
+                <FlatList style={styles.list} data={itemsState} numColumns={2} renderItem={({ item }) => (
                     <FeedsListItem name={item.posterName} text={item.feedText} likes={item.likes}></FeedsListItem>
-                )}/>
+                )} />
             </ScrollView>
         </View>
     )
@@ -181,7 +181,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'rgb(200, 200, 200)',
+        backgroundColor: 'rgb(12, 12, 12)',
         height: windowHeight - 80 - 20,
     },
     list: {

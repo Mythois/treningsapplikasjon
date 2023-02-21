@@ -1,35 +1,57 @@
 import * as React from 'react';
-import { View, Text} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from '../screens/mainNavScreens/HomeScreen';
 import ProfileScreen from '../screens/mainNavScreens/ProfileScreen';
+import SearchScreen from '../screens/mainNavScreens/SearchScreen';
 
 // Screen Names
-const homeName:any = "Home";
-const profileName:any = "Profile";
+const homeName: any = "Home";
+const profileName: any = "Profile";
+const searchName: any = "Search";
 
-const Tab:any = createBottomTabNavigator();
+const Tab: any = createBottomTabNavigator();
 
-export default function MainStack(){
-    return(
+export default function MainStack() {
+    return (
         <NavigationContainer>
-            <Tab.Navigator 
-                initialRouteName={homeName} 
-                screenOptions={({route}) => ({
-                    tabBarIcon: ({focused, color, size}) => {
+            <Tab.Navigator
+                initialRouteName={homeName}
+                screenOptions={({ route }) => ({
+                    "tabBarActiveTintColor": "tomato",
+                    "tabBarInactiveTintColor": "grey",
+                    "tabBarLabelStyle": {
+                        "fontSize": 10
+                    },
+                    "tabBarItemStyle": {
+                        "backgroundColor": "rgba(10, 10, 10, 1)"
+                    },
+                    "tabBarStyle": [
+                        {
+                            "display": "flex"
+                        },
+                        null
+                    ],
+
+                    tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
                         let rn = route.name;
 
-                        if (rn === homeName) {
-                            iconName = focused ? 'home' : 'home-outline'
-                        } else if (rn === profileName) {
-                            iconName = focused ? 'person' : 'person-outline'
+                        switch (rn) {
+                            case homeName:
+                                iconName = focused ? 'home' : 'home-outline'
+                                break
+                            case profileName:
+                                iconName = focused ? 'person' : 'person-outline'
+                                break
+                            case searchName:
+                                iconName = 'search'
+                                break
                         }
 
-                        return <Ionicons name={iconName} size={size} color={color}/>
+                        return <Ionicons name={iconName} size={size} color={color} />
                     }
                 })}
                 tabBarOptions={{
@@ -40,13 +62,17 @@ export default function MainStack(){
                 }}
             >
 
-                <Tab.Screen name={homeName} 
-                component={HomeScreen}
-                options={{ headerShown: false }}
+                <Tab.Screen name={homeName}
+                    component={HomeScreen}
+                    options={{ headerShown: false }}
                 />
-                <Tab.Screen name={profileName} 
-                component={ProfileScreen}
-                options={{ headerShown: false }}
+                <Tab.Screen name={searchName}
+                    component={SearchScreen}
+                    options={{ headerShown: false }}
+                />
+                <Tab.Screen name={profileName}
+                    component={ProfileScreen}
+                    options={{ headerShown: false }}
                 />
 
             </Tab.Navigator>

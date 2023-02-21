@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { View, Text} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -10,6 +9,7 @@ import Search from '../screens/mainNavScreens/Search';
 import Groups from '../screens/mainNavScreens/Groups';
 import Program from '../screens/mainNavScreens/Program';
 
+import SearchScreen from '../screens/mainNavScreens/SearchScreen';
 
 // Screen Names
 const homeName:any = "Home";
@@ -26,34 +26,47 @@ export default function MainStack(){
             <Tab.Navigator 
                 initialRouteName={homeName} 
                 screenOptions={({route}) => ({
+                    "tabBarActiveTintColor": "tomato",
+                    "tabBarInactiveTintColor": "grey",
+                    "tabBarLabelStyle": {
+                    "fontSize": 10
+                    },
+                    "tabBarItemStyle": {
+                    "backgroundColor": "rgba(10, 10, 10, 1)"
+                    },
+                    "tabBarStyle": [
+                    {
+                        "display": "flex"
+                    },
+                    null
+                    ],
+
                     tabBarIcon: ({focused, color, size}) => {
                         let iconName;
                         let rn = route.name;
 
-                        if (rn === homeName) {
-                            iconName = focused ? 'home' : 'home-outline'
-                        } else if (rn === profileName) {
-                            iconName = focused ? 'person' : 'person-outline'
-                        }
-                        else if (rn === search) {
-                        iconName = focused ? 'search' : 'search-outline'
-                        }
-                        else if (rn === groups) {
-                            iconName = focused ? 'people' : 'people-outline'
-                        }
-                        else if (rn === program) {
-                            iconName = focused ? 'barbell' : 'barbell-outline'
+                        switch (rn) {
+                            case homeName:
+                                iconName = focused ? 'home' : 'home-outline'
+                                break
+                            case profileName:
+                                iconName = focused ? 'person' : 'person-outline'
+                                break
+                            case search:
+                                iconName = 'search'
+                                break
+                            case groups:
+                                iconName = focused ? 'people' : 'people-outline'
+                                break
+                            case program:
+                                iconName = focused ? 'barbell' : 'barbell-outline'
+                                break
                         }
 
                         return <Ionicons name={iconName} size={size} color={color}/>
                     }
-                })}
-                tabBarOptions={{
-                    activeTintColor: 'tomato',
-                    inactiveTintColor: 'grey',
-                    labelStyle: { fontSize: 10 },
-                    tabStyle: { backgroundColor: 'rgba(10, 10, 10, 1)' }
-                }}
+                }) 
+            }
             >
 
                 <Tab.Screen name={homeName} 
@@ -61,7 +74,7 @@ export default function MainStack(){
                 options={{ headerShown: false }}
                 />
                 <Tab.Screen name={search} 
-                component={Search}
+                component={SearchScreen}
                 options={{ headerShown: false }}
                 />
                 <Tab.Screen name={program} 
@@ -70,7 +83,6 @@ export default function MainStack(){
                 />
                 <Tab.Screen name={groups} 
                 component={Groups}
-                options={{ headerShown: false }}
                 />
                 <Tab.Screen name={profileName} 
                 component={ProfileScreen}

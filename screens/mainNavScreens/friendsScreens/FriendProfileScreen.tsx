@@ -15,11 +15,11 @@ export default function FriendProfileScreen({ route, navigation }: { route: Frie
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={{width: "100%", alignContent:"flex-start", flexDirection:'row', paddingLeft: 22, paddingBottom:30}}
+            <TouchableOpacity style={{width: "40%", alignContent:"flex-start", flexDirection:'row', paddingLeft: 22, paddingBottom:30}}
             onPress={navigation.goBack}>
             <Icon type='font-awesome' name="chevron-left" size={20} color="white"/>
             </TouchableOpacity>
-            <TouchableOpacity style={{width: "100%", alignContent:"flex-start", paddingLeft: 315, paddingTop: 10, flexDirection: 'row'}}>
+            <TouchableOpacity style={{width: "40%", alignContent:"flex-start", paddingLeft: 315, paddingBottom: 30, flexDirection: 'row'}}>
                 <Text style={{color: 'white', fontSize: 20}}>
                     Follow
                 </Text>

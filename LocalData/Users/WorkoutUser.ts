@@ -5,6 +5,7 @@ export class WorkoutUser {
 
   groups: string[] = [];
   friends: string[] = [];
+  createdPrograms: string[] = [];
 
   /**
    * Takes in the data from firebase to initialize a user instance. 
@@ -23,9 +24,15 @@ export class WorkoutUser {
     }
     if (Array.isArray(data.friends)) {
         this.friends = [];
-        data.friends.forEach((groupID: any) => {
-            this.groups.push(groupID)
+        data.friends.forEach((friendID: any) => {
+            this.groups.push(friendID)
         })
+    }
+    if (Array.isArray(data.createdPrograms)) {
+      this.createdPrograms = [];
+      data.createdPrograms.forEach((programID: any) => {
+          this.createdPrograms.push(programID)
+      })
     }
   }
   console.log("User:", this.name, this.username, this.groups, this.friends);

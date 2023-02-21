@@ -2,6 +2,7 @@ import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { Button, Image } from '@rneui/themed';
 import {View, Text, StyleSheet, FlatList, Dimensions, ActivityIndicator} from 'react-native';
 import FeedsListItem from './ProgramsList';
+import { BackgroundImage } from '@rneui/base';
 
 
 
@@ -54,7 +55,7 @@ function HeaderContainer(props,ref) {
                     <Text> @user </Text>
                 </View>
                 <View style={styles.editBox}>
-                    <Text> EDIT </Text>
+                    <Text style={styles.editText}> EDIT </Text>
                 </View>
             </View>
             </View>
@@ -93,13 +94,15 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        backgroundColor: "#a40000"
     },
     rowContainer2: {
         height: "100%",
         flexDirection: "row",
         // flex: 1,
         alignItems: "center",
-        justifyContent: "space-evenly"
+        justifyContent: "space-evenly",
+        backgroundColor: "#ffffff",
     },
     columnContainer2: {
         flexDirection: "column",
@@ -114,14 +117,25 @@ const styles = StyleSheet.create({
     },
     textBox: {
         fontSize: 30,
-        color: '%e6e6e6',
+        // color: '#e6e6e6',
+        backgroundColor: '#ff0000',
+        flex: 1,
+        alignItems: "center",
     },
     editBox: {
-        justifyContent: "flex-end",
+        //justifyContent: "flex-end",
+        backgroundColor: "#0000ff",
+        flex: 1,
+        //alignItems: "flex-end",
+        textAlignVertical:'top',
     },
     profileImageBox: {
         flex: 1,
         //width: '40%',
         //height: '100%',
     },
+    editText: {
+        color: '#ffffff',
+        backgroundColor: '#121212',
+    }
 });

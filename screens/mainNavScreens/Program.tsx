@@ -6,35 +6,40 @@ import { AuthErrorCodes } from 'firebase/auth';
 
 interface exercise {
     id: number;
-    day: string;
+    day: number;
     exerciseName: string;
-    sets: string;
-    reps: string;
+    sets: number;
+    reps: number;
 }
 export default function ProgramScreen({navigation}) {
     const [exercises, setExercises] = React.useState<exercise[]>([]);
     const [exerciseName, setExerciseName] = React.useState('');
-    const [sets, setSets] = React.useState('');
-    const [reps, setReps] = React.useState('');
-    const [selectedDay, setSelectedDay] = React.useState<string>("Mon");
+    const [sets, setSets] = React.useState<number>();
+    const [reps, setReps] = React.useState<number>();
+    const [selectedDay, setSelectedDay] = React.useState<number>(0);
     const handleAddExercise = () => {
         const newExercise: exercise = {
           id: exercises.length,
           day: selectedDay,
           exerciseName: '',
-          sets: '',
-          reps: '',
+          sets: sets,
+          reps: reps,
         };
         setExercises([...exercises, newExercise]);
       };
     
-    const handleDayPress = (day: string) => {
+    const handleDayPress = (day: number) => {
         setSelectedDay(day);
     }
     const filteredExercises = exercises.filter((exercise) => exercise.day === selectedDay);
     
     return(
         <View style={{backgroundColor: "#121212", flex:1}}>
+            <View style={{width:"16%", height:"5%", left:"74%", top:"8%"}}>
+                <Button
+                    title="Save"
+                />
+            </View>
             <View style={{top:"10%"}}>
                 <View>
                     <Text style = {{fontWeight:"400", fontSize:30, color:"#DC6247", textAlign:"center", paddingBottom:10}}>
@@ -47,71 +52,71 @@ export default function ProgramScreen({navigation}) {
                     <View style = {{padding:2}}>
                         <Button 
                             title = "Mon"
-                            color = {selectedDay === "Mon" ? "#25A073" : "#CCCCCC"}
+                            color = {selectedDay === 0 ? "#25A073" : "#CCCCCC"}
                             buttonStyle={{width:45, height:66, opacity: 87, borderRadius: 25}}
                             titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:12 }}
                             containerStyle ={{}}
-                            onPress={() => handleDayPress("Mon")}
+                            onPress={() => handleDayPress(0)}
                         />
                     </View>
                     <View style = {{padding:2}}>
                         <Button 
                             title = "Tue"
-                            color = {selectedDay === "Tue" ? "#25A073" : "#CCCCCC"}
+                            color = {selectedDay === 1 ? "#25A073" : "#CCCCCC"}
                             buttonStyle={{width:45, height:66, opacity: 87, borderRadius: 25}}
                             titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:12 }}
                             containerStyle ={{}}
-                            onPress={() => handleDayPress("Tue")}
+                            onPress={() => handleDayPress(1)}
                         />
                     </View>
                     <View style = {{padding:2}}>
                         <Button 
                             title = "Wed"
-                            color = {selectedDay === "Wed" ? "#25A073" : "#CCCCCC"}
+                            color = {selectedDay === 2 ? "#25A073" : "#CCCCCC"}
                             buttonStyle={{width:45, height:66, opacity: 87, borderRadius: 25}}
                             titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:12 }}
                             containerStyle ={{}}
-                            onPress={() => handleDayPress("Wed")}
+                            onPress={() => handleDayPress(2)}
                         />
                     </View>
                     <View style = {{padding:2}}>
                         <Button 
                             title = "Thu"
-                            color = {selectedDay === "Thu" ? "#25A073" : "#CCCCCC"}
+                            color = {selectedDay === 3 ? "#25A073" : "#CCCCCC"}
                             buttonStyle={{width:45, height:66, opacity: 87, borderRadius: 25}}
                             titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:12 }}
                             containerStyle ={{}}
-                            onPress={() => handleDayPress("Thu")}
+                            onPress={() => handleDayPress(3)}
                         />
                     </View>
                     <View style = {{padding:2}}>
                         <Button 
                             title = "Fri"
-                            color = {selectedDay === "Fri" ? "#25A073" : "#CCCCCC"}
+                            color = {selectedDay === 4 ? "#25A073" : "#CCCCCC"}
                             buttonStyle={{width:45, height:66, opacity: 87, borderRadius: 25}}
                             titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:12 }}
                             containerStyle ={{}}
-                            onPress={() => handleDayPress("Fri")}
+                            onPress={() => handleDayPress(4)}
                         />
                     </View>
                     <View style = {{padding:2}}>
                         <Button 
                             title = "Sat"
-                            color = {selectedDay === "Sat" ? "#25A073" : "#CCCCCC"}
+                            color = {selectedDay === 5 ? "#25A073" : "#CCCCCC"}
                             buttonStyle={{width:45, height:66, opacity: 87, borderRadius: 25}}
                             titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:12 }}
                             containerStyle ={{}}
-                            onPress={() => handleDayPress("Sat")}
+                            onPress={() => handleDayPress(5)}
                         />
                     </View>
                     <View style = {{padding:2}}>
                         <Button 
                             title = "Sun"
-                            color = {selectedDay === "Sun" ? "#25A073" : "#CCCCCC"}
+                            color = {selectedDay === 6 ? "#25A073" : "#CCCCCC"}
                             buttonStyle={{width:45, height:66, opacity: 87, borderRadius: 25}}
                             titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:12 }}
                             containerStyle ={{}}
-                            onPress={() => handleDayPress("Sun")}
+                            onPress={() => handleDayPress(6)}
                         />
                     </View>
                 </View>

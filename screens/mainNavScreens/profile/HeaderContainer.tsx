@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         //height: '100%',
     },
     editText: {
-        color: '#ffffff',
+        color: '#eeeeee',
         backgroundColor: '#121212',
     }
 });

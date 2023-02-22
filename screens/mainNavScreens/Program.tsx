@@ -5,7 +5,7 @@ import { isTemplateSpan } from 'typescript';
 import { AuthErrorCodes } from 'firebase/auth';
 import { v4 as uuid } from 'uuid';
 import { LocalData } from '../../LocalData/LocalData';
-import { exercisesArrayToExercisesMap, groupExercisesByDay, saveProgram } from '../../save/programSave';
+import { exercisesArrayToExercisesMap, groupExercisesByDay} from '../../save/programSave';
 
 interface exercise {
     id: number;
@@ -36,6 +36,19 @@ interface programDay{
 
 
 export default function ProgramScreen({navigation}) {
+    
+
+    const [currentDate, setCurrentDate] = React.useState('');
+  
+    React.useEffect(() => {
+      var date = new Date().getDate(); //Current Date
+      var month = new Date().getMonth() + 1; //Current Month
+      var year = new Date().getFullYear(); //Current Year
+      setCurrentDate(
+        date + '.' + month + '.' + year 
+      );
+    }, []);
+
     const [exercises, setExercises] = React.useState<exercise[]>([]);
     const [exerciseName, setExerciseName] = React.useState(''); // What about this?
     const [sets, setSets] = React.useState<number>();
@@ -51,6 +64,9 @@ export default function ProgramScreen({navigation}) {
         };
         setExercises([...exercises, newExercise]);
       };
+      const handleDeleteExercise = (id: number)  => {
+        setExercises(prevExercises => prevExercises.filter(exercise => exercise.id !== id));
+      }
     
     const handleDayPress = (day: number) => {
         setSelectedDay(day);
@@ -82,17 +98,29 @@ export default function ProgramScreen({navigation}) {
 
     return(
         <View style={{backgroundColor: "#121212", flex:1}}>
-            <View style={{width:"16%", height:"5%", left:"74%", top:"8%"}}>
-                <Button
-                    title="Save"
-                    onPress={() =>handleSave(exercises)}
-                />
+            <View style={{flexDirection:"row", width: "100%", top:"20%", left:"5%"}}>
+                <View>
+                    <Text style={{color:"#FFFFFF", fontSize:18, top:"20%"}}>
+                        {currentDate}
+                    </Text>
+                </View>
+                <View style={{left:"450%"}}>
+                    <Button
+                        
+                        color = "#121212"
+                        titleStyle={{fontSize:18}}
+                        title="Save"
+                        onPress={() =>handleSave(exercises)}
+                    />
+                </View>
             </View>
             <View style={{top:"10%"}}>
                 <View>
-                    <Text style = {{fontWeight:"400", fontSize:30, color:"#DC6247", textAlign:"center", paddingBottom:10}}>
-                    Workout   Program
-                    </Text>
+                    <TextInput
+                    style = {{fontWeight:"400", fontSize:30, color:"#DC6247", textAlign:"center", paddingBottom:10}}
+                    placeholder = "Program Name"
+                    placeholderTextColor = "#DC6247"
+                    />
                 </View>
                 
                 <View style = {{flexDirection:'row', justifyContent:'center'}}>
@@ -100,7 +128,7 @@ export default function ProgramScreen({navigation}) {
                     <View style = {{padding:2}}>
                         <Button 
                             title = "Mon"
-                            color = {selectedDay === 0 ? "#25A073" : "#CCCCCC"}
+                            color = {selectedDay === 0 ? "#136A4A" : "#309A73"}
                             buttonStyle={{width:45, height:66, opacity: 87, borderRadius: 25}}
                             titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:12 }}
                             containerStyle ={{}}
@@ -110,7 +138,7 @@ export default function ProgramScreen({navigation}) {
                     <View style = {{padding:2}}>
                         <Button 
                             title = "Tue"
-                            color = {selectedDay === 1 ? "#25A073" : "#CCCCCC"}
+                            color = {selectedDay === 1 ? "#136A4A" : "#309A73"}
                             buttonStyle={{width:45, height:66, opacity: 87, borderRadius: 25}}
                             titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:12 }}
                             containerStyle ={{}}
@@ -120,7 +148,7 @@ export default function ProgramScreen({navigation}) {
                     <View style = {{padding:2}}>
                         <Button 
                             title = "Wed"
-                            color = {selectedDay === 2 ? "#25A073" : "#CCCCCC"}
+                            color = {selectedDay === 2 ? "#136A4A" : "#309A73"}
                             buttonStyle={{width:45, height:66, opacity: 87, borderRadius: 25}}
                             titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:12 }}
                             containerStyle ={{}}
@@ -130,7 +158,7 @@ export default function ProgramScreen({navigation}) {
                     <View style = {{padding:2}}>
                         <Button 
                             title = "Thu"
-                            color = {selectedDay === 3 ? "#25A073" : "#CCCCCC"}
+                            color = {selectedDay === 3 ? "#136A4A" : "#309A73"}
                             buttonStyle={{width:45, height:66, opacity: 87, borderRadius: 25}}
                             titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:12 }}
                             containerStyle ={{}}
@@ -140,7 +168,7 @@ export default function ProgramScreen({navigation}) {
                     <View style = {{padding:2}}>
                         <Button 
                             title = "Fri"
-                            color = {selectedDay === 4 ? "#25A073" : "#CCCCCC"}
+                            color = {selectedDay === 4 ? "#136A4A" : "#309A73"}
                             buttonStyle={{width:45, height:66, opacity: 87, borderRadius: 25}}
                             titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:12 }}
                             containerStyle ={{}}
@@ -150,7 +178,7 @@ export default function ProgramScreen({navigation}) {
                     <View style = {{padding:2}}>
                         <Button 
                             title = "Sat"
-                            color = {selectedDay === 5 ? "#25A073" : "#CCCCCC"}
+                            color = {selectedDay === 5 ? "#136A4A" : "#309A73"}
                             buttonStyle={{width:45, height:66, opacity: 87, borderRadius: 25}}
                             titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:12 }}
                             containerStyle ={{}}
@@ -160,7 +188,7 @@ export default function ProgramScreen({navigation}) {
                     <View style = {{padding:2}}>
                         <Button 
                             title = "Sun"
-                            color = {selectedDay === 6 ? "#25A073" : "#CCCCCC"}
+                            color = {selectedDay === 6 ? "#136A4A" : "#309A73"}
                             buttonStyle={{width:45, height:66, opacity: 87, borderRadius: 25}}
                             titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:12 }}
                             containerStyle ={{}}
@@ -174,7 +202,7 @@ export default function ProgramScreen({navigation}) {
                         keyExtractor={(item) => item.id.toString()}
                         renderItem={({item}) => 
                         <View style={{width:335, height:70, backgroundColor:"#303030", borderRadius:10, margin:"1%", flexDirection:"row", left:12, padding:5, marginTop:10}}>
-                            <View>
+                            <View style={{width:"40%"}}>
                                 <TextInput
                                     style = {{fontSize:30, margin:10, color:"#FFFFFF"}}
                                     placeholder='Exercise'
@@ -191,16 +219,16 @@ export default function ProgramScreen({navigation}) {
                                     }}
                                 />
                             </View>
-                            <View>
+                            <View style={{width:"24%"}}>
                                 <TextInput
-                                    style = {{fontSize:30, margin:10, color:"#9556CE"}}
+                                    style = {{fontSize:30, margin:10, color:"#F0DA5D"}}
                                     placeholder='Sets'
-                                    placeholderTextColor="#FFFFFF"
+                                    placeholderTextColor="#FFFFFF" 
                                     value = {item.sets}
                                     onChangeText={(text) => {
                                         const updatedExercises = exercises.map((exercise) => {
                                           if (exercise.id === item.id) {
-                                            return { ...exercise, sets: sets };
+                                            return { ...exercise, sets: text };
                                           }
                                           return exercise;
                                         });
@@ -208,21 +236,31 @@ export default function ProgramScreen({navigation}) {
                                     }}
                                 />
                             </View>
-                            <View>
+                            <View style={{width:"28%"}}>
                                 <TextInput
-                                    style = {{fontSize:30, margin:10, color:"#F0DA5D"}}
+                                    style = {{fontSize:30, margin:10, color:"#9556CE"}}
                                     placeholder='Reps'
                                     placeholderTextColor="#FFFFFF"
                                     value = {item.reps}
                                     onChangeText={(text) => {
                                         const updatedExercises = exercises.map((exercise) => {
                                           if (exercise.id === item.id) {
-                                            return { ...exercise, reps: reps };
+                                            return { ...exercise, reps: text };
                                           }
                                           return exercise;
                                         });
                                         setExercises(updatedExercises);
                                     }}
+                                />
+                            </View>
+                            <View style={{top:"-1.5%", left:"9%"}}>
+                                <Button
+                                    
+                                    buttonStyle={{borderRadius:10}}
+                                    color = "#E93333"
+                                    titleStyle= {{fontSize:8, color:"#000000"}}
+                                    title={"X"}
+                                    onPress={() => handleDeleteExercise(item.id)}
                                 />
                             </View>
                             

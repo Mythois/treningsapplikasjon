@@ -8,6 +8,7 @@ import firestore from '@react-native-firebase/firestore';
 import {auth} from '../firebase';
 
 
+
 //Interfaces
 
 interface exercise {
@@ -85,7 +86,7 @@ export function exercisesArrayToExercisesMap(exercisesArray:exercise[]){
 
 
 
-
+/*
 //Saving
 export const saveProgram = async(program:program, programDays: programDay[]): Promise<void> =>{
     
@@ -104,7 +105,7 @@ export const saveProgram = async(program:program, programDays: programDay[]): Pr
     }
 }
 
-
+*/
 
 
 

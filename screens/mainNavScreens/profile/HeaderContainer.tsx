@@ -79,10 +79,11 @@ const styles = StyleSheet.create({
     },
     rowContainer: {
         backgroundColor: '#121212',
-        height: 150,
+        height: 160,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-evenly",
+        padding: '1%',
     },
     profileImageBox: {
         width: '45%',

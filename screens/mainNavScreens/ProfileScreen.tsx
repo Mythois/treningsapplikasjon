@@ -16,7 +16,6 @@ function HomeScreen({ navigation }) {
   }
 
   //Log-out
-    //TODO Need to make it log out if you press OK
     const signOutAlert = () =>
     Alert.alert('Sign out', 'Do you wish to sign out?', [
         {
@@ -157,7 +156,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#121212',
   },
   topRowContainer: {
-    height: 50,
+    padding: '1%',
+    height: 55,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
     marginRight: '1%',
   },
   workoutHeaderContatiner: {
+    padding: '1%',
     height: 50,
     flexDirection: "row",
     justifyContent: "center",
@@ -187,7 +188,8 @@ const styles = StyleSheet.create({
     color: '#DC6247',
   },
   chooseWorkoutContainer: {
-    height: 35,
+    padding: '1%',
+    height: 50,
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",

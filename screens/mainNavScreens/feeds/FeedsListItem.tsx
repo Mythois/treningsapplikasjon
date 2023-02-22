@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 interface Props {
     name: String,
     text: String,
-    likes: number,
+    likes: Array<String>,
 }
 
 const windowWidth = Dimensions.get('window').width;
@@ -28,6 +28,7 @@ export default function FeedsListItem(data: Props) {
     }
 
     return (
+        
         <View style={[styles.container, styles.elevation]}>
             <TouchableOpacity onPress={handlePressName} style={styles.top}>
                 <Text style={styles.header}>
@@ -41,7 +42,7 @@ export default function FeedsListItem(data: Props) {
             </TouchableOpacity>
             <Ionicons name={iconState} style={styles.likesIcon} size={20} onPress={handlePressLike}/>
             <Text style={styles.likesText}>
-                {data.likes.toString()}
+                {data.likes}
             </Text>
         </View>
     );

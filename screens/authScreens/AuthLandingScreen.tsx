@@ -55,7 +55,7 @@ function AuthLandingScreen({ navigation }) {
             borderColor: '#25A073',
             height: 55,
           }}
-          titleStyle={{ color: '#25A073', fontWeight: 'regular', fontSize: 18 }}
+          titleStyle={{ fontWeight: 'regular', fontSize: 18, color: '#25A073' }}
           containerStyle={{
             marginHorizontal: 50,
             height: 55,

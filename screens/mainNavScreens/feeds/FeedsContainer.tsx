@@ -5,120 +5,32 @@ import FeedsListItem from './FeedsListItem';
 // Placeholder for feeds
 const Feeds = [
     {
-        id: 1,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 2,
-        posterName: 'bfdgfgd',
-        feedText: 'sdfjsd fskdfjsj jkd dksdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 3,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  kfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 4,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjekdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd f dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkgsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  hodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 5,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj sdfjsdsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs   fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 6,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsdsdfjsd fskdfjsjkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd  jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs   fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 7,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 8,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 9,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  djgh odjkghodsdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 10,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 11,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd ef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 12,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd d dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 13,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkdkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd  dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 14,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 15,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd d dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 16,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 17,
-        posterName: 'CCCCCC',
-        feedText: 'sdfjsd fskdfjsj jkdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodsdfjsd kd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 18,
-        posterName: 'Aaaaaa',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
-    },
-    {
-        id: 19,
-        posterName: 'FFFFFF',
-        feedText: 'sdfjsd fskdfjsj jkd dkfjef dsfjeojsdf sjflksd jflk sfkejk fjs fkjs  fdjgh odjkghodfighorip hgoidh goui dh',
-        likes: 24,
+        id: Math.random(),
+        userID: 'you',
+        name: 'New workout program',
+        date: new Date(),
+        likedBy: ['dsfs', 'sdfjsf', '83724', '3423'],
     },
 ];
+
+
+function GenerateFeed() {
+    function GerenerateRandomNumberOfStringsInAnArray() {
+        let array = [];
+        for (var i = 0; i < Math.floor(Math.random()*100); i++) {
+            array.push('a');
+        };
+        return array;
+    }
+    const feed = {
+        id: Math.random(),
+        userID: 'you',
+        name: 'New workout program',
+        date: new Date(),
+        likedBy: GerenerateRandomNumberOfStringsInAnArray(),
+    };
+    return feed;
+}
 
 interface Filters {
     typeOfFeed: String,
@@ -150,7 +62,7 @@ function FeedsContainer(props, ref) {
 
     // Fetch new feed from database without deleting the existing ones        <---------------- Must make a better load function
     function loadNewItems() {
-        setItems(currentItems => [...currentItems, Feeds[0]]);
+        setItems(currentItems => [...currentItems, GenerateFeed()]);
 
         // If nothing is returned, then tell the user that there are no more feeds
     }
@@ -166,9 +78,9 @@ function FeedsContainer(props, ref) {
 
     return (
         <View style={styles.container}>
-            <ScrollView onScroll={({ nativeEvent }) => { if (isCloseToBottom(nativeEvent)) { loadNewItems() } }}>
+            <ScrollView onScroll={({ nativeEvent }) => { if (isCloseToBottom(nativeEvent)) { loadNewItems() } }} scrollEventThrottle={16}>
                 <FlatList style={styles.list} data={itemsState} numColumns={2} renderItem={({ item }) => (
-                    <FeedsListItem name={item.posterName} text={item.feedText} likes={item.likes}></FeedsListItem>
+                    <FeedsListItem name={item.name} text={'This text contains the content of the program'} likes={item.likedBy.length}></FeedsListItem>
                 )} />
             </ScrollView>
         </View>

@@ -3,6 +3,9 @@ import { View, FlatList, TextInput} from 'react-native';
 import { Button, Text } from '@rneui/themed';
 import { isTemplateSpan } from 'typescript';
 import { AuthErrorCodes } from 'firebase/auth';
+import { v4 as uuid } from 'uuid';
+import { LocalData } from '../../LocalData/LocalData';
+import { exercisesArrayToExercisesMap, groupExercisesByDay, saveProgram } from '../../save/programSave';
 
 interface exercise {
     id: number;
@@ -11,15 +14,36 @@ interface exercise {
     sets: number;
     reps: number;
 }
+
+// The structure of a training program
+interface program{
+    name: string;
+
+    userID: string;
+    date: Date; // The date at which the training program got created.
+
+    likedBy: string[];
+}
+
+// The structure of a training program day
+// A training program can go over multiple days, this interface represents one day
+interface programDay{
+    weekday: number;
+    exercises: Map<number, {day: number, name:string, reps:number, sets:number}>;   /* The key is an id, the values can be anything, but will be either strings or numbers.
+                                        exercise holds all the exercises associated with that day*/
+    
+}
+
+
 export default function ProgramScreen({navigation}) {
     const [exercises, setExercises] = React.useState<exercise[]>([]);
-    const [exerciseName, setExerciseName] = React.useState('');
+    const [exerciseName, setExerciseName] = React.useState(''); // What about this?
     const [sets, setSets] = React.useState<number>();
     const [reps, setReps] = React.useState<number>();
     const [selectedDay, setSelectedDay] = React.useState<number>(0);
     const handleAddExercise = () => {
         const newExercise: exercise = {
-          id: exercises.length,
+          id: uuid(),
           day: selectedDay,
           exerciseName: '',
           sets: sets,
@@ -33,11 +57,35 @@ export default function ProgramScreen({navigation}) {
     }
     const filteredExercises = exercises.filter((exercise) => exercise.day === selectedDay);
     
+    const handleSave = (exercises:exercise[]) =>{
+        const newProgram = {name: "test",
+                         userID: LocalData.currentUser.id,
+                        date: new Date(),
+                        likedBy:["test"]};
+
+        const groupedExercises = groupExercisesByDay(exercises);
+        let programDays =  [];
+
+        groupedExercises.forEach(item =>{
+            const newProgramDayExercises = exercisesArrayToExercisesMap(item);
+            const newProgramDayWeekday = newProgramDayExercises.keys[0];
+            const newProgramDay: programDay = {
+                weekday: newProgramDayWeekday,
+                exercises: newProgramDayExercises,
+            }
+            programDays.push(newProgramDay);
+        });
+
+        saveProgram(newProgram,programDays)
+        
+    }
+
     return(
         <View style={{backgroundColor: "#121212", flex:1}}>
             <View style={{width:"16%", height:"5%", left:"74%", top:"8%"}}>
                 <Button
                     title="Save"
+                    onPress={() =>handleSave(exercises)}
                 />
             </View>
             <View style={{top:"10%"}}>
@@ -152,7 +200,7 @@ export default function ProgramScreen({navigation}) {
                                     onChangeText={(text) => {
                                         const updatedExercises = exercises.map((exercise) => {
                                           if (exercise.id === item.id) {
-                                            return { ...exercise, sets: text };
+                                            return { ...exercise, sets: sets };
                                           }
                                           return exercise;
                                         });
@@ -169,7 +217,7 @@ export default function ProgramScreen({navigation}) {
                                     onChangeText={(text) => {
                                         const updatedExercises = exercises.map((exercise) => {
                                           if (exercise.id === item.id) {
-                                            return { ...exercise, reps: text };
+                                            return { ...exercise, reps: reps };
                                           }
                                           return exercise;
                                         });

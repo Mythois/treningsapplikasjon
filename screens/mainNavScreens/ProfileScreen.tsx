@@ -33,9 +33,6 @@ function HomeScreen({ navigation }) {
     if(myButtonColor == '#121212') {
       mySetButtonColor('#303030');
       savedSetButtonColor('#121212');
-    } else {
-      mySetButtonColor('#121212');
-      savedSetButtonColor('#303030');
     }
   }
 
@@ -45,9 +42,6 @@ function HomeScreen({ navigation }) {
     if(savedButtonColor == '#121212') {
       savedSetButtonColor('#303030');
       mySetButtonColor('#121212');
-    } else {
-      savedSetButtonColor('#121212');
-      mySetButtonColor('#303030');
     }
   }
 

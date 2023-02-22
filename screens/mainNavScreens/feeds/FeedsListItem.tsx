@@ -5,13 +5,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 interface Props {
     name: String,
     text: String,
-    likes: Array<String>,
+    likes: number,
 }
 
 const windowWidth = Dimensions.get('window').width;
 
 export default function FeedsListItem(data: Props) {
     const [iconState, setIcon] = useState('heart-outline');
+    const [likeState, setLike] = useState(data.likes);
+
     const handlePressName = () => {
         alert(data.name)
     };
@@ -21,9 +23,11 @@ export default function FeedsListItem(data: Props) {
     const handlePressLike = () => {
         // Toggle between like and unlike
         if(iconState === 'heart') {
-            setIcon('heart-outline')
+            setIcon('heart-outline');
+            setLike(data.likes);
         } else {
-            setIcon('heart')
+            setIcon('heart');
+            setLike(data.likes + 1);
         }
     }
 
@@ -42,7 +46,7 @@ export default function FeedsListItem(data: Props) {
             </TouchableOpacity>
             <Ionicons name={iconState} style={styles.likesIcon} size={20} onPress={handlePressLike}/>
             <Text style={styles.likesText}>
-                {data.likes}
+                {likeState}
             </Text>
         </View>
     );

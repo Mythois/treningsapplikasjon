@@ -1,6 +1,8 @@
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, ScrollView, Dimensions } from 'react-native';
 import FeedsListItem from './FeedsListItem';
+
+
 
 // Placeholder for feeds
 const Feeds = [
@@ -41,7 +43,8 @@ const defaultFilters: Filters = { typeOfFeed: 'All', isImage: false }
 
 
 function FeedsContainer(props, ref) {
-
+    
+    const scrollRef: any = useRef();
     // Contains the current items
     const [itemsState, setItems] = useState([]);
     useEffect(() => {
@@ -53,11 +56,14 @@ function FeedsContainer(props, ref) {
 
     // Refreshes all items in the item list
     function refresh() {
+        scrollRef.current?.scrollTo({
+            y: 0,
+            animated: true,
+        });
         setItems([]);
         for (var i = 0; i < 10; i++) {
             loadNewItems();
         }
-        alert('refreshed');
     }
 
     // Fetch new feed from database without deleting the existing ones        <---------------- Must make a better load function
@@ -68,7 +74,7 @@ function FeedsContainer(props, ref) {
     }
 
     function isCloseToBottom({ contentOffset, contentSize, layoutMeasurement }) {
-        return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1000;
+        return layoutMeasurement.height + contentOffset.y >= contentSize.height - 2000;
     }
 
     // Allow the parent to call refresh
@@ -78,7 +84,7 @@ function FeedsContainer(props, ref) {
 
     return (
         <View style={styles.container}>
-            <ScrollView onScroll={({ nativeEvent }) => { if (isCloseToBottom(nativeEvent)) { loadNewItems() } }} scrollEventThrottle={16}>
+            <ScrollView ref={scrollRef} onScroll={({ nativeEvent }) => { if (isCloseToBottom(nativeEvent)) { loadNewItems() } }} scrollEventThrottle={16}>
                 <FlatList style={styles.list} data={itemsState} numColumns={2} renderItem={({ item }) => (
                     <FeedsListItem name={item.name} text={'This text contains the content of the program'} likes={item.likedBy.length}></FeedsListItem>
                 )} />

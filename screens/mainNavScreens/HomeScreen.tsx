@@ -26,13 +26,13 @@ function HomeScreen({ navigation }) {
             <Text style={styles.feedTabText}>Discover</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab())}>
-            <Text style={styles.feedTabText}>Friend</Text>
+            <Text style={styles.feedTabText}>Friends</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab())}>
-            <Text style={styles.feedTabText}>Group</Text>
+            <Text style={styles.feedTabText}>Groups</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab())}>
-            <Text style={styles.feedTabText}>Myself</Text>
+            <Text style={styles.feedTabText}>My own</Text>
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>

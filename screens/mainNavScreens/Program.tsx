@@ -29,7 +29,7 @@ interface program{
 // A training program can go over multiple days, this interface represents one day
 interface programDay{
     weekday: number;
-    exercises: Map<number, {day: number, name:string, reps:number, sets:number}>;   /* The key is an id, the values can be anything, but will be either strings or numbers.
+    exercises: exercise[];   /* The key is an id, the values can be anything, but will be either strings or numbers.
                                         exercise holds all the exercises associated with that day*/
     
 }
@@ -73,6 +73,25 @@ export default function ProgramScreen({navigation}) {
     }
     const filteredExercises = exercises.filter((exercise) => exercise.day === selectedDay);
     
+    const handleSave = (exercises: exercise[]) => {
+        const newProgram = {name: "test",
+                         userID: LocalData.currentUser.id,
+                        date: new Date(),
+                        likedBy:["test"]};
+
+        for (let index = 0; index < 7; index++) {
+            if (exercises.filter((exercise) => exercise.day === index).length > 0) {
+                const newExercisesArray: exercise[] = [];
+                exercises.forEach(exerciseItem => newExercisesArray.push(exerciseItem))
+
+                const newProgramDay: programDay = {
+                    weekday: index,
+                    exercises: newExercisesArray
+                }
+            }
+        }
+    }
+    /*
     const handleSave = (exercises:exercise[]) =>{
         const newProgram = {name: "test",
                          userID: LocalData.currentUser.id,
@@ -94,7 +113,7 @@ export default function ProgramScreen({navigation}) {
 
         saveProgram(newProgram,programDays)
         
-    }
+    }*/
 
     return(
         <View style={{backgroundColor: "#121212", flex:1}}>

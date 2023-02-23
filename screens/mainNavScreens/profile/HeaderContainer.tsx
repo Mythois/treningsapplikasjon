@@ -10,7 +10,7 @@ import { WorkoutUser } from '../../../LocalData/Users/WorkoutUser';
 //TODO We have to make an edit-mode where the user can change user info and delete/unsave workouts
 //TODO We have to make a feed
 
-function HeaderContainer(props,ref) {
+function HeaderContainer({user, ref} : {user : WorkoutUser, ref : any}) {
     
     // Contains the current items
     const [itemsState, setItems] = useState([]);
@@ -49,10 +49,10 @@ function HeaderContainer(props,ref) {
             </View>
             <View style={styles.columnContainer}>
                 <View style={styles.realNameBox}>
-                    <Text adjustsFontSizeToFit={true} style={styles.realNameText}> {props.name.toString()   } </Text>
+                    <Text adjustsFontSizeToFit={true} style={styles.realNameText}> {user.name.toString()} </Text>
                 </View>
                 <View style={styles.userNameBox}>
-                    <Text adjustsFontSizeToFit={true} style={styles.userNameText}> @{props.username.toString()} </Text>
+                    <Text adjustsFontSizeToFit={true} style={styles.userNameText}> @{user.username.toString()} </Text>
                 </View>
                 <View style={styles.editBox}>
                     <Ionicons name={iconState} style={styles.editIcon} size={30} onPress={handleEditPress}/>

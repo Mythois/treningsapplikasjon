@@ -5,8 +5,9 @@ import { Text, StyleSheet, View, SafeAreaView, ScrollView, TouchableOpacity, Act
 import { auth } from '../../firebase';
 import FeedsContainer from './feeds/FeedsContainer';
 import HeaderContainer from './profile/HeaderContainer';
+import { LocalData } from '../../LocalData/LocalData';
 
-function HomeScreen({ navigation }) {
+function ProfileScreen({ navigation }) {
 
   // Controling the feeds
   const childRef: any = useRef();
@@ -98,14 +99,8 @@ function HomeScreen({ navigation }) {
         </View>
       </SafeAreaView>
       {/* This is the feed section */}
-      {/* //!REMEMBER to remove the view-styling here when inserting the feed */}
       <View style={{flex: 1, flexDirection: 'column'}}>
-
-        <FeedsContainer ref={childRef}></FeedsContainer>
-        {/*
-        <Text style={{fontSize: 35, color: '#e6e6e6', fontStyle: 'italic'}}> 
-          The feed will be here
-        </Text> */}
+        <FeedsContainer props={LocalData.currentUser} ref={childRef}></FeedsContainer>
       </View>
     </View>
   );
@@ -157,4 +152,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 })
-export default HomeScreen;
+export default ProfileScreen;

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { View, FlatList, TextInput, ScrollView, Alert} from 'react-native';
-import { Button, Text } from '@rneui/themed';
+import { View, FlatList, TextInput, ScrollView, Alert, ActivityIndicator} from 'react-native';
+import { Button, Text , Image} from '@rneui/themed';
 import { isTemplateSpan } from 'typescript';
 import { AuthErrorCodes } from 'firebase/auth';
 import 'react-native-get-random-values';
@@ -33,10 +33,7 @@ interface programDay{
     exercises: exercise[];
 }
 
-const buttonAlert = () =>
-    Alert.alert('Program Created', '', [
-      {text: 'OK', onPress: () => console.log("Ok")},
-    ]);
+
 
 
 export default function ProgramScreen({navigation}) {
@@ -80,13 +77,22 @@ export default function ProgramScreen({navigation}) {
     const filteredExercises = exercises.filter((exercise) => exercise.day === selectedDay);
     
     const handleSave = (exercises: exercise[]) => {
-        const newProgram = {name: name,
-                         userID: LocalData.currentUser.id,
-                        date: new Date(),
-                        likedBy:["test"]};
-        const programDays: programDay[] = [];
-        
-        for (let index = 0; index < 7; index++) {
+        if(name == ""){
+            Alert.alert('Please enter a program name', '', [
+                {text: 'Proceed', onPress: () => console.log("No program created")},
+              ]);
+        }
+        else{
+            Alert.alert('Program Created', '', [
+                {text: 'Ok', onPress: () => console.log("Ok")},
+              ]);
+            const newProgram = {name: name,
+            userID: LocalData.currentUser.id,
+            date: new Date(),
+            likedBy:["test"]};
+            const programDays: programDay[] = [];
+
+            for (let index = 0; index < 7; index++) {
             const filteredExcs = exercises.filter((exercise) => exercise.day === index)
             if (filteredExcs.length > 0) {
                 const newExercisesArray: exercise[] = [];
@@ -98,8 +104,17 @@ export default function ProgramScreen({navigation}) {
                 }
                 programDays.push(newProgramDay)
             }
+            }
+            saveProgram(newProgram, programDays)
+
+            setName("");    
+            setExercises([]);
+            setSelectedDay(0);
+            setExerciseName("");
+            setSets(undefined);
+            setReps(undefined);
         }
-        saveProgram(newProgram, programDays)
+        
     }
     /*
     const handleSave = (exercises:exercise[]) =>{
@@ -141,7 +156,7 @@ export default function ProgramScreen({navigation}) {
                         color = "#121212"
                         titleStyle={{fontSize:18}}
                         title="Save"
-                        onPress={() =>{handleSave(exercises), buttonAlert()}}
+                        onPress={() =>handleSave(exercises)}
                     />
                 </View>
             </View>
@@ -150,6 +165,7 @@ export default function ProgramScreen({navigation}) {
                     <TextInput
                     style = {{fontWeight:"bold", fontSize:30, color:"#DC6247", textAlign:"center", paddingBottom:10}}
                     placeholder = "Program Name"
+                    value={name}
                     placeholderTextColor = "#DC6247"
                     onChangeText={(text) => setName(text)}
                     />

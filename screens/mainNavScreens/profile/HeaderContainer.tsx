@@ -3,6 +3,7 @@ import { Image } from '@rneui/themed';
 import {View, Text, StyleSheet, Dimensions, ActivityIndicator, Alert} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { LocalData } from '../../../LocalData/LocalData';
+import { WorkoutUser } from '../../../LocalData/Users/WorkoutUser';
 
 //General todo-list realted to the profile-page, not just the HeaderContainer-file:
 //TODO We have to get and insert stored user information from firebase
@@ -17,7 +18,6 @@ function HeaderContainer(props,ref) {
         //refresh();
     }, []);
 
-    LocalData.currentUser.name
     //Edit-icon states
     const [iconState, setIcon] = useState('create-outline');
     const handleEditPress = () => {
@@ -49,10 +49,10 @@ function HeaderContainer(props,ref) {
             </View>
             <View style={styles.columnContainer}>
                 <View style={styles.realNameBox}>
-                    <Text adjustsFontSizeToFit={true} style={styles.realNameText}> {LocalData.currentUser.name.toString()   } </Text>
+                    <Text adjustsFontSizeToFit={true} style={styles.realNameText}> {props.name.toString()   } </Text>
                 </View>
                 <View style={styles.userNameBox}>
-                    <Text adjustsFontSizeToFit={true} style={styles.userNameText}> @{LocalData.currentUser.username.toString()} </Text>
+                    <Text adjustsFontSizeToFit={true} style={styles.userNameText}> @{props.username.toString()} </Text>
                 </View>
                 <View style={styles.editBox}>
                     <Ionicons name={iconState} style={styles.editIcon} size={30} onPress={handleEditPress}/>

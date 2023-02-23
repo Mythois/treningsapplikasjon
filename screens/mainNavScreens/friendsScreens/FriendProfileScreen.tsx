@@ -12,7 +12,7 @@ import { auth } from '../../../firebase';
 
 type FriendProfileScreenRouteProp = RouteProp<RootStackParamList, 'FriendProfileScreen'>;
 
-export default function FriendProfileScreen({ route, navigation }: { route: FriendProfileScreenRouteProp, navigation: any }) {
+export default function FriendProfileScreen({ route, navigation } : { route: FriendProfileScreenRouteProp, navigation: any }) {
     const { user } = route.params;
     const [follows, setFollows] = React.useState<boolean>(LocalData.currentUser.friends.includes(user.id));
     const childRef: any = useRef();
@@ -36,7 +36,7 @@ export default function FriendProfileScreen({ route, navigation }: { route: Frie
             {/*<Icon type='font-awesome' name="chevron-left" size={20} color="white"/>*/}
           {/*Logo */}
           <Image
-            source={require("../../assets/images/WeTrainLogo.png")}
+            source={require("../../../assets/images/WeTrainLogo.png")}
             containerStyle={styles.logoBox}
             style={{width: '50%', height: '70%'}}
             resizeMode="cover"

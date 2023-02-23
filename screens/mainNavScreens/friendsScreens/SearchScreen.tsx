@@ -14,7 +14,11 @@ export default function SearchScreen({navigation}) {
         style={{ flexDirection: 'row', justifyContent:"space-around", alignContent:"flex-start",
         paddingLeft:28, paddingVertical: 8, flex: 1, width:"100%", alignItems:"center"}}
         onPress={() => {
-            navigation.navigate('FriendProfileScreen', { user: item });
+            if (item.id == LocalData.currentUser.id) {
+                navigation.navigate('ProfileScreen')
+            } else {
+                navigation.navigate('FriendProfileScreen', { user: item })
+            }
         }}>
             <Avatar
             rounded

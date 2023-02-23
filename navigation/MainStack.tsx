@@ -57,12 +57,6 @@ export default function MainStack() {
                         return <Ionicons name={iconName} size={size} color={color} />
                     }
                 })}
-                tabBarOptions={{
-                    activeTintColor: 'tomato',
-                    inactiveTintColor: 'grey',
-                    labelStyle: { fontSize: 8 },
-                    tabStyle: { backgroundColor: 'rgba(10, 10, 10, 1)', },
-                }}
             >
 
                 <Tab.Screen name={homeName}
@@ -70,7 +64,7 @@ export default function MainStack() {
                     options={{ headerShown: false }}
                 />
                 <Tab.Screen name={searchName}
-                    component={SearchScreen}
+                    component={SearchStack}
                     options={{ headerShown: false }}
                 />
                 <Tab.Screen name={profileName}

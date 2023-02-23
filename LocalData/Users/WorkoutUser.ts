@@ -1,12 +1,18 @@
 export class WorkoutUser {
   name: string = "";
   username: string = ""
+  id: string = ""
 
   groups: string[] = [];
   friends: string[] = [];
+  createdPrograms: string[] = [];
 
-  constructor(data: any) {
-    if (data) {
+  /**
+   * Takes in the data from firebase to initialize a user instance. 
+   */
+  constructor(data: any, id?: string) {
+    if (data && id) {
+      this.id = id
       this.name = typeof data.name === "string" ? data.name : "";
       this.username = typeof data.username === "string" ? data.username : "";
 
@@ -18,12 +24,34 @@ export class WorkoutUser {
     }
     if (Array.isArray(data.friends)) {
         this.friends = [];
-        data.friends.forEach((groupID: any) => {
-            this.groups.push(groupID)
+        data.friends.forEach((friendID: any) => {
+            this.friends.push(friendID)
         })
+    }
+    if (Array.isArray(data.createdPrograms)) {
+      this.createdPrograms = [];
+      data.createdPrograms.forEach((programID: any) => {
+          this.createdPrograms.push(programID)
+      })
     }
   }
   console.log("User:", this.name, this.username, this.groups, this.friends);
+  }
+
+  /**
+   * Follow this user.
+   * @param followBy the id of the user to follow this user.
+   */
+  followUser(followBy: WorkoutUser) {
+    
+  }
+
+  /**
+   * Unfollow this user.
+   * @param unFollowBy the user to unfollow this user.
+   */
+  unFollowUser(unFollowBy: WorkoutUser) {
+
   }
 
 }

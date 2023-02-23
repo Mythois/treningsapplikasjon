@@ -5,12 +5,18 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from '../screens/mainNavScreens/HomeScreen';
 import ProfileScreen from '../screens/mainNavScreens/ProfileScreen';
+import Search from '../screens/mainNavScreens/Search';
+import Groups from '../screens/mainNavScreens/Groups';
+import Program from '../screens/mainNavScreens/Program';
+
 import SearchScreen from '../screens/mainNavScreens/SearchScreen';
 
 // Screen Names
-const homeName: any = "Home";
-const profileName: any = "Profile";
-const searchName: any = "Search";
+const homeName:any = "Home";
+const profileName:any = "Profile";
+const search:any = "Search"
+const groups:any = "Groups"
+const program:any = "Program"
 
 const Tab: any = createBottomTabNavigator();
 
@@ -46,8 +52,14 @@ export default function MainStack() {
                             case profileName:
                                 iconName = focused ? 'person' : 'person-outline'
                                 break
-                            case searchName:
+                            case search:
                                 iconName = 'search'
+                                break
+                            case groups:
+                                iconName = focused ? 'people' : 'people-outline'
+                                break
+                            case program:
+                                iconName = focused ? 'barbell' : 'barbell-outline'
                                 break
                         }
 
@@ -66,13 +78,20 @@ export default function MainStack() {
                     component={HomeScreen}
                     options={{ headerShown: false }}
                 />
-                <Tab.Screen name={searchName}
-                    component={SearchScreen}
-                    options={{ headerShown: false }}
+                <Tab.Screen name={search} 
+                component={SearchScreen}
+                options={{ headerShown: false }}
                 />
-                <Tab.Screen name={profileName}
-                    component={ProfileScreen}
-                    options={{ headerShown: false }}
+                <Tab.Screen name={program} 
+                component={Program}
+                options={{ headerShown: false }}
+                />
+                <Tab.Screen name={groups} 
+                component={Groups}
+                />
+                <Tab.Screen name={profileName} 
+                component={ProfileScreen}
+                options={{ headerShown: false }}
                 />
 
             </Tab.Navigator>

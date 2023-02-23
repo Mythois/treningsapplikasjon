@@ -24,7 +24,7 @@ export class LocalData {
       await getDoc(userRef)
       .then((snap) => {
         console.log(snap.data());
-        this.currentUser = new WorkoutUser(snap.data(), auth.currentUser.uid);
+        this.currentUser = new WorkoutUser(snap.data(), cu.uid);
         this.setupCurrentUserListener()
       })
       .catch(error => console.log(error.message));

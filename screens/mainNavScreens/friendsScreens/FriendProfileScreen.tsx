@@ -47,7 +47,7 @@ export default function FriendProfileScreen({ route, navigation }: { route: Frie
           <Button color={'#121212'} title={'Sign out'} style={styles.signOutText} onPress={signOutAlert} />
         </View>
         {/* Header: profilbilde, navn og brukernavn*/}
-        <HeaderContainer props={user} ref={childRef}></HeaderContainer>
+        <HeaderContainer user={user} ref={childRef}></HeaderContainer>
         <View style={styles.workoutHeaderContatiner}>
           <Text adjustsFontSizeToFit={true} style={styles.workoutHeaderText}> WORKOUTS </Text>
         </View>

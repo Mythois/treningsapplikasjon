@@ -36,7 +36,7 @@ export default class UsersCollectionLoader {
         .then((docs) => {
             this.users.push(LocalData.currentUser);
             docs.forEach((doc) => {
-                const u = new WorkoutUser(doc.id, doc.data());
+                const u = new WorkoutUser(doc.data(), doc.id);
                 if (u.username != "" &&
                 u.username != LocalData.currentUser.username) 
                     this.users.push(u);

@@ -8,34 +8,34 @@ import ProfileScreen from '../screens/mainNavScreens/ProfileScreen';
 import SearchScreen from '../screens/mainNavScreens/SearchScreen';
 
 // Screen Names
-const homeName:any = "Home";
-const profileName:any = "Profile";
-const searchName:any = "Search";
+const homeName: any = "Home";
+const profileName: any = "Profile";
+const searchName: any = "Search";
 
-const Tab:any = createBottomTabNavigator();
+const Tab: any = createBottomTabNavigator();
 
-export default function MainStack(){
-    return(
+export default function MainStack() {
+    return (
         <NavigationContainer>
-            <Tab.Navigator 
-                initialRouteName={homeName} 
-                screenOptions={({route}) => ({
+            <Tab.Navigator
+                initialRouteName={homeName}
+                screenOptions={({ route }) => ({
                     "tabBarActiveTintColor": "tomato",
                     "tabBarInactiveTintColor": "grey",
                     "tabBarLabelStyle": {
-                    "fontSize": 10
+                        "fontSize": 10
                     },
                     "tabBarItemStyle": {
-                    "backgroundColor": "rgba(10, 10, 10, 1)"
+                        "backgroundColor": "rgba(10, 10, 10, 1)"
                     },
                     "tabBarStyle": [
-                    {
-                        "display": "flex"
-                    },
-                    null
+                        {
+                            "display": "flex"
+                        },
+                        null
                     ],
 
-                    tabBarIcon: ({focused, color, size}) => {
+                    tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
                         let rn = route.name;
 
@@ -51,23 +51,28 @@ export default function MainStack(){
                                 break
                         }
 
-                        return <Ionicons name={iconName} size={size} color={color}/>
+                        return <Ionicons name={iconName} size={size} color={color} />
                     }
-                }) 
-            }
+                })}
+                tabBarOptions={{
+                    activeTintColor: 'tomato',
+                    inactiveTintColor: 'grey',
+                    labelStyle: { fontSize: 8 },
+                    tabStyle: { backgroundColor: 'rgba(10, 10, 10, 1)', },
+                }}
             >
 
-                <Tab.Screen name={homeName} 
-                component={HomeScreen}
-                options={{ headerShown: false }}
+                <Tab.Screen name={homeName}
+                    component={HomeScreen}
+                    options={{ headerShown: false }}
                 />
-                <Tab.Screen name={searchName} 
-                component={SearchScreen}
-                options={{ headerShown: false }}
+                <Tab.Screen name={searchName}
+                    component={SearchScreen}
+                    options={{ headerShown: false }}
                 />
-                <Tab.Screen name={profileName} 
-                component={ProfileScreen}
-                options={{ headerShown: false }}
+                <Tab.Screen name={profileName}
+                    component={ProfileScreen}
+                    options={{ headerShown: false }}
                 />
 
             </Tab.Navigator>

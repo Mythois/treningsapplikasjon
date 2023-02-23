@@ -38,9 +38,8 @@ interface program{
 // A training program can go over multiple days, this interface represents one day
 interface programDay{
     weekday: number;
-    exercises: Map<number, {day: number, name:string, reps:number, sets:number}>;   /* The key is an id, the values can be anything, but will be either strings or numbers.
+    exercises: exercise[];   /* The key is an id, the values can be anything, but will be either strings or numbers.
                                         exercise holds all the exercises associated with that day*/
-    
 }
 
 
@@ -88,10 +87,6 @@ export function exercisesArrayToExercisesMap(exercisesArray:exercise[]){
     }
 }
 
-
-
-
-
 //Saving
 export const saveProgram = async(program:program, programDays: programDay[]): Promise<void> =>{
     console.log(LocalData.currentUser.id);
@@ -112,7 +107,7 @@ export const saveProgram = async(program:program, programDays: programDay[]): Pr
                 }).catch(error => console.log(error.message));
         for (let i = 0; i < programDays.length; i++){
             const {weekday, exercises} = programDays[i];
-            const programDayRef = doc(db, 'programs/${programID}/programDays', uuid());
+            const programDayRef = doc(db, 'programs/' + programID + '/programDays', weekday.toString());
             const programDayData = {weekday, exercises};
             await setDoc(programDayRef, {programDayData})
             .catch(error => console.log(error.message));

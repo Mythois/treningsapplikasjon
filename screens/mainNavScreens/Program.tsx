@@ -29,9 +29,7 @@ interface program{
 // A training program can go over multiple days, this interface represents one day
 interface programDay{
     weekday: number;
-    exercises: exercise[];   /* The key is an id, the values can be anything, but will be either strings or numbers.
-                                        exercise holds all the exercises associated with that day*/
-    
+    exercises: exercise[];
 }
 
 
@@ -76,22 +74,26 @@ export default function ProgramScreen({navigation}) {
     const filteredExercises = exercises.filter((exercise) => exercise.day === selectedDay);
     
     const handleSave = (exercises: exercise[]) => {
-        const newProgram = {name: "test",
+        const newProgram = {name: name,
                          userID: LocalData.currentUser.id,
                         date: new Date(),
                         likedBy:["test"]};
-
+        const programDays: programDay[] = [];
+        
         for (let index = 0; index < 7; index++) {
-            if (exercises.filter((exercise) => exercise.day === index).length > 0) {
+            const filteredExcs = exercises.filter((exercise) => exercise.day === index)
+            if (filteredExcs.length > 0) {
                 const newExercisesArray: exercise[] = [];
-                exercises.forEach(exerciseItem => newExercisesArray.push(exerciseItem))
+                filteredExcs.forEach(exerciseItem => newExercisesArray.push(exerciseItem))
 
                 const newProgramDay: programDay = {
                     weekday: index,
                     exercises: newExercisesArray
                 }
+                programDays.push(newProgramDay)
             }
         }
+        saveProgram(newProgram, programDays)
     }
     /*
     const handleSave = (exercises:exercise[]) =>{

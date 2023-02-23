@@ -3,7 +3,7 @@ import { signOut } from 'firebase/auth';
 import React, { useRef, useState } from 'react'
 import { Text, StyleSheet, View, SafeAreaView, ScrollView, TouchableOpacity, ActivityIndicator, Alert, ViewBase } from 'react-native'
 import { auth } from '../../firebase';
-import FeedsContainer from './profile/ProgramsContainer';
+import FeedsContainer from './feeds/FeedsContainer';
 import HeaderContainer from './profile/HeaderContainer';
 
 function HomeScreen({ navigation }) {

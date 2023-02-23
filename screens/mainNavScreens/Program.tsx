@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, FlatList, TextInput} from 'react-native';
+import { View, FlatList, TextInput, ScrollView} from 'react-native';
 import { Button, Text } from '@rneui/themed';
 import { isTemplateSpan } from 'typescript';
 import { AuthErrorCodes } from 'firebase/auth';
@@ -117,7 +117,7 @@ export default function ProgramScreen({navigation}) {
             <View style={{top:"10%"}}>
                 <View>
                     <TextInput
-                    style = {{fontWeight:"400", fontSize:30, color:"#DC6247", textAlign:"center", paddingBottom:10}}
+                    style = {{fontWeight:"bold", fontSize:30, color:"#DC6247", textAlign:"center", paddingBottom:10}}
                     placeholder = "Program Name"
                     placeholderTextColor = "#DC6247"
                     />
@@ -150,7 +150,7 @@ export default function ProgramScreen({navigation}) {
                             title = "Wed"
                             color = {selectedDay === 2 ? "#136A4A" : "#309A73"}
                             buttonStyle={{width:45, height:66, opacity: 87, borderRadius: 25}}
-                            titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:12 }}
+                            titleStyle = {{color:"#FFFFFF", opacity:87, fontSize:11 }}
                             containerStyle ={{}}
                             onPress={() => handleDayPress(2)}
                         />
@@ -197,85 +197,87 @@ export default function ProgramScreen({navigation}) {
                     </View>
                 </View>
                 <View style={{justifyContent:'center'}}>
-                <FlatList
-                        data = {filteredExercises}
-                        keyExtractor={(item) => item.id.toString()}
-                        renderItem={({item}) => 
-                        <View style={{width:335, height:70, backgroundColor:"#303030", borderRadius:10, margin:"1%", flexDirection:"row", left:12, padding:5, marginTop:10}}>
-                            <View style={{width:"40%"}}>
-                                <TextInput
-                                    style = {{fontSize:30, margin:10, color:"#FFFFFF"}}
-                                    placeholder='Exercise'
-                                    placeholderTextColor="#FFFFFF"
-                                    value = {item.exerciseName}
-                                    onChangeText={(text) => {
-                                        const updatedExercises = exercises.map((exercise) => {
-                                          if (exercise.id === item.id) {
-                                            return { ...exercise, exerciseName: text };
-                                          }
-                                          return exercise;
-                                        });
-                                        setExercises(updatedExercises);
-                                    }}
-                                />
-                            </View>
-                            <View style={{width:"24%"}}>
-                                <TextInput
-                                    style = {{fontSize:30, margin:10, color:"#F0DA5D"}}
-                                    placeholder='Sets'
-                                    placeholderTextColor="#FFFFFF" 
-                                    value = {item.sets}
-                                    onChangeText={(text) => {
-                                        const updatedExercises = exercises.map((exercise) => {
-                                          if (exercise.id === item.id) {
-                                            return { ...exercise, sets: text };
-                                          }
-                                          return exercise;
-                                        });
-                                        setExercises(updatedExercises);
-                                    }}
-                                />
-                            </View>
-                            <View style={{width:"28%"}}>
-                                <TextInput
-                                    style = {{fontSize:30, margin:10, color:"#9556CE"}}
-                                    placeholder='Reps'
-                                    placeholderTextColor="#FFFFFF"
-                                    value = {item.reps}
-                                    onChangeText={(text) => {
-                                        const updatedExercises = exercises.map((exercise) => {
-                                          if (exercise.id === item.id) {
-                                            return { ...exercise, reps: text };
-                                          }
-                                          return exercise;
-                                        });
-                                        setExercises(updatedExercises);
-                                    }}
-                                />
-                            </View>
-                            <View style={{top:"-1.5%", left:"9%"}}>
-                                <Button
-                                    
-                                    buttonStyle={{borderRadius:10}}
-                                    color = "#E93333"
-                                    titleStyle= {{fontSize:8, color:"#000000"}}
-                                    title={"X"}
-                                    onPress={() => handleDeleteExercise(item.id)}
-                                />
-                            </View>
-                            
-                        </View>    
-                        }
+                <ScrollView>
+                    <FlatList
+                            data = {filteredExercises}
+                            keyExtractor={(item) => item.id.toString()}
+                            renderItem={({item}) => 
+                            <View style={{width:335, height:70, backgroundColor:"#303030", borderRadius:10, margin:"1%", flexDirection:"row", left:12, padding:5, marginTop:20, marginBottom:10}}>
+                                <View style={{width:"40%"}}>
+                                    <TextInput
+                                        style = {{fontSize:20, margin:10, color:"#FFFFFF", top:"12%"}}
+                                        placeholder='Exercise'
+                                        placeholderTextColor="#FFFFFF"
+                                        value = {item.exerciseName}
+                                        onChangeText={(text) => {
+                                            const updatedExercises = exercises.map((exercise) => {
+                                            if (exercise.id === item.id) {
+                                                return { ...exercise, exerciseName: text };
+                                            }
+                                            return exercise;
+                                            });
+                                            setExercises(updatedExercises);
+                                        }}
+                                    />
+                                </View>
+                                <View style={{width:"24%"}}>
+                                    <TextInput
+                                        style = {{fontSize:20, margin:10, color:"#F0DA5D",top:"12%"}}
+                                        placeholder='Sets'
+                                        placeholderTextColor="#FFFFFF" 
+                                        value = {item.sets}
+                                        onChangeText={(text) => {
+                                            const updatedExercises = exercises.map((exercise) => {
+                                            if (exercise.id === item.id) {
+                                                return { ...exercise, sets: text };
+                                            }
+                                            return exercise;
+                                            });
+                                            setExercises(updatedExercises);
+                                        }}
+                                    />
+                                </View>
+                                <View style={{width:"28%"}}>
+                                    <TextInput
+                                        style = {{fontSize:20, margin:10, color:"#9556CE", top:"12%"}}
+                                        placeholder='Reps'
+                                        placeholderTextColor="#FFFFFF"
+                                        value = {item.reps}
+                                        onChangeText={(text) => {
+                                            const updatedExercises = exercises.map((exercise) => {
+                                            if (exercise.id === item.id) {
+                                                return { ...exercise, reps: text };
+                                            }
+                                            return exercise;
+                                            });
+                                            setExercises(updatedExercises);
+                                        }}
+                                    />
+                                </View>
+                                <View style={{top:"-1.5%", left:"9%"}}>
+                                    <Button
+                                        
+                                        buttonStyle={{borderRadius:10}}
+                                        color = "#E93333"
+                                        titleStyle= {{fontSize:8, color:"#000000"}}
+                                        title={"X"}
+                                        onPress={() => handleDeleteExercise(item.id)}
+                                    />
+                                </View>
+                                
+                            </View>    
+                            }
 
-                    />
-                    <Button 
-                    title= "Add new exercise"
-                    color = "#303030"
-                    style = {{left:"25%", paddingTop:20}}
-                    onPress={handleAddExercise}
-                    buttonStyle = {{width:200, height:40, borderRadius:10}}
-                    />
-                    
+                        />
+                        
+                        <Button 
+                        title= "Add new exercise"
+                        color = "#303030"
+                        style = {{left:"25%", paddingTop:20}}
+                        onPress={handleAddExercise}
+                        buttonStyle = {{width:200, height:40, borderRadius:10}}
+                        />
+                    </ScrollView>
                 </View>
             </View>
         </View>

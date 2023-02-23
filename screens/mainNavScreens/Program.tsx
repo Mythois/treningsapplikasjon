@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { View, FlatList, TextInput, ScrollView} from 'react-native';
+import { View, FlatList, TextInput, ScrollView, Alert} from 'react-native';
 import { Button, Text } from '@rneui/themed';
 import { isTemplateSpan } from 'typescript';
 import { AuthErrorCodes } from 'firebase/auth';
-import { v4 as uuid } from 'uuid';
+import 'react-native-get-random-values';
+import { nanoid } from 'nanoid'
 import { LocalData } from '../../LocalData/LocalData';
 import { exercisesArrayToExercisesMap, groupExercisesByDay, saveProgram} from '../../save/programSave';
 
@@ -32,6 +33,11 @@ interface programDay{
     exercises: exercise[];
 }
 
+const buttonAlert = () =>
+    Alert.alert('Program Created', '', [
+      {text: 'OK', onPress: () => console.log("Ok")},
+    ]);
+
 
 export default function ProgramScreen({navigation}) {
     
@@ -56,7 +62,7 @@ export default function ProgramScreen({navigation}) {
 
     const handleAddExercise = () => {
         const newExercise: exercise = {
-          id: uuid(),
+          id: nanoid(),
           day: selectedDay,
           exerciseName: '',
           sets: sets,
@@ -135,7 +141,7 @@ export default function ProgramScreen({navigation}) {
                         color = "#121212"
                         titleStyle={{fontSize:18}}
                         title="Save"
-                        onPress={() =>handleSave(exercises)}
+                        onPress={() =>{handleSave(exercises), buttonAlert()}}
                     />
                 </View>
             </View>

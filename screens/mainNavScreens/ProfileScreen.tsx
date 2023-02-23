@@ -16,6 +16,16 @@ function HomeScreen({ navigation }) {
     childRef.current.refresh();
   }
 
+  //Load My Programs to feed
+  function showMyPrograms() {
+
+  }
+
+  //Load Saved Programs to feed
+  function showSaved() {
+    
+  }
+
   //Log-out
     const signOutAlert = () =>
     Alert.alert('Sign out', 'Do you wish to sign out?', [
@@ -34,6 +44,7 @@ function HomeScreen({ navigation }) {
     if(myButtonColor == '#121212') {
       mySetButtonColor('#303030');
       savedSetButtonColor('#121212');
+      showSaved();
     }
   }
 
@@ -43,6 +54,7 @@ function HomeScreen({ navigation }) {
     if(savedButtonColor == '#121212') {
       savedSetButtonColor('#303030');
       mySetButtonColor('#121212');
+      showMyPrograms();
     }
   }
 

@@ -5,10 +5,10 @@ import { isTemplateSpan } from 'typescript';
 import { AuthErrorCodes } from 'firebase/auth';
 import { v4 as uuid } from 'uuid';
 import { LocalData } from '../../LocalData/LocalData';
-import { exercisesArrayToExercisesMap, groupExercisesByDay} from '../../save/programSave';
+import { exercisesArrayToExercisesMap, groupExercisesByDay, saveProgram} from '../../save/programSave';
 
 interface exercise {
-    id: number;
+    id: string;
     day: number;
     exerciseName: string;
     sets: number;
@@ -54,6 +54,8 @@ export default function ProgramScreen({navigation}) {
     const [sets, setSets] = React.useState<number>();
     const [reps, setReps] = React.useState<number>();
     const [selectedDay, setSelectedDay] = React.useState<number>(0);
+    const [name, setName] = React.useState('');
+
     const handleAddExercise = () => {
         const newExercise: exercise = {
           id: uuid(),
@@ -64,7 +66,7 @@ export default function ProgramScreen({navigation}) {
         };
         setExercises([...exercises, newExercise]);
       };
-      const handleDeleteExercise = (id: number)  => {
+      const handleDeleteExercise = (id: string)  => {
         setExercises(prevExercises => prevExercises.filter(exercise => exercise.id !== id));
       }
     
@@ -94,6 +96,8 @@ export default function ProgramScreen({navigation}) {
     /*
     const handleSave = (exercises:exercise[]) =>{
         const newProgram = {name: "test",
+    /*const handleSave = (exercises:exercise[]) =>{
+        const newProgram = {name: name,
                          userID: LocalData.currentUser.id,
                         date: new Date(),
                         likedBy:["test"]};
@@ -103,7 +107,7 @@ export default function ProgramScreen({navigation}) {
 
         groupedExercises.forEach(item =>{
             const newProgramDayExercises = exercisesArrayToExercisesMap(item);
-            const newProgramDayWeekday = newProgramDayExercises.keys[0];
+            const newProgramDayWeekday = newProgramDayExercises[0].day;
             const newProgramDay: programDay = {
                 weekday: newProgramDayWeekday,
                 exercises: newProgramDayExercises,
@@ -139,6 +143,7 @@ export default function ProgramScreen({navigation}) {
                     style = {{fontWeight:"bold", fontSize:30, color:"#DC6247", textAlign:"center", paddingBottom:10}}
                     placeholder = "Program Name"
                     placeholderTextColor = "#DC6247"
+                    onChangeText={(text) => setName(text)}
                     />
                 </View>
                 

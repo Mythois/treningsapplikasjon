@@ -4,15 +4,20 @@
  */
 
 //Impoorts 
-import firestore from '@react-native-firebase/firestore';
-import {auth} from '../firebase';
+import "firebase/firestore";
+
+import { db } from "../firebase";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { v4 as uuid } from 'uuid';
+import { LocalData } from "../LocalData/LocalData";
+
 
 
 
 //Interfaces
 
 interface exercise {
-    id: number;
+    id: string;
     day: number;
     exerciseName: string;
     sets: number;
@@ -73,7 +78,7 @@ export function exercisesArrayToExercisesMap(exercisesArray:exercise[]){
         throw new Error();
     }
     else{
-        let exercises =  new Map<number,{day: number, name:string, reps:number, sets:number}>();
+        let exercises =  new Map<string,{day: number, name:string, reps:number, sets:number}>();
     
         exercisesArray.forEach(item => {
             exercises.set(item.id, {day: item.day, name: item.exerciseName, reps: item.reps, sets: item.sets});
@@ -86,26 +91,41 @@ export function exercisesArrayToExercisesMap(exercisesArray:exercise[]){
 
 
 
-/*
+
 //Saving
 export const saveProgram = async(program:program, programDays: programDay[]): Promise<void> =>{
+    console.log(LocalData.currentUser.id);
     
     // Saving the program
     const {name, userID, date, likedBy} = program;
-    const programRef = firestore().collection('programs').doc();
+    const programID = uuid();
+    const programRef = doc(db, "programs", programID);
     const programData = {name, userID, date, likedBy};
-    await programRef.set(programData);
+    await setDoc(programRef, {
+        programData
+    })
+    .then(async () => {
+        const userRef = doc(db, "users", LocalData.currentUser.id);
+                LocalData.currentUser.createdPrograms.push(programID);
+                await updateDoc(userRef, {
+                    'createdPrograms':LocalData.currentUser.createdPrograms
+                }).catch(error => console.log(error.message));
+        for (let i = 0; i < programDays.length; i++){
+            const {weekday, exercises} = programDays[i];
+            const programDayRef = doc(db, 'programs/${programID}/programDays', uuid());
+            const programDayData = {weekday, exercises};
+            await setDoc(programDayRef, {programDayData})
+            .catch(error => console.log(error.message));
+        }
+    })
+    .catch(error => console.log(error.message)
+    );
 
     // Saving programDays
-    for (let i = 0; i < programDays.length; i++){
-        const {weekday, exercises} = programDays[i];
-        const programDayRef = programRef.collection('programDays').doc();
-        const programDayData = {weekday, exercises};
-        await programDayRef.set(programDayData);
-    }
+    
 }
 
-*/
+
 
 
 

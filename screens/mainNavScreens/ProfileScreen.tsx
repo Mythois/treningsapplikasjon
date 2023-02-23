@@ -99,11 +99,13 @@ function HomeScreen({ navigation }) {
       </SafeAreaView>
       {/* This is the feed section */}
       {/* //!REMEMBER to remove the view-styling here when inserting the feed */}
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        {/* //! <FeedsContainer></FeedsContainer> */}
+      <View style={{flex: 1, flexDirection: 'column'}}>
+
+        <FeedsContainer ref={childRef}></FeedsContainer>
+        {/*
         <Text style={{fontSize: 35, color: '#e6e6e6', fontStyle: 'italic'}}> 
           The feed will be here
-        </Text>
+        </Text> */}
       </View>
     </View>
   );

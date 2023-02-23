@@ -1,11 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import { Button, Image } from '@rneui/themed';
-import {View, Text, StyleSheet, FlatList, Dimensions, ActivityIndicator, Alert} from 'react-native';
-import FeedsListItem from './ProgramsList';
-import { BackgroundImage } from '@rneui/base';
+import { Image } from '@rneui/themed';
+import {View, Text, StyleSheet, Dimensions, ActivityIndicator, Alert} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../../firebase';
 
 //General todo-list realted to the profile-page, not just the HeaderContainer-file:
 //TODO We have to get and insert stored user information from firebase

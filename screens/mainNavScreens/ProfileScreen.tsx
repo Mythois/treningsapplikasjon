@@ -77,7 +77,7 @@ function ProfileScreen({ navigation }) {
           <Button color={'#121212'} title={'Sign out'} style={styles.signOutText} onPress={signOutAlert} />
         </View>
         {/* Header: profilbilde, navn og brukernavn*/}
-        <HeaderContainer ref={childRef}></HeaderContainer>
+        <HeaderContainer user={LocalData.currentUser} ref={childRef}></HeaderContainer>
         <View style={styles.workoutHeaderContatiner}>
           <Text adjustsFontSizeToFit={true} style={styles.workoutHeaderText}> WORKOUTS </Text>
         </View>
@@ -100,7 +100,7 @@ function ProfileScreen({ navigation }) {
       </SafeAreaView>
       {/* This is the feed section */}
       <View style={{flex: 1, flexDirection: 'column'}}>
-        <FeedsContainer props={LocalData.currentUser} ref={childRef}></FeedsContainer>
+        <FeedsContainer ref={childRef}></FeedsContainer>
       </View>
     </View>
   );

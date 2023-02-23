@@ -15,7 +15,7 @@ export default function SearchScreen({navigation}) {
         paddingLeft:28, paddingVertical: 8, flex: 1, width:"100%", alignItems:"center"}}
         onPress={() => {
             if (item.id == LocalData.currentUser.id) {
-                navigation.navigate('ProfileScreen')
+                navigation.navigate('Profile')
             } else {
                 navigation.navigate('FriendProfileScreen', { user: item })
             }
@@ -33,7 +33,7 @@ export default function SearchScreen({navigation}) {
                 <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>{item.name}</Text>
                 <Text style={{ color: 'white' }}>{item.username}</Text>
             </View>
-                <View style={{ flex: 1, width: "100%", alignContent:"flex-end"}}>
+            <View style={{ flex: 1, width: "100%", alignContent:"flex-end"}}>
                 <Icon type='font-awesome' name="chevron-right" size={20} color="white"/>
             </View>
         </TouchableOpacity>

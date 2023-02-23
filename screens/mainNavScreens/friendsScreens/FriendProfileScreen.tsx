@@ -14,18 +14,24 @@ type FriendProfileScreenRouteProp = RouteProp<RootStackParamList, 'FriendProfile
 
 export default function FriendProfileScreen({ route, navigation } : { route: FriendProfileScreenRouteProp, navigation: any }) {
     const { user } = route.params;
-    const [follows, setFollows] = React.useState<boolean>(LocalData.currentUser.friends.includes(user.id));
+    const [follows, setFollows] = React.useState<boolean>(user.isFollowingUser());
     const childRef: any = useRef();
+    const toggleFollow = () => {
+      user.isFollowingUser() === true ? 
+      unFollowAlert()
+      :
+      user.followUser(() => { setFollows(user.isFollowingUser()) })
+    }
 
       //Log-out
-      const signOutAlert = () =>
-      Alert.alert('Sign out', 'Do you wish to sign out?', [
+      const unFollowAlert = () =>
+      Alert.alert('Unfollow user', 'Are you sure you want to unfollow this user?', [
           {
               text: 'Cancel',
               onPress: () => console.log('Cancel Pressed'),
               style: 'cancel',
           },
-              {text: 'OK', onPress: () => signOut(auth)},
+              {text: 'Unfollow', onPress: () => user.unFollowUser(() => {setFollows(user.isFollowingUser())}) },
       ]);
 
     return (
@@ -43,8 +49,10 @@ export default function FriendProfileScreen({ route, navigation } : { route: Fri
             PlaceholderContent={<ActivityIndicator />} 
             onPress={() => navigation.navigate('Home')}>
           </Image>
-          {/* Log out knapp */}
-          <Button color={'#121212'} title={'Sign out'} style={styles.signOutText} onPress={signOutAlert} />
+          {/* Follow button */}
+          <Button color={'#121212'} title={user.isFollowingUser() ? "Unfollow" : "Follow"} 
+          style={styles.followButton} 
+          onPress={toggleFollow} />
         </View>
         {/* Header: profilbilde, navn og brukernavn*/}
         <HeaderContainer user={user} ref={childRef}></HeaderContainer>
@@ -53,9 +61,7 @@ export default function FriendProfileScreen({ route, navigation } : { route: Fri
         </View>
         </SafeAreaView>
       {/* This is the feed section */}
-      <View style={{flex: 1, flexDirection: 'column'}}>
-        <FeedsContainer ref={childRef}></FeedsContainer>
-      </View>
+      
     </View>
 
     );
@@ -81,7 +87,7 @@ const styles = StyleSheet.create({
       marginLeft: 5,
       width: '70%',
     },
-    signOutText: {
+    followButton: {
       fontSize: 20,
       fontWeight: 'normal',
       color: '#e6e6e6',

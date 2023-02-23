@@ -25,7 +25,7 @@ export class WorkoutUser {
     if (Array.isArray(data.friends)) {
         this.friends = [];
         data.friends.forEach((friendID: any) => {
-            this.groups.push(friendID)
+            this.friends.push(friendID)
         })
     }
     if (Array.isArray(data.createdPrograms)) {

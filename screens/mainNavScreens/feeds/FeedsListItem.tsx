@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, Touchable, TouchableOpacity, Dimensions} from 'react-native';
+import { View, Text, StyleSheet, Touchable, TouchableOpacity, Dimensions } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 interface Props {
@@ -22,7 +22,7 @@ export default function FeedsListItem(data: Props) {
     }
     const handlePressLike = () => {
         // Toggle between like and unlike
-        if(iconState === 'heart') {
+        if (iconState === 'heart') {
             setIcon('heart-outline');
             setLike(data.likes);
         } else {
@@ -32,7 +32,7 @@ export default function FeedsListItem(data: Props) {
     }
 
     return (
-        
+
         <View style={[styles.container, styles.elevation]}>
             <TouchableOpacity onPress={handlePressName} style={styles.top}>
                 <Text style={styles.header}>
@@ -40,11 +40,11 @@ export default function FeedsListItem(data: Props) {
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.content} onPress={handlePressContent}>
-                <Text>
+                <Text style={styles.contentText}>
                     {data.text}
                 </Text>
             </TouchableOpacity>
-            <Ionicons name={iconState} style={styles.likesIcon} size={20} onPress={handlePressLike}/>
+            <Ionicons name={iconState} style={styles.likesIcon} size={20} onPress={handlePressLike} />
             <Text style={styles.likesText}>
                 {likeState}
             </Text>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     },
     header: {
-        color: '#cccccc',
+        color: '#e6e6e6',
         fontSize: 20,
     },
     top: {
@@ -73,6 +73,10 @@ const styles = StyleSheet.create({
     },
     content: {
         margin: 20,
+        color: '#e6e6e6',
+    },
+    contentText: {
+        color: '#e6e6e6',
     },
     likesIcon: {
         color: '#cccccc',
@@ -93,7 +97,7 @@ const styles = StyleSheet.create({
     },
     shadowProp: {
         shadowColor: '#171717',
-        shadowOffset: {width: -2, height: 4},
+        shadowOffset: { width: -2, height: 4 },
         shadowOpacity: 0.2,
         shadowRadius: 3,
     },

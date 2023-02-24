@@ -17,7 +17,7 @@ function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       {/* This is the top section */}
-      <SafeAreaView>
+      <SafeAreaView style={styles.headerConteiner}>
         <ScrollView horizontal={true}>
           <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab())}>
             <Text style={styles.feedTabText}>All</Text>
@@ -90,7 +90,12 @@ const styles = StyleSheet.create({
   },
   feedTabText: {
     fontSize: 24,
-    color: 'rgb(230, 230, 230)',
+    fontWeight: '900',
+    letterSpacing: 2,
+    color: '#DC6247',
+  },
+  headerConteiner: { //Added to maybe add logo to the top
+    // height: 120,
   },
 })
 export default HomeScreen;

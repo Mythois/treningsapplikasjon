@@ -2,17 +2,23 @@ import { WorkoutUser } from "./Users/WorkoutUser";
 import { auth, db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import UsersCollectionLoader from "./Users/UserCollectionLoader";
+import { ProgramData } from "./Programs/ProgramData";
+import ProgramCollectionLoader from "./Programs/ProgramCollectionLoader";
 
 export class LocalData {
   /**
    * The WorkoutUser instance of the user currently signed in to the application
    */
   static currentUser: WorkoutUser = new WorkoutUser({});
+
+  static currentPrograms: ProgramData = new ProgramData({});
   
   /**
    * A CollectionLoader to load the instances of users in the app.
    */
   static usersCollection: UsersCollectionLoader = new UsersCollectionLoader();
+
+  static programCollection: ProgramCollectionLoader = new ProgramCollectionLoader();
     
   static async initCurrentUser() {
     console.log("Init curr user");

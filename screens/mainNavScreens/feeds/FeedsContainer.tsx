@@ -1,5 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, ScrollView, Dimensions } from 'react-native';
+import { LocalData } from '../../../LocalData/LocalData';
 import FeedsListItem from './FeedsListItem';
 
 
@@ -15,7 +16,16 @@ const Feeds = [
     },
 ];
 
+// Contains the basic shape of programs
+interface Program {
+    id: String,
+    name: string,
+    userID: string,
+    date: Date,
+    likedBy: string[],
+}
 
+// Temporary mock items for feeds
 function GenerateFeed() {
     function GerenerateRandomNumberOfStringsInAnArray() {
         let array = [];
@@ -66,18 +76,27 @@ function FeedsContainer(props, ref) {
     const [itemsState, setItems] = useState([]);
     useEffect(() => {
         refresh();
+        // LocalData.programCollection.load(() => {
+        //     setItems(LocalData.programCollection.getPrograms())
+        // });
     }, []);
 
-    // Managing what to load
+    // Managing what to load                                               <---------------------- this is made for later functions
     const [loadFilters, setFilters] = useState(defaultFilters);
 
     // Refreshes all items in the item list
     function refresh() {
+        console.log('refreshed');
+        console.log(itemsState);
+        console.log(LocalData.programCollection.getPrograms());
         scrollRef.current?.scrollTo({
             y: 0,
             animated: true,
         });
-        setItems([]);
+        LocalData.programCollection.load(() => {
+            setItems(LocalData.programCollection.getPrograms())
+        });
+        //setItems([]);
         for (var i = 0; i < 10; i++) {
             loadNewItems();
         }
@@ -85,7 +104,7 @@ function FeedsContainer(props, ref) {
 
     // Fetch new feed from database without deleting the existing ones        <---------------- Must make a better load function
     function loadNewItems() {
-        setItems(currentItems => [...currentItems, GenerateFeed()]);
+        //setItems(currentItems => [...currentItems, GenerateFeed()]);
 
         // If nothing is returned, then tell the user that there are no more feeds
     }

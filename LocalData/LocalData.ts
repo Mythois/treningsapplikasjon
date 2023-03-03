@@ -10,11 +10,9 @@ export class LocalData {
    * The WorkoutUser instance of the user currently signed in to the application
    */
   static currentUser: WorkoutUser = new WorkoutUser({});
-
-  static currentPrograms: ProgramData = new ProgramData({});
   
   /**
-   * A CollectionLoader to load the instances of users in the app.
+   * CollectionLoaders to load the instances of users and programs in the app.
    */
   static usersCollection: UsersCollectionLoader = new UsersCollectionLoader();
 

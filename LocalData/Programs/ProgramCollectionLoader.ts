@@ -1,6 +1,5 @@
 import { collection, getDocs, query, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase";
-import { LocalData } from "../LocalData";
 import { ProgramData } from "./ProgramData";
 
 
@@ -11,7 +10,7 @@ export default class ProgramCollectionLoader {
     // Attributes
     collectionRef = collection(db, "programs");
     
-    loaded: boolean = false;
+    loaded: boolean = false;                      //   <---------------------- Not sure if we need this
     
     private programs: ProgramData[] = [];
     /**
@@ -28,17 +27,18 @@ export default class ProgramCollectionLoader {
      * @param completion 
      */
     async load(completion: (documents: ProgramData[]) => void) {
-        //if (this.loaded) { return; }
+        if (this.loaded) { return; }              // <---------------------- Not sure if we need this
         this.programs = [];
         // Creating a loading query
         const q = query(this.collectionRef);
         const querySnapshot = await getDocs(q)
         .then((docs) => {
-            this.programs.push(LocalData.currentPrograms);
             docs.forEach((doc) => {
                 const p = new ProgramData(doc.data().programData);
+                p.setId(doc.id);
                 this.programs.push(p);
             })
+            
             completion(this.programs);
         })
         .catch(error => console.log(error.message))

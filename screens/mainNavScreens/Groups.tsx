@@ -3,9 +3,14 @@ import { TouchableOpacity, View, ActivityIndicator, StyleSheet, SafeAreaView, Al
 import React, { useRef, useState } from 'react';
 
 
-export default function ProfileScreen({navigation}) {
+
+export default function Groups({navigation}) {
     return(
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#121212' }}>
+            <Button
+                title = "New Group"
+                onPress={() => navigation.navigate('NewGroup')}
+            />
             <Text 
                 onPress={() => navigation.navigate('Home')}
                 style={{ fontSize: 26, fontWeight: 'bold'}}

@@ -1,9 +1,11 @@
-import * as React from 'react';
-import { View, Text} from 'react-native';
+import { Icon, Text, Image, Button, Avatar } from '@rneui/themed';
+import { TouchableOpacity, View, ActivityIndicator, StyleSheet, SafeAreaView, Alert } from 'react-native';
+import React, { useRef, useState } from 'react';
+
 
 export default function ProfileScreen({navigation}) {
     return(
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#121212' }}>
             <Text 
                 onPress={() => navigation.navigate('Home')}
                 style={{ fontSize: 26, fontWeight: 'bold'}}
@@ -13,3 +15,11 @@ export default function ProfileScreen({navigation}) {
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+      width: '100%',
+      flex: 1,
+      backgroundColor: '#121212',
+    },
+});

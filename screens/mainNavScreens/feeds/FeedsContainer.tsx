@@ -87,8 +87,7 @@ function FeedsContainer(props, ref) {
     // Refreshes all items in the item list
     function refresh() {
         console.log('refreshed');
-        console.log(itemsState);
-        console.log(LocalData.programCollection.getPrograms());
+        //console.log(LocalData.programCollection.getPrograms()[0]);
         scrollRef.current?.scrollTo({
             y: 0,
             animated: true,

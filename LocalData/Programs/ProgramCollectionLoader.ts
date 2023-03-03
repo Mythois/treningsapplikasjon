@@ -28,7 +28,7 @@ export default class ProgramCollectionLoader {
      * @param completion 
      */
     async load(completion: (documents: ProgramData[]) => void) {
-        if (this.loaded) { return; }
+        //if (this.loaded) { return; }
         this.programs = [];
         // Creating a loading query
         const q = query(this.collectionRef);
@@ -36,10 +36,8 @@ export default class ProgramCollectionLoader {
         .then((docs) => {
             this.programs.push(LocalData.currentPrograms);
             docs.forEach((doc) => {
-                const p = new ProgramData(doc.data());
-                // if (p.name != "" &&      // -----------------------------------------
-                // p.name != LocalData.currentPrograms.name) 
-                    this.programs.push(p);
+                const p = new ProgramData(doc.data().programData);
+                this.programs.push(p);
             })
             completion(this.programs);
         })

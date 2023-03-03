@@ -17,6 +17,5 @@ export class ProgramData {
           })
       }
     }
-    console.log("Program:", this.name, this.userID, this.date, this.likedBy);
-    }
   }
+}

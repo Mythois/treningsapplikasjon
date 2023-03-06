@@ -32,7 +32,7 @@ function FeedsContainer(props, ref) {
     }, []);
 
     // Managing what to load                                               <---------------------- this is made for later functions
-    const [loadFilters, setFilters] = useState(defaultFilters);
+    const [filterState, setFilters] = useState(defaultFilters);
 
     // Refreshes all items in the item list
     function refresh(type: string) {
@@ -97,11 +97,16 @@ function FeedsContainer(props, ref) {
 
         // Check if the item fulfils the requirements from filter
         let filteredItems: ProgramData[] = [];
-        for (var item of itemsState) {
-            if (item.userID == LocalData.currentUser.id) {
-                filteredItems.push(item);
+        if (filterState.typeOfFeed == 'myOwn') {
+            for (var item of itemsState) {
+                if (item.userID == LocalData.currentUser.id) {
+                    filteredItems.push(item);
+                }
             }
+        } else {
+            filteredItems = itemsState;
         }
+        
         findMissingProgram(filteredItems, currentItemsState);
         
 

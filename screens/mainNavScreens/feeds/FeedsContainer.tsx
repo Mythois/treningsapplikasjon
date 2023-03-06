@@ -54,7 +54,14 @@ function FeedsContainer(props, ref) {
 
         // Set filterState based on input from parent component
         let filter: Filters = {typeOfFeed: type, isImage: false}
-        setFilters(filter);
+        // Current only 'all' and 'myOwn' types are available for use
+        if (type == 'myOwn') {
+            setFilters(filter);
+        } else {
+            filter = {typeOfFeed: 'all', isImage: false};
+            setFilters(filter);
+        }
+        
         console.log(type);
 
         // Load 10 more items
@@ -70,6 +77,8 @@ function FeedsContainer(props, ref) {
             if (arr1.every((i) => i instanceof ProgramData) && arr2.every((i) => i instanceof ProgramData)) {
                 for (const item of arr1) {
                     if (!arr2.some((i) => i.id === item.id)) {
+                        
+                        console.log('added item to current');
                         setCurrentItems(currentItems => [...currentItems, item]);
                         return
                     }
@@ -85,7 +94,15 @@ function FeedsContainer(props, ref) {
     function loadNewItems() {
 
         //setCurrentItems(currentItems => [...currentItems, findMissingProgram(itemsState, currentItemsState)]);
-        findMissingProgram(itemsState, currentItemsState);
+
+        // Check if the item fulfils the requirements from filter
+        let filteredItems: ProgramData[] = [];
+        for (var item of itemsState) {
+            if (item.userID == LocalData.currentUser.id) {
+                filteredItems.push(item);
+            }
+        }
+        findMissingProgram(filteredItems, currentItemsState);
         
 
 

@@ -16,7 +16,7 @@
 
 // Imports
 import * as React from 'react';
-import { View, FlatList, TextInput, ScrollView, Alert, ActivityIndicator} from 'react-native';
+import { View, FlatList, TextInput, ScrollView, Alert, ActivityIndicator, Dimensions} from 'react-native';
 import { Button, Text , Image} from '@rneui/themed';
 import { isTemplateSpan } from 'typescript';
 import { AuthErrorCodes } from 'firebase/auth';

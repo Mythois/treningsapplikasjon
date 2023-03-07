@@ -87,9 +87,9 @@ export default function MainStack() {
                 component={GroupsStack}
                 options={{ headerShown: false}}
                 />
-                <Tab.Screen name={profileName} 
-                component={ProfileScreen}
-                options={{ headerShown: false }}
+                <Tab.Screen name={profileName}
+                    component={ProfileScreen}
+                    options={{ headerShown: false }}
                 />
 
             </Tab.Navigator>

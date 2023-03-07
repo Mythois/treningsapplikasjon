@@ -1,6 +1,7 @@
 import { Icon, Text, Image, Button, Avatar } from '@rneui/themed';
 import { TouchableOpacity, View, ActivityIndicator, StyleSheet, SafeAreaView, Alert, TextInput } from 'react-native';
 import React, { useRef, useState } from 'react';
+import { nanoid } from 'nanoid'
 
 interface group {
     id:number;
@@ -16,13 +17,15 @@ export default function NewGroup({navigation}) {
 
     const handleNameChange = (text) => {
         newName(text);
-        console.log(text)
     }
 
     const handleDescChange = (text) => {
         newDesc(text);
     }
 
+    const handleSave = () => {
+        
+    }
     return(
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#121212'}}>
             <View style={{marginLeft:"-65%", marginTop:"-50%"}}>
@@ -62,6 +65,7 @@ export default function NewGroup({navigation}) {
                         <Button
                         buttonStyle={{borderRadius:5, marginTop:"10%"}}
                         title="Create"
+                        onPress={() =>handleSave()}
                         />
                     </View>
             </View>

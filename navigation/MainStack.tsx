@@ -9,16 +9,16 @@ import ProfileScreen from '../screens/mainNavScreens/ProfileScreen';
 import Groups from '../screens/mainNavScreens/Groups';
 import Program from '../screens/mainNavScreens/Program';
 import SearchStack from '../screens/mainNavScreens/friendsScreens/SearchStack';
-import NewGroup from '../screens/mainNavScreens/NewGroup';
+import NewGroup from '../screens/mainNavScreens/NewGroup';  
 
 
 // Screen Names
 const homeName:any = "Home";
 const profileName:any = "Profile";
-const search:any = "Search"
-const groups:any = "Groups"
-const program:any = "Program"
-const newGroup:any = "NewGroup"
+const search:any = "Search";
+const groups:any = "Groups";
+const program:any = "Program";
+const newGroup:any = "NewGroup";
 
 const Tab: any = createBottomTabNavigator();
 const Stack: any = createStackNavigator();
@@ -113,4 +113,4 @@ function GroupsStack() {
         />
       </Stack.Navigator>
     );
-  }
+}

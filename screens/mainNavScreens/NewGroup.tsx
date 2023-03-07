@@ -10,6 +10,19 @@ interface group {
 
 
 export default function NewGroup({navigation}) {
+
+    const [currentName, newName] = React.useState('');
+    const [currentDesc, newDesc] = React.useState('');
+
+    const handleNameChange = (text) => {
+        newName(text);
+        console.log(text)
+    }
+
+    const handleDescChange = (text) => {
+        newDesc(text);
+    }
+
     return(
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#121212'}}>
             <View style={{marginLeft:"-65%", marginTop:"-50%"}}>
@@ -34,6 +47,7 @@ export default function NewGroup({navigation}) {
                             style={{fontSize:23}}
                             placeholderTextColor={"#FFFFFF"}
                             placeholder="Name"
+                            onChangeText={handleNameChange}
                         />
                     </View>
                     <View style={{borderWidth:1, borderColor:"#FFFFFF", borderRadius:5, padding:5, marginTop:"7%", width:250, height:150}}>
@@ -41,6 +55,7 @@ export default function NewGroup({navigation}) {
                         style={{fontSize:23}}
                         placeholderTextColor={"#FFFFFF"}
                         placeholder="Description"
+                        onChangeText={handleDescChange}
                         />
                     </View>
                     <View>

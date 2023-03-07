@@ -23,7 +23,7 @@ export class LocalData {
       await getDoc(userRef)
       .then((snap) => {
         console.log(snap.data());
-        this.currentUser = new WorkoutUser(snap.data());
+        this.currentUser = new WorkoutUser(snap.data(), cu.uid);
       })
       .catch(error => console.log(error.message));
     }

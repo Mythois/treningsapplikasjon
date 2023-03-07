@@ -74,17 +74,21 @@ export default function MainStack() {
                     component={HomeScreen}
                     options={{ headerShown: false }}
                 />
+                <Tab.Screen name={search}
+                    component={SearchStack}
+                    options={{ headerShown: false }}
+                />
                 <Tab.Screen name={program} 
                 component={ProgramScreen}
                 options={{ headerShown: false }}
                 />
+                <Tab.Screen name={groups}
+                    component={GroupsStack}
+                    options={{ headerShown: false }}
+                />
                 <Tab.Screen name={profileName} 
                 component={ProfileScreen}
                 options={{ headerShown: false }}
-                />
-                <Tab.Screen name={search}
-                    component={SearchStack}
-                    options={{ headerShown: false }}
                 />
 
             </Tab.Navigator>

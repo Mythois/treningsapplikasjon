@@ -19,17 +19,34 @@ const Feeds = [
 function GenerateFeed() {
     function GerenerateRandomNumberOfStringsInAnArray() {
         let array = [];
-        for (var i = 0; i < Math.floor(Math.random()*100); i++) {
+        for (var i = 0; i < Math.floor(Math.random() * 100); i++) {
             array.push('a');
         };
         return array;
     }
+    function GenerateRandomExerciseText() {
+        let text: String = "";
+        text = text + "Monday: " + Math.floor(Math.random() * 8) + 1 + " sets" + Math.floor(Math.random() * 8) + 1 + " reps" + "\n";
+        text = text + "Tuesday: " + Math.floor(Math.random() * 8) + 1 + " sets" + Math.floor(Math.random() * 8) + 1 + " reps" + "\n";
+        text = text + "Wednesday: " + Math.floor(Math.random() * 8) + 1 + " sets" + Math.floor(Math.random() * 8) + 1 + " reps" + "\n";
+        text = text + "Thursday: " + Math.floor(Math.random() * 8) + 1 + " sets" + Math.floor(Math.random() * 8) + 1 + " reps" + "\n";
+        text = text + "Friday: " + Math.floor(Math.random() * 8) + 1 + " sets" + Math.floor(Math.random() * 8) + 1 + " reps" + "\n";
+        text = text + "Saturday: " + Math.floor(Math.random() * 8) + 1 + " sets" + Math.floor(Math.random() * 8) + 1 + " reps" + "\n";
+        text = text + "Sunday: " + Math.floor(Math.random() * 8) + 1 + " sets" + Math.floor(Math.random() * 8) + 1 + " reps" + "\n";
+        return text;
+    }
+    function GenerateRandomExerciseName() {
+        let text: String = "";
+        text = text + "Program" + Math.floor(Math.random() * 89) + 10;
+        return text;
+    }
     const feed = {
         id: Math.random(),
         userID: 'you',
-        name: 'New workout program',
+        name: GenerateRandomExerciseName(),
         date: new Date(),
         likedBy: GerenerateRandomNumberOfStringsInAnArray(),
+        text: GenerateRandomExerciseText(),
     };
     return feed;
 }
@@ -43,7 +60,7 @@ const defaultFilters: Filters = { typeOfFeed: 'All', isImage: false }
 
 
 function FeedsContainer(props, ref) {
-    
+
     const scrollRef: any = useRef();
     // Contains the current items
     const [itemsState, setItems] = useState([]);
@@ -86,7 +103,7 @@ function FeedsContainer(props, ref) {
         <View style={styles.container}>
             <ScrollView ref={scrollRef} onScroll={({ nativeEvent }) => { if (isCloseToBottom(nativeEvent)) { loadNewItems() } }} scrollEventThrottle={16}>
                 <FlatList style={styles.list} data={itemsState} numColumns={2} renderItem={({ item }) => (
-                    <FeedsListItem name={item.name} text={'This text contains the content of the program'} likes={item.likedBy.length}></FeedsListItem>
+                    <FeedsListItem name={item.name} text={item.text} likes={item.likedBy.length}></FeedsListItem>
                 )} />
             </ScrollView>
         </View>

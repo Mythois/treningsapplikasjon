@@ -18,6 +18,7 @@
 import * as React from 'react';
 import { View, FlatList, TextInput, ScrollView, Alert, ActivityIndicator, Dimensions} from 'react-native';
 import { Button, Text , Image} from '@rneui/themed';
+import { SelectList } from 'react-native-dropdown-select-list'
 import { isTemplateSpan } from 'typescript';
 import { AuthErrorCodes } from 'firebase/auth';
 import 'react-native-get-random-values';
@@ -41,6 +42,7 @@ interface program{
 
     userID: string;
     date: Date; // The date at which the training program is created
+    category: string;
 
     likedBy: string[];
 }
@@ -78,6 +80,8 @@ export default function ProgramScreen({navigation}) {
     const [reps, setReps] = React.useState<number>();
     const [selectedDay, setSelectedDay] = React.useState<number>(0);
     const [name, setName] = React.useState('');
+    
+
 
     /**
      * A method to add new exercises to the list of exercises
@@ -110,12 +114,24 @@ export default function ProgramScreen({navigation}) {
     const handleDayPress = (day: number) => {
         setSelectedDay(day);
     }
+    const [category, setCategory] = React.useState("");
 
+    React.useEffect(() => {
+    console.log(category);
+    }, [category]);
+
+    const handleCategorySwitch = (cat:string) => {
+    setCategory(cat);
+    }
     /**
      * The set of exercises that pertain to the day the user selects
      */
     const filteredExercises = exercises.filter((exercise) => exercise.day === selectedDay);
-    
+    const categories = [
+        {key:1, value:"Full Body"},
+        {key:2, value:"Lower Body"},
+        {key:3, value:"Upper Body"}
+    ]
 
 
 
@@ -135,7 +151,7 @@ export default function ProgramScreen({navigation}) {
               ]);
             const newProgram = {name: name,
             userID: LocalData.currentUser.id,
-            date: new Date(),
+            date: new Date(), category: category,
             likedBy:["test"]};
             const programDays: programDay[] = [];
 
@@ -208,14 +224,30 @@ export default function ProgramScreen({navigation}) {
                 </View>
             </View>
             <View style={{top:"10%"}}>
-                <View style={{paddingTop:10}}>
+                <View style={{paddingTop:10, flexDirection:"row", paddingBottom:10, paddingLeft:10}}>
+                    <View>
+                    <SelectList
+                        setSelected={handleCategorySwitch}
+                        data={categories} 
+                        search = {false}
+                        save="value"
+                        placeholder='Category'
+                        inputStyles={{fontSize:15, color:"#FFFFFF"}}
+                        boxStyles={{width:130}}
+                        dropdownTextStyles={{color:"#FFFFFF"}}
+                        />
+                    </View>
+                    <View>
                     <TextInput
-                    style = {{fontWeight:"bold", fontSize:30, color:"#DC6247", textAlign:"center", paddingBottom:5}}
-                    placeholder = "Program Name"
-                    value={name}
-                    placeholderTextColor = "#DC6247"
-                    onChangeText={(text) => setName(text)}
+                        style = {{fontWeight:"bold", fontSize:25, color:"#DC6247", textAlign:"center", paddingBottom:5, paddingLeft:40, paddingTop:10}}
+                        placeholder = "Program Name"
+                        value={name}
+                        placeholderTextColor = "#DC6247"
+                        onChangeText={(text) => setName(text)}
                     />
+                    </View>
+                    
+                    
                 </View>
                 
                 <View style = {{flexDirection:'row', justifyContent:'center'}}>
@@ -364,7 +396,7 @@ export default function ProgramScreen({navigation}) {
                             }
 
                         />
-                    <View style={{alignItems: 'center', marginTop:"2%"}}>
+                    <View style={{alignItems: 'center', marginTop:"-2%"}}>
                         <Button 
                         title= "Add new exercise"
                         color = "#303030"

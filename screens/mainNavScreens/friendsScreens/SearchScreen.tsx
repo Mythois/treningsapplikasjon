@@ -1,4 +1,4 @@
-import { Avatar, Icon, Input } from '@rneui/themed';
+import { Avatar, Button, Icon, Input } from '@rneui/themed';
 import * as React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { WorkoutUser } from '../../../LocalData/Users/WorkoutUser';
@@ -33,7 +33,7 @@ export default function SearchScreen({ navigation }) {
             />
             <View style={{ flex: 1, marginLeft: 16, width: "100%" }}>
                 <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>{item.name}</Text>
-                <Text style={{ color: 'white' }}>{item.isFollowingUser() ? item.username + " · Following" : item.username + ""}</Text>
+                <Text style={{ color: 'white' }}>{item.username}</Text>
             </View>
             <View style={{ flex: 1, width: "100%", alignContent: "flex-end" }}>
                 <Icon type='font-awesome' name="chevron-right" size={20} color="white" />
@@ -70,8 +70,6 @@ export default function SearchScreen({ navigation }) {
                     data={users}
                     renderItem={renderItem}
                     keyExtractor={(item, index) => index.toString()}
-                    directionalLockEnabled={true}
-                    horizontal={false}
                 />
             ) : (
                 <Text style={{ color: "white" }}>{(search.length > 1 ? "No users found" : "Type in two or more characters to search.")}</Text>

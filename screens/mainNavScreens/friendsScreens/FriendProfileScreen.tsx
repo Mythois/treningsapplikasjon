@@ -1,10 +1,13 @@
 import { RouteProp } from '@react-navigation/native';
-import { Icon, Text, Image, Button } from '@rneui/themed';
-import { View, ActivityIndicator, StyleSheet, SafeAreaView, Alert } from 'react-native';
-import React, { useRef } from 'react';
+import { Icon, Text, Image, Button, Avatar } from '@rneui/themed';
+import { TouchableOpacity, View, ActivityIndicator, StyleSheet, SafeAreaView, Alert } from 'react-native';
+import React, { useRef, useState } from 'react';
 import { RootStackParamList } from '../../../types';
+import { LocalData } from '../../../LocalData/LocalData';
 import FeedsContainer from '../feeds/FeedsContainer';
 import HeaderContainer from '../profile/HeaderContainer';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../../firebase';
 
 
 type FriendProfileScreenRouteProp = RouteProp<RootStackParamList, 'FriendProfileScreen'>;
@@ -20,30 +23,23 @@ export default function FriendProfileScreen({ route, navigation }: { route: Frie
       user.followUser(() => { setFollows(user.isFollowingUser()) })
   }
 
-  //Handle back to search arrow
-  const handleBack = () => {
-    navigation.navigate('SearchScreen');
-  }
-
-  //Log-out
-  const unFollowAlert = () =>
-    Alert.alert('Unfollow user', 'Are you sure you want to unfollow this user?', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      { text: 'Unfollow', onPress: () => user.unFollowUser(() => { setFollows(user.isFollowingUser()) }) },
-    ]);
+      //Log-out
+      const unFollowAlert = () =>
+      Alert.alert('Unfollow user', 'Are you sure you want to unfollow this user?', [
+          {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+          },
+              {text: 'Unfollow', onPress: () => user.unFollowUser(() => {setFollows(user.isFollowingUser())}) },
+      ]);
 
   return (
     <View style={styles.container}>
       {/* This is the header area */}
       <SafeAreaView>
         <View style={styles.topRowContainer}>
-          <View style={{ flex: 1, width: "100%", alignContent: "flex-end" }}>
-            <Icon type='font-awesome' name="chevron-left" size={20} color={'#e6e6e6'} onPress={handleBack} />
-          </View>
+            {/*<Icon type='font-awesome' name="chevron-left" size={20} color="white"/>*/}
           {/*Logo */}
           <Image
             source={require("../../../assets/images/WeTrainLogo.png")}
@@ -65,9 +61,7 @@ export default function FriendProfileScreen({ route, navigation }: { route: Frie
         </View>
       </SafeAreaView>
       {/* This is the feed section */}
-      <View style={{ flex: 1, flexDirection: 'column' }}>
-        <FeedsContainer ref={childRef}></FeedsContainer>
-      </View>
+      
     </View>
 
   );

@@ -30,6 +30,7 @@ function FeedsContainer(props, ref) {
 
     // Managing what to load                                               <---------------------- this is made for later functions
     const [filterState, setFilters] = useState(defaultFilters);
+    const [filteredItemsState, setFilteredItems] = useState([]);
 
     // Runs at the beginning of the home screen to generate feeds
     useEffect(() => {
@@ -37,17 +38,8 @@ function FeedsContainer(props, ref) {
     }, []);
 
     useEffect(() => {
-        console.log('filterState changed');
         setCurrentItems(resultAfterFilter());
     }, [filterState]);
-
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         refresh(defaultFilters.typeOfFeed);
-    //     }, [])
-    // )
-
-    
 
     // Refreshes all items in the item list
     function refresh(type: string) {
@@ -57,9 +49,6 @@ function FeedsContainer(props, ref) {
             y: 0,
             animated: true,
         });
-
-        // Refreshes the items by setting itemsState to be empty
-        // setItems([]);
 
         // Reloads the feeds from the database
         LocalData.programCollection.load(() => {
@@ -75,37 +64,14 @@ function FeedsContainer(props, ref) {
         let filter: Filters = { typeOfFeed: type, isImage: false }
         setFilters(filter);
         console.log(filterState);
-
         
-
-        // let filteredItems: ProgramData[] = [];
-        // if (filterState.typeOfFeed == 'myOwn') {
-        //     for (var item of itemsState) {
-        //         if (item.userID == LocalData.currentUser.id) {
-        //             filteredItems.push(item);
-        //             console.log('filtered an item');
-        //         }
-        //     }
-        // } else {
-        //     console.log('set currentitems as itemstate')
-        //     filteredItems = itemsState;
-        // }
-
-        // for (var item of itemsState) {
-        //     loadNewItems()
-        // }
-
-        
-
-        // Load 10 more items
-        // for (var i = 0; i < 10; i++) {
-        //     loadNewItems();
-        // }
+        // Refreshes the items by setting itemsState to be empty
+        setCurrentItems([]);
 
         console.log('refreshed');
     }
 
-    function findMissingProgram(arr1: ProgramData[], arr2: ProgramData[]): ProgramData {
+    function findOneMissingProgram(arr1: ProgramData[], arr2: ProgramData[]): ProgramData {
         if (currentItemsState !== undefined || currentItemsState.length != 0) {
             if (arr1.every((i) => i instanceof ProgramData) && arr2.every((i) => i instanceof ProgramData)) {
                 for (const item of arr1) {
@@ -124,21 +90,37 @@ function FeedsContainer(props, ref) {
         }
     }
 
-    // Get new program from programCollection without deleting the existing ones        <---------------- Must make a better load function
+    function loadTenInitialItemsFromFilteredItems() {
+        console.log('starts to load inital items');
+        let items: ProgramData[] = [];
+        for (let i = 0; i < 11; i++) {
+            console.log(items.length);
+            for (const item of filteredItemsState) {
+                
+                if (!items.some((i) => i.id === item.id)) {
+
+                    
+                    items.push(item);
+                    i = i + 1;
+                }
+            }
+            
+        }
+        return items;
+    }
+
+    // Unused function
+    // Get new program from programCollection without deleting the existing ones
     function loadNewItems() {
 
-        //setCurrentItems(currentItems => [...currentItems, findMissingProgram(itemsState, currentItemsState)]);
+        setCurrentItems(currentItems => [...currentItems, findOneMissingProgram(itemsState, currentItemsState)]);
 
         // Check if the item fulfils the requirements from filter
         
+        // findOneMissingProgram(currentItemsState, itemsState);
 
-        findMissingProgram(filteredItems, itemsState);
-
-
-
-
-        //console.log('ho');
-        //console.log(currentItemsState);
+        // console.log('ho');
+        // console.log(currentItemsState);
         // for (const item of itemsState) {
         //     if (!currentItemsState.includes(item)) {
 
@@ -160,27 +142,11 @@ function FeedsContainer(props, ref) {
         //             setCurrentItems([item]);
 
         //         }
-        //         
+                
         //     }
-        //}
+        // }
 
         // If nothing is returned, then tell the user that there are no more feeds
-    }
-
-    function setCurrentFilters(type: string) {
-        // Set filterState based on input from parent component
-        let filter: Filters = { typeOfFeed: type, isImage: false }
-        // Current only 'all' and 'myOwn' types are available for use
-        if (type == 'myOwn') {
-            setFilters(filter);
-            console.log('sat filter to myOwn');
-            console.log(filterState);
-        } else {
-            filter = { typeOfFeed: 'all', isImage: false };
-            setFilters(filter);
-            console.log('sat filter to all');
-            console.log(filterState);
-        }
     }
 
     function resultAfterFilter() {
@@ -192,12 +158,11 @@ function FeedsContainer(props, ref) {
                     console.log('filtered an item');
                 }
             }
-            console.log('filtered items with myOwn')
         } else {
             filteredItems = itemsState;
-            console.log('filtered items without myOwn')
         }
         return filteredItems;
+        //setFilteredItems(filteredItems);
     }
 
     function isCloseToBottom({ contentOffset, contentSize, layoutMeasurement }) {

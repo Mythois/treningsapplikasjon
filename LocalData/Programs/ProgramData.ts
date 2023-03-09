@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export class ProgramData {
   id: string = "";
   name: string = "";
@@ -9,7 +11,7 @@ export class ProgramData {
     if (data) {
       this.name = typeof data.name === "string" ? data.name : "";
       this.userID = typeof data.userID === "string" ? data.userID : "";
-      this.date = typeof data.date.getMonth === 'function' ? data.date : new Date();  // <----------- Fix, the fetch data.date is not a Date
+      this.date = this.getDateFromTimestamp(data.date) ?? new Date();
 
       if (Array.isArray(data.likedBy)) {
         this.likedBy = [];
@@ -18,6 +20,20 @@ export class ProgramData {
         })
       }
     }
+  }
+
+  public getDateFromTimestamp(data: any): Date | undefined {
+    if (data instanceof Date) {
+      return data;
+    } else if (data instanceof Timestamp) {
+      return data.toDate();
+    } else if (typeof data === "number") {
+      const date = new Date(data);
+      if (date.getTime() > 0) {
+        return date;
+      }
+    }
+    return undefined;
   }
 
   public setId(id: string) {

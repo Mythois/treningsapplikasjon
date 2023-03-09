@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     color: '#DC6247',
   },
   headerConteiner: { //Added to maybe add logo to the top
-    
+
   },
 })
 

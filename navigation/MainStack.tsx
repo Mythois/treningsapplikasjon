@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from '../screens/mainNavScreens/HomeScreen';
 import ProfileScreen from '../screens/mainNavScreens/ProfileScreen';
-import SearchScreen from '../screens/mainNavScreens/SearchScreen';
+import SearchStack from '../screens/mainNavScreens/friendsScreens/SearchStack';
 
 // Screen Names
 const homeName: any = "Home";
@@ -54,12 +54,6 @@ export default function MainStack() {
                         return <Ionicons name={iconName} size={size} color={color} />
                     }
                 })}
-                tabBarOptions={{
-                    activeTintColor: 'tomato',
-                    inactiveTintColor: 'grey',
-                    labelStyle: { fontSize: 8 },
-                    tabStyle: { backgroundColor: 'rgba(10, 10, 10, 1)', },
-                }}
             >
 
                 <Tab.Screen name={homeName}
@@ -67,7 +61,7 @@ export default function MainStack() {
                     options={{ headerShown: false }}
                 />
                 <Tab.Screen name={searchName}
-                    component={SearchScreen}
+                    component={SearchStack}
                     options={{ headerShown: false }}
                 />
                 <Tab.Screen name={profileName}
@@ -76,6 +70,7 @@ export default function MainStack() {
                 />
 
             </Tab.Navigator>
+
         </NavigationContainer>
     );
 }

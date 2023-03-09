@@ -1,9 +1,10 @@
 import { async } from '@firebase/util';
-import { Component, forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { Component, forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, ScrollView, Dimensions } from 'react-native';
 import { LocalData } from '../../../LocalData/LocalData';
 import { ProgramData } from '../../../LocalData/Programs/ProgramData';
 import FeedsListItem from './FeedsListItem';
+import { useFocusEffect } from '@react-navigation/native';
 
 // Filters for feeds that change what feeds to display
 interface Filters {
@@ -25,18 +26,23 @@ function FeedsContainer(props, ref) {
     const programs: ProgramData[] = [];
     const [itemsState, setItems] = useState(programs);
     const [currentItemsState, setCurrentItems] = useState(programs);
-    
+
     // Runs at the beginning of the home screen to generate feeds
     useEffect(() => {
         refresh(defaultFilters.typeOfFeed);
     }, []);
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         refresh(defaultFilters.typeOfFeed);
+    //     }, [])
+    // )
 
     // Managing what to load                                               <---------------------- this is made for later functions
     const [filterState, setFilters] = useState(defaultFilters);
 
     // Refreshes all items in the item list
     function refresh(type: string) {
-        
+
         // Scroll back to top when a new tab is pressed
         scrollRef.current?.scrollTo({
             y: 0,
@@ -47,22 +53,44 @@ function FeedsContainer(props, ref) {
         setItems([]);
 
         // Reloads the feeds from the database
-        LocalData.programCollection.load(() => {});
-        setItems(LocalData.programCollection.getPrograms());
+        LocalData.programCollection.load(() => {
+            setItems(LocalData.programCollection.getPrograms()); // <------------------------ Put everything here
+        });
+
 
         console.log(itemsState);
 
         // Set filterState based on input from parent component
-        let filter: Filters = {typeOfFeed: type, isImage: false}
+        let filter: Filters = { typeOfFeed: type, isImage: false }
         // Current only 'all' and 'myOwn' types are available for use
         if (type == 'myOwn') {
             setFilters(filter);
         } else {
-            filter = {typeOfFeed: 'all', isImage: false};
+            filter = { typeOfFeed: 'all', isImage: false };
             setFilters(filter);
         }
-        
+
         console.log(type);
+
+        let filteredItems: ProgramData[] = [];
+        if (filterState.typeOfFeed == 'myOwn') {
+            for (var item of itemsState) {
+                if (item.userID == LocalData.currentUser.id) {
+                    filteredItems.push(item);
+                    console.log('filtered an item');
+                }
+            }
+        } else {
+            console.log('set currentitems as itemstate')
+            filteredItems = itemsState;
+        }
+
+        // for (var item of itemsState) {
+        //     loadNewItems()
+        // }
+
+        setCurrentItems(filteredItems);
+        console.log(currentItemsState);
 
         // Load 10 more items
         // for (var i = 0; i < 10; i++) {
@@ -77,14 +105,15 @@ function FeedsContainer(props, ref) {
             if (arr1.every((i) => i instanceof ProgramData) && arr2.every((i) => i instanceof ProgramData)) {
                 for (const item of arr1) {
                     if (!arr2.some((i) => i.id === item.id)) {
-                        
-                        console.log('added item to current');
+
+                        console.log('added unique item to current');
                         setCurrentItems(currentItems => [...currentItems, item]);
                         return
                     }
                 }
             }
         } else {
+            console.log('added new item to current');
             setCurrentItems(currentItems => [...currentItems, itemsState[0]])
             return
         }
@@ -101,14 +130,15 @@ function FeedsContainer(props, ref) {
             for (var item of itemsState) {
                 if (item.userID == LocalData.currentUser.id) {
                     filteredItems.push(item);
+                    console.log('filtered an item');
                 }
             }
         } else {
             filteredItems = itemsState;
         }
-        
-        findMissingProgram(filteredItems, currentItemsState);
-        
+
+        findMissingProgram(filteredItems, itemsState);
+
 
 
 
@@ -122,7 +152,7 @@ function FeedsContainer(props, ref) {
 
 
         //     if (item && item instanceof ProgramData && item.id) {
-                
+
         //         if (currentItemsState !== undefined && currentItemsState.length != 0) {
         //             for (var currentItem of currentItemsState) {
         //                 if (item.id != currentItem.id) {
@@ -133,12 +163,12 @@ function FeedsContainer(props, ref) {
         //             }
         //         } else {
         //             setCurrentItems([item]);
-                    
+
         //         }
         //         
         //     }
         //}
-        
+
         // If nothing is returned, then tell the user that there are no more feeds
     }
 
@@ -153,13 +183,19 @@ function FeedsContainer(props, ref) {
 
     return (
         <View style={styles.container}>
-            <ScrollView ref={scrollRef} onScroll={({ nativeEvent }) => { if (isCloseToBottom(nativeEvent)) { loadNewItems() } }} scrollEventThrottle={16}>
-                <View style={{height: windowHeight}}>
+            <ScrollView ref={scrollRef} onScroll={({ nativeEvent }) => {
+                if (isCloseToBottom(nativeEvent)) {
+                    //loadNewItems() 
+                }
+            }} scrollEventThrottle={16}>
+                <View style={{
+                    //height: windowHeight 
+                }}>
                     <FlatList style={styles.list} data={currentItemsState} numColumns={2} renderItem={({ item }) => (
                         <FeedsListItem name={item.name} text={item.date.toString()} likes={item.likedBy.length}></FeedsListItem>
                     )} />
                 </View>
-                
+
             </ScrollView>
         </View>
     )

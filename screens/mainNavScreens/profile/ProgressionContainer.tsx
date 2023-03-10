@@ -6,14 +6,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { WorkoutUser } from '../../../LocalData/Users/WorkoutUser';
 import { BarChart, LineChart } from "react-native-chart-kit";
 import { color } from '@rneui/base';
+import { withNavigation } from 'react-navigation';
 
-function ProgressionContainer({user, ref} : {user : WorkoutUser, ref : any}) {
-    
-    // Contains the current items
-    const [itemsState, setItems] = useState([]);
-    useEffect(() => {
-        //refresh();
-    }, []);
+interface Props {
+    navigate;
+}
+
+function ProgressionContainer(props: Props) {
 
     const handleLogProgressPress = () => {
         
@@ -89,7 +88,7 @@ function ProgressionContainer({user, ref} : {user : WorkoutUser, ref : any}) {
     )
 };
 
-export default forwardRef(ProgressionContainer);
+export default withNavigation(ProgressionContainer);
 
 
 const windowHeight = Dimensions.get('window').height; 

@@ -92,7 +92,7 @@ export default function MainStack() {
                 />
 
             </Tab.Navigator>
-            
+
         </NavigationContainer>
     );
 }

@@ -1,93 +1,169 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { async } from '@firebase/util';
+import { Component, forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, ScrollView, Dimensions } from 'react-native';
+import { LocalData } from '../../../LocalData/LocalData';
+import { ProgramData } from '../../../LocalData/Programs/ProgramData';
 import FeedsListItem from './FeedsListItem';
+import { useFocusEffect } from '@react-navigation/native';
 
-
-
-// Placeholder for feeds
-const Feeds = [
-    {
-        id: Math.random(),
-        userID: 'you',
-        name: 'New workout program',
-        date: new Date(),
-        likedBy: ['dsfs', 'sdfjsf', '83724', '3423'],
-    },
-];
-
-
-function GenerateFeed() {
-    function GerenerateRandomNumberOfStringsInAnArray() {
-        let array = [];
-        for (var i = 0; i < Math.floor(Math.random() * 100); i++) {
-            array.push('a');
-        };
-        return array;
-    }
-    function GenerateRandomExerciseText() {
-        let text: String = "";
-        text = text + "Monday: " + Math.floor(Math.random() * 8) + 1 + " sets" + Math.floor(Math.random() * 8) + 1 + " reps" + "\n";
-        text = text + "Tuesday: " + Math.floor(Math.random() * 8) + 1 + " sets" + Math.floor(Math.random() * 8) + 1 + " reps" + "\n";
-        text = text + "Wednesday: " + Math.floor(Math.random() * 8) + 1 + " sets" + Math.floor(Math.random() * 8) + 1 + " reps" + "\n";
-        text = text + "Thursday: " + Math.floor(Math.random() * 8) + 1 + " sets" + Math.floor(Math.random() * 8) + 1 + " reps" + "\n";
-        text = text + "Friday: " + Math.floor(Math.random() * 8) + 1 + " sets" + Math.floor(Math.random() * 8) + 1 + " reps" + "\n";
-        text = text + "Saturday: " + Math.floor(Math.random() * 8) + 1 + " sets" + Math.floor(Math.random() * 8) + 1 + " reps" + "\n";
-        text = text + "Sunday: " + Math.floor(Math.random() * 8) + 1 + " sets" + Math.floor(Math.random() * 8) + 1 + " reps" + "\n";
-        return text;
-    }
-    function GenerateRandomExerciseName() {
-        let text: String = "";
-        text = text + "Program" + Math.floor(Math.random() * 89) + 10;
-        return text;
-    }
-    const feed = {
-        id: Math.random(),
-        userID: 'you',
-        name: GenerateRandomExerciseName(),
-        date: new Date(),
-        likedBy: GerenerateRandomNumberOfStringsInAnArray(),
-        text: GenerateRandomExerciseText(),
-    };
-    return feed;
-}
-
+// Filters for feeds that change what feeds to display
 interface Filters {
-    typeOfFeed: String,
+    typeOfFeed: string,
     isImage: boolean,
 }
 
-const defaultFilters: Filters = { typeOfFeed: 'All', isImage: false }
+// Default filters has the type of 'all'
+const defaultFilters: Filters = { typeOfFeed: 'all', isImage: false };
+let currentUserID: string = '';
 
-
+// This is container for the whole feed section
+// It contain functions to filter the feeds, get new feeds from loaded programs
 function FeedsContainer(props, ref) {
 
+    // This ref is used to refer to the scrollview so that we know when the user scrolled to the bottom to generate new feed
     const scrollRef: any = useRef();
+
     // Contains the current items
-    const [itemsState, setItems] = useState([]);
+    const programs: ProgramData[] = [];
+    const [itemsState, setItems] = useState(programs);
+    const [currentItemsState, setCurrentItems] = useState(programs);
+
+    // Managing what to load                                               <---------------------- this is made for later functions
+    const [filterState, setFilters] = useState(defaultFilters);
+    const [filteredItemsState, setFilteredItems] = useState([]);
+
+    // Runs at the beginning of the home screen to generate feeds
     useEffect(() => {
-        refresh();
+        refresh(defaultFilters.typeOfFeed);
     }, []);
 
-    // Managing what to load
-    const [loadFilters, setFilters] = useState(defaultFilters);
+    useEffect(() => {
+        setCurrentItems(itemsState);
+        setCurrentItems(resultAfterFilter());
+    }, [filterState]);
 
     // Refreshes all items in the item list
-    function refresh() {
+    function refresh(type: string) {
+
+        // Scroll back to top when a new tab is pressed
         scrollRef.current?.scrollTo({
             y: 0,
             animated: true,
         });
-        setItems([]);
-        for (var i = 0; i < 10; i++) {
-            loadNewItems();
+
+        // Reloads the feeds from the database
+        LocalData.programCollection.load(() => {
+            setItems(LocalData.programCollection.getPrograms()); // <------------------------ Put everything here
+            currentUserID = LocalData.currentUser.id;
+            setCurrentItems(LocalData.programCollection.getPrograms());
+            console.log(type);
+            console.log(filterState);
+            console.log(currentItemsState);
+        });
+
+        // Set filterState based on input from parent component
+        let filter: Filters = { typeOfFeed: type, isImage: false }
+        setFilters(filter);
+        console.log(filterState);
+        
+        // Refreshes the items by setting itemsState to be empty
+        setCurrentItems([]);
+
+        console.log('refreshed');
+    }
+
+    function findOneMissingProgram(arr1: ProgramData[], arr2: ProgramData[]): ProgramData {
+        if (currentItemsState !== undefined || currentItemsState.length != 0) {
+            if (arr1.every((i) => i instanceof ProgramData) && arr2.every((i) => i instanceof ProgramData)) {
+                for (const item of arr1) {
+                    if (!arr2.some((i) => i.id === item.id)) {
+
+                        console.log('added unique item to current');
+                        setCurrentItems(currentItems => [...currentItems, item]);
+                        return
+                    }
+                }
+            }
+        } else {
+            console.log('added new item to current');
+            setCurrentItems(currentItems => [...currentItems, itemsState[0]])
+            return
         }
     }
 
-    // Fetch new feed from database without deleting the existing ones        <---------------- Must make a better load function
+    function loadTenInitialItemsFromFilteredItems() {
+        console.log('starts to load inital items');
+        let items: ProgramData[] = [];
+        for (let i = 0; i < 11; i++) {
+            console.log(items.length);
+            for (const item of filteredItemsState) {
+                
+                if (!items.some((i) => i.id === item.id)) {
+
+                    
+                    items.push(item);
+                    i = i + 1;
+                }
+            }
+            
+        }
+        return items;
+    }
+
+    // Unused function
+    // Get new program from programCollection without deleting the existing ones
     function loadNewItems() {
-        setItems(currentItems => [...currentItems, GenerateFeed()]);
+
+        setCurrentItems(currentItems => [...currentItems, findOneMissingProgram(itemsState, currentItemsState)]);
+
+        // Check if the item fulfils the requirements from filter
+        
+        // findOneMissingProgram(currentItemsState, itemsState);
+
+        // console.log('ho');
+        // console.log(currentItemsState);
+        // for (const item of itemsState) {
+        //     if (!currentItemsState.includes(item)) {
+
+        //     }
+
+
+
+        //     if (item && item instanceof ProgramData && item.id) {
+
+        //         if (currentItemsState !== undefined && currentItemsState.length != 0) {
+        //             for (var currentItem of currentItemsState) {
+        //                 if (item.id != currentItem.id) {
+        //                     setCurrentItems(currentItems => [...currentItems, item]);
+        //                     console.log('loaded new item');
+        //                     break
+        //                 }
+        //             }
+        //         } else {
+        //             setCurrentItems([item]);
+
+        //         }
+                
+        //     }
+        // }
 
         // If nothing is returned, then tell the user that there are no more feeds
+    }
+
+    function resultAfterFilter() {
+        let filteredItems: ProgramData[] = [];
+        if (filterState.typeOfFeed == 'myOwn') {
+            for (var item of itemsState) {
+                if (item.userID == currentUserID) {
+                    filteredItems.push(item);
+                    console.log('filtered an item');
+                }
+            }
+        } else {
+            filteredItems = itemsState;
+        }
+        return filteredItems;
+        //setFilteredItems(filteredItems);
     }
 
     function isCloseToBottom({ contentOffset, contentSize, layoutMeasurement }) {
@@ -96,15 +172,27 @@ function FeedsContainer(props, ref) {
 
     // Allow the parent to call refresh
     useImperativeHandle(ref, () => ({
-        refresh: () => { refresh() }
+        refresh: (type) => { refresh(type) }
     }));
 
     return (
         <View style={styles.container}>
-            <ScrollView ref={scrollRef} onScroll={({ nativeEvent }) => { if (isCloseToBottom(nativeEvent)) { loadNewItems() } }} scrollEventThrottle={16}>
-                <FlatList style={styles.list} data={itemsState} numColumns={2} renderItem={({ item }) => (
-                    <FeedsListItem name={item.name} text={item.text} likes={item.likedBy.length}></FeedsListItem>
-                )} />
+            <View>
+                {/*<Text style={{color: '#e6e6e6'}}>HI</Text>*/}
+            </View>
+            <ScrollView nestedScrollEnabled={true} ref={scrollRef} onScroll={({ nativeEvent }) => {
+                if (isCloseToBottom(nativeEvent)) {
+                    //loadNewItems() 
+                }
+            }} scrollEventThrottle={16}>
+                <View style={{
+                    //height: windowHeight 
+                }}>
+                    <FlatList style={styles.list} data={currentItemsState} numColumns={2} renderItem={({ item }) => (
+                        <FeedsListItem name={item.name} text={item.date.toString()} likes={item.likedBy.length}></FeedsListItem>
+                    )} />
+                </View>
+
             </ScrollView>
         </View>
     )
@@ -112,6 +200,7 @@ function FeedsContainer(props, ref) {
 
 export default forwardRef(FeedsContainer);
 
+// Get window heigh to decide the height of the container
 const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({

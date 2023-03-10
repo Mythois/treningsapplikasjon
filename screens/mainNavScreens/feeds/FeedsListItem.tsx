@@ -8,18 +8,33 @@ interface Props {
     likes: number,
 }
 
+// Gets window width to be used in item width, each item has to be less than half the window width
 const windowWidth = Dimensions.get('window').width;
 
+// This is an item component that represents a single item in the FeedsContainer
+// It contains a header, content and a like button
 export default function FeedsListItem(data: Props) {
+
+    // This holds the icon that gets displayed, it can have two different states, 'heart' or 'heart-outline'
     const [iconState, setIcon] = useState('heart-outline');
+
+    // This handles the like state, allows the user to increase like count of decrease(unlike)
     const [likeState, setLike] = useState(data.likes);
 
+    // Runs when the user presses the header of this item
     const handlePressName = () => {
         alert(data.name)
     };
+
+    // Runs when the user presses the content of this item
     const handlePressContent = () => {
         alert(data.text)
     }
+
+    // Runs when the user presses the heart icon
+    // Changes the state of the icon
+    // Increase in the like count if not already liked, decreases if the opposite
+    // Add user to likedBy in the database for the program                         <--------------------- Not implemented yet
     const handlePressLike = () => {
         // Toggle between like and unlike
         if (iconState === 'heart') {
@@ -32,7 +47,6 @@ export default function FeedsListItem(data: Props) {
     }
 
     return (
-
         <View style={[styles.container, styles.elevation]}>
             <TouchableOpacity onPress={handlePressName} style={styles.top}>
                 <Text style={styles.header}>

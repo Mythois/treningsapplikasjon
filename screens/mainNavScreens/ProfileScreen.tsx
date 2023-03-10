@@ -6,6 +6,7 @@ import { auth } from '../../firebase';
 import FeedsContainer from './feeds/FeedsContainer';
 import HeaderContainer from './profile/HeaderContainer';
 import { LocalData } from '../../LocalData/LocalData';
+import ProgressionContainer from './profile/ProgressionContainer';
 
 function ProfileScreen({ navigation }) {
 
@@ -78,8 +79,12 @@ function ProfileScreen({ navigation }) {
         </View>
         {/* Header: profilbilde, navn og brukernavn*/}
         <HeaderContainer user={LocalData.currentUser} ref={childRef}></HeaderContainer>
+      </SafeAreaView>
+      {/* This is the feed section */}
+      <ScrollView style={{flex: 1, flexDirection: 'column'}}>
+        <ProgressionContainer user={LocalData.currentUser} ref={childRef}></ProgressionContainer>
         <View style={styles.workoutHeaderContatiner}>
-          <Text adjustsFontSizeToFit={true} style={styles.workoutHeaderText}> WORKOUTS </Text>
+            <Text adjustsFontSizeToFit={true} style={styles.workoutHeaderText}> WORKOUTS </Text>
         </View>
         <View style={styles.chooseWorkoutContainer}>
           <View style={{flex: 1}}>
@@ -97,11 +102,8 @@ function ProfileScreen({ navigation }) {
             />
           </View>
         </View>
-      </SafeAreaView>
-      {/* This is the feed section */}
-      <View style={{flex: 1, flexDirection: 'column'}}>
         <FeedsContainer ref={childRef}></FeedsContainer>
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -139,7 +141,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#121212"
   },
   workoutHeaderText: {
-    fontSize: 35,
+    fontSize: 37,
     fontWeight: '900',
     letterSpacing: 2,
     color: '#DC6247',

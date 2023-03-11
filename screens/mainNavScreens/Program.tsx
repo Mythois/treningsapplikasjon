@@ -35,7 +35,6 @@ interface exercise {
     reps: number;
 }
 
-
 interface program{
     name: string;
 
@@ -44,7 +43,6 @@ interface program{
 
     likedBy: string[];
 }
-
 
 interface programDay{
     weekday: number;

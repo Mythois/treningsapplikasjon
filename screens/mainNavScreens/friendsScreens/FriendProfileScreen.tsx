@@ -12,16 +12,16 @@ import { auth } from '../../../firebase';
 
 type FriendProfileScreenRouteProp = RouteProp<RootStackParamList, 'FriendProfileScreen'>;
 
-export default function FriendProfileScreen({ route, navigation } : { route: FriendProfileScreenRouteProp, navigation: any }) {
-    const { user } = route.params;
-    const [follows, setFollows] = React.useState<boolean>(user.isFollowingUser());
-    const childRef: any = useRef();
-    const toggleFollow = () => {
-      user.isFollowingUser() === true ? 
+export default function FriendProfileScreen({ route, navigation }: { route: FriendProfileScreenRouteProp, navigation: any }) {
+  const { user } = route.params;
+  const [follows, setFollows] = React.useState<boolean>(user.isFollowingUser());
+  const childRef: any = useRef();
+  const toggleFollow = () => {
+    user.isFollowingUser() === true ?
       unFollowAlert()
       :
       user.followUser(() => { setFollows(user.isFollowingUser()) })
-    }
+  }
 
       //Log-out
       const unFollowAlert = () =>
@@ -34,8 +34,8 @@ export default function FriendProfileScreen({ route, navigation } : { route: Fri
               {text: 'Unfollow', onPress: () => user.unFollowUser(() => {setFollows(user.isFollowingUser())}) },
       ]);
 
-    return (
-        <View style={styles.container}>
+  return (
+    <View style={styles.container}>
       {/* This is the header area */}
       <SafeAreaView>
         <View style={styles.topRowContainer}>
@@ -44,74 +44,74 @@ export default function FriendProfileScreen({ route, navigation } : { route: Fri
           <Image
             source={require("../../../assets/images/WeTrainLogo.png")}
             containerStyle={styles.logoBox}
-            style={{width: '50%', height: '70%'}}
+            style={{ width: '50%', height: '70%' }}
             resizeMode="cover"
-            PlaceholderContent={<ActivityIndicator />} 
+            PlaceholderContent={<ActivityIndicator />}
             onPress={() => navigation.navigate('Home')}>
           </Image>
           {/* Follow button */}
-          <Button color={'#121212'} title={user.isFollowingUser() ? "Unfollow" : "Follow"} 
-          style={styles.followButton} 
-          onPress={toggleFollow} />
+          <Button color={'#121212'} title={user.isFollowingUser() ? "Unfollow" : "Follow"}
+            style={styles.followButton}
+            onPress={toggleFollow} />
         </View>
         {/* Header: profilbilde, navn og brukernavn*/}
         <HeaderContainer user={user} ref={childRef}></HeaderContainer>
         <View style={styles.workoutHeaderContatiner}>
           <Text adjustsFontSizeToFit={true} style={styles.workoutHeaderText}> WORKOUTS </Text>
         </View>
-        </SafeAreaView>
+      </SafeAreaView>
       {/* This is the feed section */}
       
     </View>
 
-    );
+  );
 
 }
 
 
 const styles = StyleSheet.create({
-    container: {
-      width: '100%',
-      flex: 1,
-      backgroundColor: '#121212',
-    },
-    topRowContainer: {
-      padding: '1%',
-      height: 55,
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      backgroundColor: "#121212"
-    },
-    logoBox: {
-      marginLeft: 5,
-      width: '70%',
-    },
-    followButton: {
-      fontSize: 20,
-      fontWeight: 'normal',
-      color: '#e6e6e6',
-      marginRight: '1%',
-    },
-    workoutHeaderContatiner: {
-      padding: '1%',
-      height: 50,
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "#121212"
-    },
-    workoutHeaderText: {
-      fontSize: 35,
-      fontWeight: '900',
-      letterSpacing: 2,
-      color: '#DC6247',
-    },
-    chooseWorkoutContainer: {
-      padding: '1%',
-      height: 50,
-      flexDirection: "row",
-      justifyContent: "space-evenly",
-      alignItems: "center",
-    },
-  });
+  container: {
+    width: '100%',
+    flex: 1,
+    backgroundColor: '#121212',
+  },
+  topRowContainer: {
+    padding: '1%',
+    height: 55,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#121212"
+  },
+  logoBox: {
+    marginLeft: 5,
+    width: '70%',
+  },
+  followButton: {
+    fontSize: 20,
+    fontWeight: 'normal',
+    color: '#e6e6e6',
+    marginRight: '1%',
+  },
+  workoutHeaderContatiner: {
+    padding: '1%',
+    height: 50,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#121212"
+  },
+  workoutHeaderText: {
+    fontSize: 35,
+    fontWeight: '900',
+    letterSpacing: 2,
+    color: '#DC6247',
+  },
+  chooseWorkoutContainer: {
+    padding: '1%',
+    height: 50,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+});

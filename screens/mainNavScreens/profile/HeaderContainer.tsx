@@ -6,9 +6,7 @@ import { LocalData } from '../../../LocalData/LocalData';
 import { WorkoutUser } from '../../../LocalData/Users/WorkoutUser';
 
 //General todo-list realted to the profile-page, not just the HeaderContainer-file:
-//TODO We have to get and insert stored user information from firebase
 //TODO We have to make an edit-mode where the user can change user info and delete/unsave workouts
-//TODO We have to make a feed
 
 function HeaderContainer({user, ref} : {user : WorkoutUser, ref : any}) {
     
@@ -31,11 +29,6 @@ function HeaderContainer({user, ref} : {user : WorkoutUser, ref : any}) {
         }
     }
 
-    // Managing what to load
-    // const [loadFilters, setFilters] = useState(defaultFilters);
-
-    // Refreshes all items in the item list --> trenger ikke å kunne refreshe headeren
-
     return (
         <View style={styles.rowContainer}>
             <View style={styles.profileImageBox}>
@@ -49,13 +42,22 @@ function HeaderContainer({user, ref} : {user : WorkoutUser, ref : any}) {
             </View>
             <View style={styles.columnContainer}>
                 <View style={styles.realNameBox}>
-                    <Text adjustsFontSizeToFit={true} style={styles.realNameText}> {user.name.toString()} </Text>
+                    <Text adjustsFontSizeToFit={true} style={styles.realNameText}> 
+                        {user.name.toString()} 
+                    </Text>
                 </View>
                 <View style={styles.userNameBox}>
-                    <Text adjustsFontSizeToFit={true} style={styles.userNameText}> @{user.username.toString()} </Text>
+                    <Text adjustsFontSizeToFit={true} style={styles.userNameText}> 
+                        @{user.username.toString()} 
+                    </Text>
                 </View>
                 <View style={styles.editBox}>
-                    <Ionicons name={iconState} style={styles.editIcon} size={30} onPress={handleEditPress}/>
+                    <Ionicons 
+                        name={iconState} 
+                        style={styles.editIcon} 
+                        size={30} 
+                        onPress={handleEditPress}
+                    />
                 </View>
             </View>
         </View>

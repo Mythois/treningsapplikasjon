@@ -10,6 +10,7 @@ import SearchStack from '../screens/mainNavScreens/friendsScreens/SearchStack';
 import ProgramScreen from '../screens/mainNavScreens/Program';
 import Groups from '../screens/mainNavScreens/Groups';
 import NewGroup from '../screens/mainNavScreens/NewGroup';  
+import LogProgressScreen from '../screens/mainNavScreens/LogProgressScreen';
 
 // Screen Names
 const homeName:any = "Home";
@@ -18,6 +19,7 @@ const search:any = "Search";
 const groups:any = "Groups";
 const program:any = "Program";
 const newGroup:any = "NewGroup";
+const progress:any = "Progress";
 
 const Tab: any = createBottomTabNavigator();
 const Stack: any = createStackNavigator();
@@ -87,7 +89,7 @@ export default function MainStack() {
                     options={{ headerShown: false }}
                 />
                 <Tab.Screen name={profileName} 
-                component={ProfileScreen}
+                component={ProfileStack}
                 options={{ headerShown: false }}
                 />
 
@@ -108,6 +110,23 @@ function GroupsStack() {
         <Stack.Screen
           name={newGroup}
           component={NewGroup}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    );
+}
+
+function ProfileStack() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name={profileName}
+          component={ProfileScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={progress}
+          component={LogProgressScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

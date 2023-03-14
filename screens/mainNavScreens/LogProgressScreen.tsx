@@ -1,5 +1,5 @@
-import { View, Text, Dimensions, StyleSheet, SafeAreaView, ActivityIndicator, ScrollView } from "react-native";
-import { Image, Button } from '@rneui/themed';
+import { View, Text, Dimensions, StyleSheet, SafeAreaView, ScrollView, Alert, ActivityIndicator } from "react-native";
+import { Button, Image } from '@rneui/themed';
 import { LineChart } from "react-native-chart-kit";
 import DropDownPicker from 'react-native-dropdown-picker';
 import React, { useState } from "react";
@@ -7,7 +7,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 function LogProgressScreen({navigation}) {
 
-    //Here's the different exercises the user in the dropdown-list
+    //Here's the different exercises the user can choose from in the dropdown-list
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [exercises, setExercises] = useState([
@@ -19,8 +19,8 @@ function LogProgressScreen({navigation}) {
         {label: 'Utfall', value: 'utfall'}
     ]);
 
-    //Chart-styling
-    const chartConfig = {
+    //Chart configuration and styling
+    const chartStyle = {
         backgroundGradientFrom:'#712d24',
         backgroundGradientFromOpacity: 0.1,
         backgroundGradientTo: '#712d24',
@@ -32,7 +32,7 @@ function LogProgressScreen({navigation}) {
 
     //The data that goes into the graph
     //TODO Have to replace this example-data with actual data from the user
-    const data = {
+    const chartData = {
         labels: ['10.02', '15.02', '25.02', '03.03', '07.03', '14.03'],
         datasets: [
         {
@@ -44,19 +44,44 @@ function LogProgressScreen({navigation}) {
         legend: ['Results']
     };
 
-    const handleAddExercise = () => {
-        
+    //Adds a new result box where the user can log their result
+    const handleAddExRes = () => {
+        //TODO Have to add a "result-boxs"
     };
+
+    //Save logged exercises
+    //TODO Have to actually save the results
+    const saveAlert = () =>
+    Alert.alert('Results saved');
 
 
     return (
         <View style={styles.container}>
             <SafeAreaView>
+                <View style={styles.topRowContainer}>
+                    {/*Logo */}
+                    <Image
+                        source={require("../../assets/images/WeTrainLogo.png")}
+                        containerStyle={styles.logoBox}
+                        style={{width: '50%', height: '70%'}}
+                        resizeMode="cover"
+                        PlaceholderContent={<ActivityIndicator />} 
+                        onPress={() => navigation.navigate('Home')}>
+                    </Image>
+                    {/* Save button */}
+                    <Button 
+                        color={'#121212'} 
+                        title={'Save'} 
+                        style={styles.saveText} 
+                        onPress={saveAlert} 
+                    />
+                </View>
                 <View style={styles.progHeaderContainer}>
                     <Text style={styles.progHeaderText}> PROGRESS</Text>
                 </View>
                 <View style={styles.dropdownContainer}>
                     <DropDownPicker
+                    //The drop-down list where you can choose an exercise to log/see your progress
                     open={open}
                     value={value}
                     items={exercises}
@@ -66,7 +91,7 @@ function LogProgressScreen({navigation}) {
                     searchable={true}
                     //TODO Have to change graph and info when a new exercise is selected
                     onChangeValue={(value) => {console.log(value); }}
-                    //Only stydling below
+                    //Only styling below
                     placeholder="Choose an exercise to log"
                     searchPlaceholder='Try searching after an exercise...'
                     searchTextInputStyle={{
@@ -91,10 +116,11 @@ function LogProgressScreen({navigation}) {
                 </View>
                 <View style={styles.chartContainer}>
                     <LineChart
-                        data={data}
+                        //The chart that visually shows exercise progress
+                        data={chartData}
                         width={windowWidth}
                         height={220}
-                        chartConfig={chartConfig}
+                        chartConfig={chartStyle}
                     />
                 </View>
                 <View style={styles.logProgHeaderContatiner}>
@@ -107,6 +133,7 @@ function LogProgressScreen({navigation}) {
             <SafeAreaView>
                 <View style={styles.logExContainer}>
                     <Button 
+                        //Button to log a new exercise result
                         title = 'Log exercise' 
                         buttonStyle = {{
                             justifyContent: 'center', 
@@ -121,7 +148,7 @@ function LogProgressScreen({navigation}) {
                             fontWeight: 'normal', 
                             color: '#e6e6e6'
                             }}
-                        onPress={() => handleAddExercise()}
+                        onPress={() => handleAddExRes()}
                     />
                 </View>
             </SafeAreaView>
@@ -140,9 +167,26 @@ const styles = StyleSheet.create({
         alignItems: 'center', 
         justifyContent: 'center',
     },
+    topRowContainer: {
+        padding: '1%',
+        height: 55,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    logoBox: {
+        marginLeft: 5,
+        width: '70%',
+    },
+    saveText: {
+        fontSize: 20,
+        fontWeight: 'normal',
+        color: '#e6e6e6',
+        marginRight: '1%',
+    },
     progHeaderContainer: {
         padding: '1%',
-        height: 60,
+        height: 55,
         width: windowWidth,
         justifyContent: "center",
         alignItems: "center",

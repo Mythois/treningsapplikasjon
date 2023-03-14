@@ -25,7 +25,7 @@ function ProfileScreen({ navigation }) {
   }
 
   //Load Saved Programs to feed
-  function showSaved() {
+  function showSavedPrograms() {
     //TODO Make the list show saved programs
   }
 
@@ -46,7 +46,7 @@ function ProfileScreen({ navigation }) {
     if(myButtonColor == '#121212') {
       mySetButtonColor('#303030');
       savedSetButtonColor('#121212');
-      showSaved();
+      showSavedPrograms();
     }
   }
 
@@ -72,11 +72,11 @@ function ProfileScreen({ navigation }) {
 
   //Move to next week
   const handleForwardPress = () => {
-      //TODO Update chart-data to correct week
+      //TODO Update chart-data to correct week, and make sure that the user can't go forward to a "non-existent" week
   }
 
   //Chart-styling
-  const chartConfig = {
+  const chartStyle = {
       backgroundGradientFrom: "#1a0b27",
       backgroundGradientFromOpacity: 0.3,
       backgroundGradientTo: "#29123e",
@@ -88,7 +88,7 @@ function ProfileScreen({ navigation }) {
 
   //The data that goes intro the graph
   //TODO Change the data to acutal data
-  const data = {
+  const chartData = {
       labels: ["Mon", "Tue", "Wen", "Thu", "Fri", "Sat", "Sun"],
       datasets: [
       {
@@ -119,24 +119,29 @@ function ProfileScreen({ navigation }) {
             onPress={signOutAlert} 
           />
         </View>
-        {/* Header: navn og brukernavn*/}
+        {/* Header: navn profilbilde og brukernavn*/}
         <HeaderContainer user={LocalData.currentUser} ref={childRef}></HeaderContainer>
       </SafeAreaView>
       {/* This is the feed section */}
       <ScrollView stickyHeaderIndices={[1]} style={{flex: 1, flexDirection: 'column'}}>
+        {/* The progress part of the profile-screen*/}
         <View style={styles.progColumnContainer}>
             <View style={styles.progHeaderContatiner}>
+                    {/* Progress title*/}
                     <Text adjustsFontSizeToFit={true} style={styles.progHeaderText}> 
                       PROGRESS 
                     </Text>
             </View>
             <View style={styles.progRowContainer}>
+                {/* Graph header*/}
                 <View style={styles.chartTitleContainer}>
                     <Text adjustsFontSizeToFit={true} style={styles.chartTitle}> 
+                      {/* //TODO the week number must update when moving between different weeks*/}
                       Times exercised week 8
                     </Text>
                 </View>
                 <View style={styles.backContainer}>
+                    {/* Back-button to move to previous week*/}
                     <Ionicons 
                       name='caret-back-outline' 
                       color={'#cfb3e9'} 
@@ -145,6 +150,7 @@ function ProfileScreen({ navigation }) {
                     </Ionicons>
                 </View>
                 <View style={styles.forwardContainer}>
+                    {/* Forward-button to move to next week*/}
                     <Ionicons 
                       name='caret-forward-outline' 
                       color={'#cfb3e9'} 
@@ -154,16 +160,18 @@ function ProfileScreen({ navigation }) {
                 </View>
             </View>
             <View>
+                {/* Chart that visually shows the number of times exercised for a given week */}
                 <BarChart
-                    data={data}
+                    data={chartData}
                     width={windowWidth}
                     height={200}
                     yAxisLabel=''
                     yAxisSuffix=''
-                    chartConfig={chartConfig}
+                    chartConfig={chartStyle}
                 />
             </View>
             <View style={styles.logProgContainer}>
+                {/* A button that, when pushed, goes to the progress screen */}
                 <Button title = 'Log Progress' 
                     buttonStyle = {{
                         justifyContent: 'center', 
@@ -182,11 +190,13 @@ function ProfileScreen({ navigation }) {
         </View>
         <View>
           <View style={styles.workoutHeaderContatiner}>
+            {/* Header for the workouts part of the profile page */}
             <Text adjustsFontSizeToFit={true} style={styles.workoutHeaderText}> 
               WORKOUTS 
             </Text>
           </View>
           <View style={styles.chooseWorkoutContainer}>
+            {/* Buttons to filter which workouts that are shown */}
             <View style={{flex: 1}}>
               <Button title = 'Mine' 
                   buttonStyle = {{
@@ -220,6 +230,7 @@ function ProfileScreen({ navigation }) {
             </View>
           </View>
         </View>
+        {/* The workout feed */}
         <FeedsContainer ref={childRef}></FeedsContainer>
       </ScrollView>
     </View>

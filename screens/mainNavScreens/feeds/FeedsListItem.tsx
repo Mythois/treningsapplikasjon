@@ -15,8 +15,8 @@ const windowWidth = Dimensions.get('window').width;
 // It contains a header, content and a like button
 export default function FeedsListItem(data: Props) {
 
-    // This holds the icon that gets displayed, it can have two different states, 'heart' or 'heart-outline'
-    const [iconState, setIcon] = useState('heart-outline');
+    // This holds the icon that gets displayed, it can have two different states, 'bookmark' or 'bookmark-outline'
+    const [iconState, setIcon] = useState('bookmark-outline');
 
     // This handles the like state, allows the user to increase like count of decrease(unlike)
     const [likeState, setLike] = useState(data.likes);
@@ -31,17 +31,17 @@ export default function FeedsListItem(data: Props) {
         alert(data.text)
     }
 
-    // Runs when the user presses the heart icon
+    // Runs when the user presses the bookmark icon
     // Changes the state of the icon
     // Increase in the like count if not already liked, decreases if the opposite
     // Add user to likedBy in the database for the program                         <--------------------- Not implemented yet
     const handlePressLike = () => {
         // Toggle between like and unlike
-        if (iconState === 'heart') {
-            setIcon('heart-outline');
+        if (iconState === 'bookmark') {
+            setIcon('bookmark-outline');
             setLike(data.likes);
         } else {
-            setIcon('heart');
+            setIcon('bookmark');
             setLike(data.likes + 1);
         }
     }

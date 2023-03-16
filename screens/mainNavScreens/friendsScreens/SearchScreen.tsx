@@ -1,13 +1,15 @@
 import { Avatar, Button, Icon, Input } from '@rneui/themed';
 import * as React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
 import { WorkoutUser } from '../../../LocalData/Users/WorkoutUser';
 import { LocalData } from '../../../LocalData/LocalData';
+import SmallHeaderContent from '../profile/SmallHeaderContent';
 
 // Export page
 export default function SearchScreen({navigation}) {
     const [users, setUsers] = React.useState<WorkoutUser[]>([]);
     const [search, setSearch] = React.useState('');
+    const childRef: any = React.useRef();
 
     const renderItem = ({ item }: { item: WorkoutUser }) => (
         <TouchableOpacity 
@@ -41,7 +43,12 @@ export default function SearchScreen({navigation}) {
       
 
     return (
+        <View style={styles.smallHcontainer}>
+            <SafeAreaView>
+            <SmallHeaderContent user={LocalData.currentUser} ref={childRef} navigation={navigation}></SmallHeaderContent>
+            </SafeAreaView>
         <View style={styles.container}>
+            
             <View style={styles.inputContainer}>
                 <Input style={styles.input}
                 placeholder='Search...'
@@ -73,6 +80,7 @@ export default function SearchScreen({navigation}) {
                 <Text style={{color: "white"}}>{(search.length > 1 ? "No users found" : "Type in two or more characters to search.")}</Text>
             )}
         </View>
+        </View>
     );
 }
 
@@ -85,12 +93,17 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         width: '90%',
-        marginTop: 50,
+        marginTop: 20,
     },
     input: {
         paddingHorizontal: 15,
         paddingVertical: 15,
         width: '100%',
         color: "white"
+    },
+    smallHcontainer: {
+        width: '100%',
+        flex: 1,
+        backgroundColor: "#121212",
     },
 });

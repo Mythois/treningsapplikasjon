@@ -193,9 +193,9 @@ export default function ProgramScreen({navigation}) {
             <SafeAreaView>
             <SmallHeaderContent user={LocalData.currentUser} ref={childRef} navigation={navigation}></SmallHeaderContent>
             </SafeAreaView>
-            <View style={{flexDirection:"row", width: "100%", top:"1%", left:"5%"}}>
+            <View style={{flexDirection:"row", width: "100%", top:"0%", left:"5%"}}>
                 <View>
-                    <Text style={{color:"#FFFFFF", fontSize:18, top:"20%"}}>
+                    <Text style={{color:"#FFFFFF", fontSize:18, top:"25%"}}>
                         {currentDate}
                     </Text>
                 </View>
@@ -209,7 +209,7 @@ export default function ProgramScreen({navigation}) {
                     />
                 </View>
             </View>
-            <View style={{top:"2%"}}>
+            <View style={{top:"0%"}}>
                 <View style={{paddingTop:10}}>
                     <TextInput
                     style = {{fontWeight:"bold", fontSize:30, color:"#DC6247", textAlign:"center", paddingBottom:5}}
@@ -366,7 +366,7 @@ export default function ProgramScreen({navigation}) {
                             }
 
                         />
-                    <View style={{alignItems: 'center', marginTop:"2%"}}>
+                    <View style={{alignItems: 'center', marginTop:"0%"}}>
                         <Button 
                         title= "Add new exercise"
                         color = "#303030"

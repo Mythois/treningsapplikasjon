@@ -2,6 +2,8 @@ import { WorkoutUser } from "./Users/WorkoutUser";
 import { auth, db } from "../firebase";
 import { doc, getDoc, onSnapshot, Unsubscribe } from "firebase/firestore";
 import UsersCollectionLoader from "./Users/UserCollectionLoader";
+import { ProgramData } from "./Programs/ProgramData";
+import ProgramCollectionLoader from "./Programs/ProgramCollectionLoader";
 
 export class LocalData {
   /**
@@ -10,9 +12,11 @@ export class LocalData {
   static currentUser: WorkoutUser = new WorkoutUser({});
   
   /**
-   * A CollectionLoader to load the instances of users in the app.
+   * CollectionLoaders to load the instances of users and programs in the app.
    */
   static usersCollection: UsersCollectionLoader = new UsersCollectionLoader();
+
+  static programCollection: ProgramCollectionLoader = new ProgramCollectionLoader();
   static unsubscribeListener: Unsubscribe;
     
   static async initCurrentUser() {

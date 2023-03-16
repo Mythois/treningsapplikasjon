@@ -1,5 +1,22 @@
+/**
+ * About this file:
+ * 
+ * This file represents the Program tab of the application.
+ * Here the user can create programs by defining a program name and
+ * by adding exercises to the various days of the week. 
+ * 
+ * An exercise has a name, a numer of sets and  a number of repetitions.
+ * A day of the week is called a programDay and can have multiple exercises.
+ * The programDay is selected by pressing the respective button for that day.
+ * A program has a name/title and a date (which is automatically stored with the 
+ * rest of the necessary information when the user pressen save).
+ * Furthermore, a program consists of programDays.
+ */
+
+
+// Imports
 import * as React from 'react';
-import { View, FlatList, TextInput, ScrollView, Alert, ActivityIndicator, SafeAreaView } from 'react-native';
+import { View, FlatList, TextInput, ScrollView, Alert, ActivityIndicator, Dimensions, SafeAreaView} from 'react-native';
 import { Button, Text , Image} from '@rneui/themed';
 import { isTemplateSpan } from 'typescript';
 import { AuthErrorCodes } from 'firebase/auth';
@@ -17,18 +34,15 @@ interface exercise {
     reps: number;
 }
 
-// The structure of a training program
 interface program{
     name: string;
 
     userID: string;
-    date: Date; // The date at which the training program got created.
+    date: Date; // The date at which the training program is created
 
     likedBy: string[];
 }
 
-// The structure of a training program day
-// A training program can go over multiple days, this interface represents one day
 interface programDay{
     weekday: number;
     exercises: exercise[];
@@ -36,13 +50,16 @@ interface programDay{
 
 
 
+// Phone dimensions
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 export default function ProgramScreen({navigation}) {
-    
+        // Find current date 
 
+    // Method and variable to set and store the current date respectively
     const [currentDate, setCurrentDate] = React.useState('');
-    const childRef: any = React.useRef();
-  
+    // Finding the current date and setting it
     React.useEffect(() => {
       var date = new Date().getDate(); //Current Date
       var month = new Date().getMonth() + 1; //Current Month
@@ -52,6 +69,8 @@ export default function ProgramScreen({navigation}) {
       );
     }, []);
 
+    const childRef: any = React.useRef();
+
     const [exercises, setExercises] = React.useState<exercise[]>([]);
     const [exerciseName, setExerciseName] = React.useState(''); // What about this?
     const [sets, setSets] = React.useState<number>();
@@ -59,6 +78,9 @@ export default function ProgramScreen({navigation}) {
     const [selectedDay, setSelectedDay] = React.useState<number>(0);
     const [name, setName] = React.useState('');
 
+    /**
+     * A method to add new exercises to the list of exercises
+     */
     const handleAddExercise = () => {
         const newExercise: exercise = {
           id: nanoid(),
@@ -69,15 +91,37 @@ export default function ProgramScreen({navigation}) {
         };
         setExercises([...exercises, newExercise]);
       };
+      
+
+      /**
+       * A method that deletes a specific exercise
+       * @param id The id of the exercise to be deleted
+       */
       const handleDeleteExercise = (id: string)  => {
         setExercises(prevExercises => prevExercises.filter(exercise => exercise.id !== id));
       }
+
     
+    /**
+     * This method is responsible for registering the day the user presses
+     * @param day The day the user has pressed
+     */
     const handleDayPress = (day: number) => {
         setSelectedDay(day);
     }
+
+    /**
+     * The set of exercises that pertain to the day the user selects
+     */
     const filteredExercises = exercises.filter((exercise) => exercise.day === selectedDay);
     
+
+
+
+    /**
+     * Method for saving training programs
+     * @param exercises an array of exercise objects
+     */
     const handleSave = (exercises: exercise[]) => {
         if(name == ""){
             Alert.alert('Please enter a program name', '', [
@@ -166,9 +210,9 @@ export default function ProgramScreen({navigation}) {
                 </View>
             </View>
             <View style={{top:"2%"}}>
-                <View>
+                <View style={{paddingTop:10}}>
                     <TextInput
-                    style = {{fontWeight:"bold", fontSize:30, color:"#DC6247", textAlign:"center", paddingBottom:10}}
+                    style = {{fontWeight:"bold", fontSize:30, color:"#DC6247", textAlign:"center", paddingBottom:5}}
                     placeholder = "Program Name"
                     value={name}
                     placeholderTextColor = "#DC6247"
@@ -250,8 +294,8 @@ export default function ProgramScreen({navigation}) {
                     </View>
                 </View>
                 <View style={{justifyContent:'center'}}>
-                <ScrollView>
                     <FlatList
+                            style={{height:windowHeight*0.54}}
                             data = {filteredExercises}
                             keyExtractor={(item) => item.id.toString()}
                             renderItem={({item}) => 
@@ -322,15 +366,14 @@ export default function ProgramScreen({navigation}) {
                             }
 
                         />
-                        
+                    <View style={{alignItems: 'center', marginTop:"2%"}}>
                         <Button 
                         title= "Add new exercise"
                         color = "#303030"
-                        style = {{left:"25%", paddingTop:20}}
                         onPress={handleAddExercise}
                         buttonStyle = {{width:200, height:40, borderRadius:10}}
                         />
-                    </ScrollView>
+                    </View>
                 </View>
             </View>
         </View>

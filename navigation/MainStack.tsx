@@ -2,21 +2,25 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from '../screens/mainNavScreens/HomeScreen';
 import ProfileScreen from '../screens/mainNavScreens/ProfileScreen';
-import Groups from '../screens/mainNavScreens/Groups';
-import Program from '../screens/mainNavScreens/Program';
 import SearchStack from '../screens/mainNavScreens/friendsScreens/SearchStack';
+import ProgramScreen from '../screens/mainNavScreens/Program';
+import Groups from '../screens/mainNavScreens/Groups';
+import NewGroup from '../screens/mainNavScreens/NewGroup';  
 
 // Screen Names
 const homeName:any = "Home";
 const profileName:any = "Profile";
-const search:any = "Search"
-const groups:any = "Groups"
-const program:any = "Program"
+const search:any = "Search";
+const groups:any = "Groups";
+const program:any = "Program";
+const newGroup:any = "NewGroup";
 
 const Tab: any = createBottomTabNavigator();
+const Stack: any = createStackNavigator();
 
 export default function MainStack() {
     return (
@@ -75,11 +79,12 @@ export default function MainStack() {
                     options={{ headerShown: false }}
                 />
                 <Tab.Screen name={program} 
-                component={Program}
+                component={ProgramScreen}
                 options={{ headerShown: false }}
                 />
-                <Tab.Screen name={groups} 
-                component={Groups}
+                <Tab.Screen name={groups}
+                    component={GroupsStack}
+                    options={{ headerShown: false }}
                 />
                 <Tab.Screen name={profileName} 
                 component={ProfileScreen}
@@ -87,7 +92,23 @@ export default function MainStack() {
                 />
 
             </Tab.Navigator>
-            
         </NavigationContainer>
+    );
+}
+
+function GroupsStack() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name={groups}
+          component={Groups}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={newGroup}
+          component={NewGroup}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
     );
 }

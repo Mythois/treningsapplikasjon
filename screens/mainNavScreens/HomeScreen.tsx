@@ -9,11 +9,12 @@ import SmallHeaderContent from './profile/SmallHeaderContent';
 
 function HomeScreen({ navigation }) {
 
-  // Controling the feeds
+  // Refers to the feeds container for controling the feeds
   const childRef: any = useRef();
 
-  function handlePressTopTab() {
-    childRef.current.refresh();
+  // Refreshes the page based on which tab is pressed
+  function handlePressTopTab(tab: string) {
+    childRef.current.refresh(tab);
   }
 
   return (
@@ -25,19 +26,19 @@ function HomeScreen({ navigation }) {
             {/* Other stuff */}
         
         <ScrollView horizontal={true}>
-          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab())}>
+          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab('all'))}>
             <Text style={styles.feedTabText}>All</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab())}>
+          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab('discover'))}>
             <Text style={styles.feedTabText}>Discover</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab())}>
+          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab('friends'))}>
             <Text style={styles.feedTabText}>Friends</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab())}>
+          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab('groups'))}>
             <Text style={styles.feedTabText}>Groups</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab())}>
+          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab('myOwn'))}>
             <Text style={styles.feedTabText}>My own</Text>
           </TouchableOpacity>
         </ScrollView>
@@ -46,32 +47,6 @@ function HomeScreen({ navigation }) {
       <View>
         <FeedsContainer ref={childRef}></FeedsContainer>
       </View>
-      {/* <Text
-          onPress={() => navigation.navigate('Home')}
-          style={{ fontSize: 26, fontWeight: 'bold'}}
-          >
-              These are the newest feeds!!!
-      </Text>
-
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Sign out"
-          loading={false}
-          loadingProps={{ size: 'small', color: 'white' }}
-          buttonStyle={{
-            backgroundColor: 'rgba(0,0,0,1)',
-            borderRadius: 5,
-            height: 55,
-          }}
-          titleStyle={{ fontWeight: 'bold', fontSize: 18 }}
-          containerStyle={{
-            marginHorizontal: 50,
-            height: 55,
-            width: '90%',
-          }}
-          onPress={() => signOut(auth)}
-        />
-      </View> */}
     </View>
   );
 }
@@ -96,7 +71,12 @@ const styles = StyleSheet.create({
   },
   feedTabText: {
     fontSize: 24,
-    color: 'rgb(230, 230, 230)',
+    fontWeight: '900',
+    letterSpacing: 2,
+    color: '#DC6247',
+  },
+  headerConteiner: { //Added to maybe add logo to the top
+
   },
   topRowContainer: {
     padding: '1%',
@@ -129,5 +109,6 @@ const styles = StyleSheet.create({
     right: 20
   }
 })
+
 export default HomeScreen;
 

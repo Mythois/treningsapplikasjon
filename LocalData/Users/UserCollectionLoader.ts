@@ -12,6 +12,7 @@ export default class UsersCollectionLoader {
     collectionRef = collection(db, "users");
     
     loaded: boolean = false;
+    loading: boolean = false;
     
     private users: WorkoutUser[] = [];
     /**
@@ -28,7 +29,8 @@ export default class UsersCollectionLoader {
      * @param completion 
      */
     async load(completion: (documents: WorkoutUser[]) => void) {
-        if (this.loaded) { return; }
+        if (this.loaded || this.loading) { return; }
+        this.loading = true;
         this.users = [];
         // Creating a loading query
         const q = query(this.collectionRef);
@@ -47,6 +49,7 @@ export default class UsersCollectionLoader {
         .finally(() => {
             if (this.users.length > 0) this.loaded = true;
             console.log("Loaded users:", this.users);
+            this.loading = false;
         });
     }
 

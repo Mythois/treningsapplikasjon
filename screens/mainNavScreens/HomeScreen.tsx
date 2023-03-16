@@ -1,9 +1,11 @@
-import { Button } from '@rneui/themed';
+import { Button, Image, Avatar } from '@rneui/themed';
 import { signOut } from 'firebase/auth';
 import React, { useRef } from 'react'
-import { Text, StyleSheet, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, View, SafeAreaView, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { auth } from '../../firebase';
 import FeedsContainer from './feeds/FeedsContainer';
+import { LocalData } from '../../LocalData/LocalData';
+import SmallHeaderContent from './profile/SmallHeaderContent';
 
 function HomeScreen({ navigation }) {
 
@@ -18,7 +20,11 @@ function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       {/* This is the top section */}
-      <SafeAreaView style={styles.headerConteiner}>
+      <SafeAreaView>
+        <SmallHeaderContent user={LocalData.currentUser} ref={childRef} navigation={navigation}></SmallHeaderContent>
+            
+            {/* Other stuff */}
+        
         <ScrollView horizontal={true}>
           <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab('all'))}>
             <Text style={styles.feedTabText}>All</Text>
@@ -72,6 +78,36 @@ const styles = StyleSheet.create({
   headerConteiner: { //Added to maybe add logo to the top
 
   },
+  topRowContainer: {
+    padding: '1%',
+    height: 60,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#121212"
+  },
+  logoBox: {
+    //padding: '1%',
+    marginLeft: 5,
+    marginTop: 8,
+    width: '70%',
+  },
+  userBox: {
+    flexDirection: 'row', 
+    //justifyContent:"space-around", 
+    //alignContent:"flex-start",
+    //alignItems: "left",
+    padding: '1%', 
+    paddingVertical: 7, 
+    flex: 1, 
+    width:"100%", 
+    alignItems:"center"
+  },
+  userName: {
+    flex: 1, 
+    width:"75%",
+    right: 20
+  }
 })
 
 export default HomeScreen;

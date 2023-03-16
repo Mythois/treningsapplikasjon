@@ -16,7 +16,7 @@
 
 // Imports
 import * as React from 'react';
-import { View, FlatList, TextInput, ScrollView, Alert, ActivityIndicator, Dimensions} from 'react-native';
+import { View, FlatList, TextInput, ScrollView, Alert, ActivityIndicator, Dimensions, SafeAreaView} from 'react-native';
 import { Button, Text , Image} from '@rneui/themed';
 import { isTemplateSpan } from 'typescript';
 import { AuthErrorCodes } from 'firebase/auth';
@@ -24,9 +24,8 @@ import 'react-native-get-random-values';
 import { nanoid } from 'nanoid'
 import { LocalData } from '../../LocalData/LocalData';
 import { exercisesArrayToExercisesMap, groupExercisesByDay, saveProgram} from '../../save/programSave';
+import SmallHeaderContent from './profile/SmallHeaderContent';
 
-
-// Interfaces
 interface exercise {
     id: string;
     day: number;
@@ -69,6 +68,8 @@ export default function ProgramScreen({navigation}) {
         date + '.' + month + '.' + year 
       );
     }, []);
+
+    const childRef: any = React.useRef();
 
     const [exercises, setExercises] = React.useState<exercise[]>([]);
     const [exerciseName, setExerciseName] = React.useState(''); // What about this?
@@ -189,9 +190,12 @@ export default function ProgramScreen({navigation}) {
 
     return(
         <View style={{backgroundColor: "#121212", flex:1}}>
-            <View style={{flexDirection:"row", width: "100%", top:"20%", left:"5%"}}>
+            <SafeAreaView>
+            <SmallHeaderContent user={LocalData.currentUser} ref={childRef} navigation={navigation}></SmallHeaderContent>
+            </SafeAreaView>
+            <View style={{flexDirection:"row", width: "100%", top:"0%", left:"5%"}}>
                 <View>
-                    <Text style={{color:"#FFFFFF", fontSize:18, top:"20%"}}>
+                    <Text style={{color:"#FFFFFF", fontSize:18, top:"25%"}}>
                         {currentDate}
                     </Text>
                 </View>
@@ -205,7 +209,7 @@ export default function ProgramScreen({navigation}) {
                     />
                 </View>
             </View>
-            <View style={{top:"10%"}}>
+            <View style={{top:"0%"}}>
                 <View style={{paddingTop:10}}>
                     <TextInput
                     style = {{fontWeight:"bold", fontSize:30, color:"#DC6247", textAlign:"center", paddingBottom:5}}
@@ -362,7 +366,7 @@ export default function ProgramScreen({navigation}) {
                             }
 
                         />
-                    <View style={{alignItems: 'center', marginTop:"2%"}}>
+                    <View style={{alignItems: 'center', marginTop:"0%"}}>
                         <Button 
                         title= "Add new exercise"
                         color = "#303030"

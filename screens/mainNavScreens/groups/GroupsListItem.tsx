@@ -12,28 +12,28 @@ interface Props {
 const windowWidth = Dimensions.get('window').width;
 
 // This is an item component that represents a single item in the GroupsContainer
-export default function GroupsListItem(data: Props) {
+export default function GroupsListItem({name, description}: {name: string, description: string}) {
 
     // Runs when the user presses the header of this item
     const handlePressName = () => {
-        alert(data.name)
+        alert(name)
     };
 
     // Runs when the user presses the content of this item
     const handlePressContent = () => {
-        alert(data.description)
+        alert(description)
     }
 
     return (
         <View style={[styles.container, styles.elevation]}>
             <TouchableOpacity onPress={handlePressName} style={styles.top}>
                 <Text style={styles.header}>
-                    {data.name}
+                    {name}
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.content} onPress={handlePressContent}>
                 <Text style={styles.contentText}>
-                    {data.description}
+                    {description}
                 </Text>
             </TouchableOpacity>
         </View>

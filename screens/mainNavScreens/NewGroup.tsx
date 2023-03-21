@@ -4,11 +4,14 @@ import React, { useRef, useState } from 'react';
 import { nanoid } from 'nanoid'
 import SmallHeaderContent from './profile/SmallHeaderContent';
 import { LocalData } from '../../LocalData/LocalData';
+import { saveGroup} from '../../save/groupSave';
 
 interface group {
-    id:number;
-    name:string;
-    description:string;
+    id: string;
+    name: string;
+    description: string;
+    members: string[];
+    admins: string[];
 }
 
 
@@ -16,6 +19,14 @@ export default function NewGroup({navigation}) {
 
     const [currentName, newName] = React.useState('');
     const [currentDesc, newDesc] = React.useState('');
+    const childRef: any = React.useRef();
+
+    // const [exercises, setExercises] = React.useState<exercise[]>([]);
+    // const [exerciseName, setExerciseName] = React.useState(''); // What about this?
+    // const [sets, setSets] = React.useState<number>();
+    // const [reps, setReps] = React.useState<number>();
+    // const [selectedDay, setSelectedDay] = React.useState<number>(0);
+    // const [name, setName] = React.useState('');
 
     const handleNameChange = (text) => {
         newName(text);
@@ -25,14 +36,68 @@ export default function NewGroup({navigation}) {
         newDesc(text);
     }
 
-    const handleSave = () => {
+    // const handleSave = () => {
         
-    }
+    // }
     const handleBack = () => {
         navigation.navigate('Groups')
     }
 
-    const childRef: any = React.useRef();
+    /**
+     * A method to add new group to the list of groups
+     */
+    // const handleAddExercise = () => {
+    //     let currentMembers: string[] = [];
+    //     currentMembers.push(LocalData.currentUser.id);
+    //     const newGroup: group = {
+    //       id: nanoid(),
+    //       name: currentName,
+    //       description: currentDesc,
+    //       members: currentMembers,
+    //       admins: currentMembers,
+    //     };
+    //     setGroup([...exercises, newExercise]);
+    //   };
+
+      /**
+     * Method for saving training programs
+     * @param exercises an array of exercise objects
+     */
+    const handleSave = () => {
+        if(currentName == ""){
+            Alert.alert('Please enter a group name', '', [
+                {text: 'Proceed', onPress: () => console.log("No group created")},
+              ]);
+        }
+        else{
+            Alert.alert('Program Created', '', [
+                {text: 'Ok', onPress: () => console.log("Ok")},
+              ]);
+
+            let currentMembers: string[] = [];
+            currentMembers.push(LocalData.currentUser.id);
+
+            const newGroup = {
+                id: nanoid(),
+                name: currentName,
+                description: currentDesc,
+                members: currentMembers,
+                admins: currentMembers,
+            };
+            saveGroup(newGroup);
+        
+            // setName("");    
+            // setExercises([]);
+            // setSelectedDay(0);
+            // setExerciseName("");
+            // setSets(undefined);
+            // setReps(undefined);
+        }
+    }
+        
+    
+
+    
 
     return(
         <View style={styles.container}>

@@ -18,7 +18,7 @@ import { LocalData } from "../LocalData/LocalData";
 
 interface group {
     id: string;
-    name: number;
+    name: string;
     description: string;
     members: string[];
     admins: string[];

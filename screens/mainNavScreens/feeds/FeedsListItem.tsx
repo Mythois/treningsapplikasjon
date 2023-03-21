@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Touchable, TouchableOpacity, Dimensions } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { LocalData } from '../../../LocalData/LocalData';
 
 interface Props {
     name: String,
     text: String,
-    likes: number,
-    updateBookmark: () => void,
+    likes: string[],
+    updateBookmark: (id: string) => void,
 }
 
 // Gets window width to be used in item width, each item has to be less than half the window width
@@ -24,7 +25,14 @@ export default function FeedsListItem(data: Props) {
 
     // Managing what to save to bookmarked
     const [bookmarksState, setBookmarks] = useState([]);
-    
+
+    useEffect(() => {
+        if (checkIfUserBookmarked()) {
+            setIcon('bookmark');
+            console.log('checked bookmark');
+        }
+    }, []);
+
     // Runs when the user presses the header of this item
     const handlePressName = () => {
         alert(data.name)
@@ -41,14 +49,27 @@ export default function FeedsListItem(data: Props) {
     // Add user to likedBy in the database for the program                         <--------------------- Not implemented yet
     const handlePressLike = () => {
         // Toggle between like and unlike
-        if (iconState === 'bookmark') {
+        if (checkIfUserBookmarked()) {
             setIcon('bookmark-outline');
-            setLike(data.likes);
+            // remove user from likeState
+            setLike((prevList) => prevList.filter((prevItem) => prevItem != LocalData.currentUser.id));
         } else {
             setIcon('bookmark');
-            setLike(data.likes + 1);
+            setLike(likeState => [...likeState, LocalData.currentUser.id]);
         }
-        data.updateBookmark();
+        // update database
+        data.updateBookmark(LocalData.currentUser.id);
+    }
+
+    function checkIfUserBookmarked() {
+        const user = LocalData.currentUser.id;
+        for (let item of likeState) {
+            if (user == item) {
+                console.log('user has already liked program');
+                return true;
+            }
+        }
+        return false;
     }
 
     return (
@@ -65,7 +86,7 @@ export default function FeedsListItem(data: Props) {
             </TouchableOpacity>
             <Ionicons name={iconState} style={styles.likesIcon} size={20} onPress={handlePressLike} />
             <Text style={styles.likesText}>
-                {likeState}
+                {likeState.length}
             </Text>
         </View>
     );

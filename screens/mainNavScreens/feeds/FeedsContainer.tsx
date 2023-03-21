@@ -32,7 +32,7 @@ function FeedsContainer(props, ref) {
     const [filterState, setFilters] = useState(defaultFilters);
     const [filteredItemsState, setFilteredItems] = useState([]);
 
-    
+
 
     // Runs at the beginning of the home screen to generate feeds
     useEffect(() => {
@@ -67,7 +67,7 @@ function FeedsContainer(props, ref) {
         let filter: Filters = { typeOfFeed: type, isImage: false }
         setFilters(filter);
         console.log(filterState);
-        
+
         // Refreshes the items by setting itemsState to be empty
         setCurrentItems([]);
 
@@ -99,15 +99,15 @@ function FeedsContainer(props, ref) {
         for (let i = 0; i < 11; i++) {
             console.log(items.length);
             for (const item of filteredItemsState) {
-                
+
                 if (!items.some((i) => i.id === item.id)) {
 
-                    
+
                     items.push(item);
                     i = i + 1;
                 }
             }
-            
+
         }
         return items;
     }
@@ -119,7 +119,7 @@ function FeedsContainer(props, ref) {
         setCurrentItems(currentItems => [...currentItems, findOneMissingProgram(itemsState, currentItemsState)]);
 
         // Check if the item fulfils the requirements from filter
-        
+
         // findOneMissingProgram(currentItemsState, itemsState);
 
         // console.log('ho');
@@ -145,7 +145,7 @@ function FeedsContainer(props, ref) {
         //             setCurrentItems([item]);
 
         //         }
-                
+
         //     }
         // }
 
@@ -195,7 +195,7 @@ function FeedsContainer(props, ref) {
                     //height: windowHeight 
                 }}>
                     <FlatList style={styles.list} data={currentItemsState} numColumns={2} renderItem={({ item }) => (
-                        <FeedsListItem name={item.name} text={item.date.toString()} likes={item.likedBy.length} updateBookmark={updateBookmarksInDatabase}></FeedsListItem>
+                        <FeedsListItem name={item.name} text={item.date.toString()} likes={item.likedBy} updateBookmark={updateBookmarksInDatabase}></FeedsListItem>
                     )} />
                 </View>
 

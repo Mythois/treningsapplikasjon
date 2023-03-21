@@ -3,7 +3,7 @@ import { Component, forwardRef, useCallback, useEffect, useImperativeHandle, use
 import { View, Text, StyleSheet, FlatList, ScrollView, Dimensions } from 'react-native';
 import { LocalData } from '../../../LocalData/LocalData';
 import { ProgramData } from '../../../LocalData/Programs/ProgramData';
-import FeedsListItem from './FeedsListItem';
+import GroupsListItem from './GroupsListItem';
 import { useFocusEffect } from '@react-navigation/native';
 
 // Filters for feeds that change what feeds to display
@@ -18,28 +18,20 @@ let currentUserID: string = '';
 
 // This is container for the whole feed section
 // It contain functions to filter the feeds, get new feeds from loaded programs
-function FeedsContainer(props, ref) {
+function GroupsContainer(props, ref) {
 
     // This ref is used to refer to the scrollview so that we know when the user scrolled to the bottom to generate new feed
     const scrollRef: any = useRef();
 
     // Contains the current items
-    const programs: ProgramData[] = [];
-    const [itemsState, setItems] = useState(programs);
-    const [currentItemsState, setCurrentItems] = useState(programs);
+    const groups: string[] = [];
+    const [itemsState, setItems] = useState(groups);
+    const [currentItemsState, setCurrentItems] = useState(groups);
 
     // Managing what to load                                               <---------------------- this is made for later functions
     const [filterState, setFilters] = useState(defaultFilters);
     const [filteredItemsState, setFilteredItems] = useState([]);
 
-    // Runs at the beginning of the home screen to generate feeds
-    useEffect(() => {
-        refresh(defaultFilters.typeOfFeed);
-    }, []);
-
-    useEffect(() => {
-        setCurrentItems(resultAfterFilter());
-    }, [filterState]);
 
     // Refreshes all items in the item list
     function refresh(type: string) {
@@ -52,9 +44,9 @@ function FeedsContainer(props, ref) {
 
         // Reloads the feeds from the database
         LocalData.programCollection.load(() => {
-            setItems(LocalData.programCollection.getPrograms()); // <------------------------ Put everything here
+            setItems(LocalData.currentUser.groups); // <------------------------ Put everything here
             currentUserID = LocalData.currentUser.id;
-            setCurrentItems(LocalData.programCollection.getPrograms());
+            setCurrentItems(LocalData.currentUser.groups);
             console.log(type);
             console.log(filterState);
             console.log(currentItemsState);
@@ -112,41 +104,7 @@ function FeedsContainer(props, ref) {
     // Unused function
     // Get new program from programCollection without deleting the existing ones
     function loadNewItems() {
-
         setCurrentItems(currentItems => [...currentItems, findOneMissingProgram(itemsState, currentItemsState)]);
-
-        // Check if the item fulfils the requirements from filter
-        
-        // findOneMissingProgram(currentItemsState, itemsState);
-
-        // console.log('ho');
-        // console.log(currentItemsState);
-        // for (const item of itemsState) {
-        //     if (!currentItemsState.includes(item)) {
-
-        //     }
-
-
-
-        //     if (item && item instanceof ProgramData && item.id) {
-
-        //         if (currentItemsState !== undefined && currentItemsState.length != 0) {
-        //             for (var currentItem of currentItemsState) {
-        //                 if (item.id != currentItem.id) {
-        //                     setCurrentItems(currentItems => [...currentItems, item]);
-        //                     console.log('loaded new item');
-        //                     break
-        //                 }
-        //             }
-        //         } else {
-        //             setCurrentItems([item]);
-
-        //         }
-                
-        //     }
-        // }
-
-        // If nothing is returned, then tell the user that there are no more feeds
     }
 
     function resultAfterFilter() {
@@ -194,11 +152,13 @@ function FeedsContainer(props, ref) {
     )
 };
 
-export default forwardRef(FeedsContainer);
+export default forwardRef(GroupsContainer);
 
 // Get window heigh to decide the height of the container
 const windowHeight = Dimensions.get('window').height;
 
+
+// Styles 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'rgb(12, 12, 12)',

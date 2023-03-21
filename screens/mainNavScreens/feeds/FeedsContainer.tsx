@@ -172,6 +172,14 @@ function FeedsContainer(props, ref) {
         //setFilteredItems(filteredItems);
     }
 
+    function listItemText(item: ProgramData) {
+        if (item.programDaysExercise.name.length > 0) {
+            let text = item.programDaysExercise.name + ': ' + item.programDaysExercise.reps + ' reps, ' + item.programDaysExercise.sets + ' sets';
+            return text;
+        }
+        return "";
+    }
+
     function isCloseToBottom({ contentOffset, contentSize, layoutMeasurement }) {
         return layoutMeasurement.height + contentOffset.y >= contentSize.height - 2000;
     }
@@ -195,7 +203,7 @@ function FeedsContainer(props, ref) {
                     //height: windowHeight 
                 }}>
                     <FlatList style={styles.list} data={currentItemsState} numColumns={2} renderItem={({ item }) => (
-                        <FeedsListItem name={item.name} text={item.date.toString()} likes={item.likedBy} updateBookmark={updateBookmarksInDatabase}></FeedsListItem>
+                        <FeedsListItem name={item.name} text={listItemText(item)} likes={item.likedBy} updateBookmark={updateBookmarksInDatabase}></FeedsListItem>
                     )} />
                 </View>
 

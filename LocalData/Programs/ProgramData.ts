@@ -1,4 +1,5 @@
 import { Timestamp } from "firebase/firestore";
+import { ProgramDayExercise } from "./ProgramDay";
 
 export class ProgramData {
   id: string = "";
@@ -7,11 +8,16 @@ export class ProgramData {
   date: Date = new Date();
   likedBy: string[] = [];
 
+  exercisesData: any = {name: "", reps: "", sets: "",};
+  programDaysExercise: ProgramDayExercise = new ProgramDayExercise(this.exercisesData);
+
   constructor(data: any) {
     if (data) {
       this.name = typeof data.name === "string" ? data.name : "";
       this.userID = typeof data.userID === "string" ? data.userID : "";
       this.date = this.getDateFromTimestamp(data.date) ?? new Date();
+      console.log(data.exercises);
+      this.programDaysExercise = data.exercises ? new ProgramDayExercise(data.exercises) : this.exercisesData;
 
       if (Array.isArray(data.likedBy)) {
         this.likedBy = [];

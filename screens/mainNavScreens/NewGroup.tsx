@@ -69,7 +69,7 @@ export default function NewGroup({navigation}) {
               ]);
         }
         else{
-            Alert.alert('Program Created', '', [
+            Alert.alert('Group created', '', [
                 {text: 'Ok', onPress: () => console.log("Ok")},
               ]);
 
@@ -123,9 +123,10 @@ export default function NewGroup({navigation}) {
                             onChangeText={handleNameChange}
                         />
                     </View>
-                    <View style={{borderWidth:1, borderColor:"#303030", borderRadius:5, padding:5, marginTop:"7%", width:350, height:300 }}>
+                    <View style={{borderWidth:1, borderColor:"#303030", borderRadius:5, padding:5, marginTop:"7%", width:350, height:300 } }>
                         <TextInput
                         style={styles.boxText}
+                        multiline={true}
                         placeholderTextColor={"#303030"}
                         placeholder="Description"
                         onChangeText={handleDescChange}

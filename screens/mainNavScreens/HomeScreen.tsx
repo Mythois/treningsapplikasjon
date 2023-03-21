@@ -11,6 +11,7 @@ function HomeScreen({ navigation }) {
 
   // Refers to the feeds container for controling the feeds
   const childRef: any = useRef();
+  const childRef2: any = useRef();
 
   // Refreshes the page based on which tab is pressed
   function handlePressTopTab(tab: string) {
@@ -21,7 +22,7 @@ function HomeScreen({ navigation }) {
     <View style={styles.container}>
       {/* This is the top section */}
       <SafeAreaView>
-        <SmallHeaderContent user={LocalData.currentUser} ref={childRef} navigation={navigation}></SmallHeaderContent>
+        <SmallHeaderContent user={LocalData.currentUser} ref={childRef2} navigation={navigation}></SmallHeaderContent>
             
             {/* Other stuff */}
         
@@ -45,7 +46,7 @@ function HomeScreen({ navigation }) {
       </SafeAreaView>
       {/* This is the feed section */}
       <View>
-        <FeedsContainer ref={childRef}></FeedsContainer>
+        <FeedsContainer ref={childRef} navigation={navigation}></FeedsContainer>
       </View>
     </View>
   );

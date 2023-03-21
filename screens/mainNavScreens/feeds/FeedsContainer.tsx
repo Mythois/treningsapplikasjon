@@ -18,7 +18,7 @@ let currentUserID: string = '';
 
 // This is container for the whole feed section
 // It contain functions to filter the feeds, get new feeds from loaded programs
-function FeedsContainer(props, ref) {
+function FeedsContainer({ref, navigation}) {
 
     // This ref is used to refer to the scrollview so that we know when the user scrolled to the bottom to generate new feed
     const scrollRef: any = useRef();
@@ -185,7 +185,7 @@ function FeedsContainer(props, ref) {
                     //height: windowHeight 
                 }}>
                     <FlatList style={styles.list} data={currentItemsState} numColumns={2} renderItem={({ item }) => (
-                        <FeedsListItem name={item.name} text={item.date.toString()} likes={item.likedBy.length}></FeedsListItem>
+                        <FeedsListItem name={item.name} text={item.date.toString()} likes={item.likedBy.length} navigation={navigation}></FeedsListItem>
                     )} />
                 </View>
 

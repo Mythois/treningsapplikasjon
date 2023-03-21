@@ -13,22 +13,24 @@ const windowWidth = Dimensions.get('window').width;
 
 // This is an item component that represents a single item in the FeedsContainer
 // It contains a header, content and a like button
-export default function FeedsListItem(data: Props) {
+export default function FeedsListItem({name, text, likes, navigation}: {name: string, text:string, likes: number, navigation: any}) {
 
     // This holds the icon that gets displayed, it can have two different states, 'heart' or 'heart-outline'
     const [iconState, setIcon] = useState('heart-outline');
 
     // This handles the like state, allows the user to increase like count of decrease(unlike)
-    const [likeState, setLike] = useState(data.likes);
+    const [likeState, setLike] = useState(likes);
 
     // Runs when the user presses the header of this item
     const handlePressName = () => {
-        alert(data.name)
+        // navigation.navigate('ShowProgram', { program: data })
+        // alert(data.name)
     };
 
     // Runs when the user presses the content of this item
     const handlePressContent = () => {
-        alert(data.text)
+        // navigation.navigate('ShowProgram', { program: data })
+        // alert(data.text)
     }
 
     // Runs when the user presses the heart icon
@@ -39,10 +41,10 @@ export default function FeedsListItem(data: Props) {
         // Toggle between like and unlike
         if (iconState === 'heart') {
             setIcon('heart-outline');
-            setLike(data.likes);
+            setLike(likes);
         } else {
             setIcon('heart');
-            setLike(data.likes + 1);
+            setLike(likes + 1);
         }
     }
 
@@ -50,12 +52,12 @@ export default function FeedsListItem(data: Props) {
         <View style={[styles.container, styles.elevation]}>
             <TouchableOpacity onPress={handlePressName} style={styles.top}>
                 <Text style={styles.header}>
-                    {data.name}
+                    {name}
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.content} onPress={handlePressContent}>
                 <Text style={styles.contentText}>
-                    {data.text}
+                    {text}
                 </Text>
             </TouchableOpacity>
             <Ionicons name={iconState} style={styles.likesIcon} size={20} onPress={handlePressLike} />

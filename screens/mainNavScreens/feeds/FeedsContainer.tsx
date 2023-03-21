@@ -32,6 +32,8 @@ function FeedsContainer(props, ref) {
     const [filterState, setFilters] = useState(defaultFilters);
     const [filteredItemsState, setFilteredItems] = useState([]);
 
+    
+
     // Runs at the beginning of the home screen to generate feeds
     useEffect(() => {
         refresh(defaultFilters.typeOfFeed);
@@ -150,6 +152,10 @@ function FeedsContainer(props, ref) {
         // If nothing is returned, then tell the user that there are no more feeds
     }
 
+    function updateBookmarksInDatabase(id: string) {
+        console.log('updateDatabase');
+    }
+
     function resultAfterFilter() {
         let filteredItems: ProgramData[] = [];
         if (filterState.typeOfFeed == 'myOwn') {
@@ -189,7 +195,7 @@ function FeedsContainer(props, ref) {
                     //height: windowHeight 
                 }}>
                     <FlatList style={styles.list} data={currentItemsState} numColumns={2} renderItem={({ item }) => (
-                        <FeedsListItem name={item.name} text={item.date.toString()} likes={item.likedBy.length}></FeedsListItem>
+                        <FeedsListItem name={item.name} text={item.date.toString()} likes={item.likedBy.length} updateBookmark={updateBookmarksInDatabase}></FeedsListItem>
                     )} />
                 </View>
 

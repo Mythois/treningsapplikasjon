@@ -6,6 +6,7 @@ interface Props {
     name: String,
     text: String,
     likes: number,
+    updateBookmark: () => void,
 }
 
 // Gets window width to be used in item width, each item has to be less than half the window width
@@ -21,6 +22,9 @@ export default function FeedsListItem(data: Props) {
     // This handles the like state, allows the user to increase like count of decrease(unlike)
     const [likeState, setLike] = useState(data.likes);
 
+    // Managing what to save to bookmarked
+    const [bookmarksState, setBookmarks] = useState([]);
+    
     // Runs when the user presses the header of this item
     const handlePressName = () => {
         alert(data.name)
@@ -44,6 +48,7 @@ export default function FeedsListItem(data: Props) {
             setIcon('bookmark');
             setLike(data.likes + 1);
         }
+        data.updateBookmark();
     }
 
     return (

@@ -128,9 +128,7 @@ function GroupsContainer(props, ref) {
                     //loadNewItems() 
                 }
             }} scrollEventThrottle={16}>
-                <View style={{
-                    //height: windowHeight 
-                }}>
+                <View>
                     <FlatList style={styles.list} data={resultMyGroupsFilter()} numColumns={1} renderItem={({ item }) => (
                         <GroupsListItem name={item.name} description={item.description}></GroupsListItem>
                     )} />

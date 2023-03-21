@@ -40,7 +40,7 @@ export default function NewGroup({navigation}) {
         
     // }
     const handleBack = () => {
-        navigation.navigate('Groups')
+        navigation.navigate('Groups');
     }
 
     /**
@@ -59,9 +59,8 @@ export default function NewGroup({navigation}) {
     //     setGroup([...exercises, newExercise]);
     //   };
 
-      /**
-     * Method for saving training programs
-     * @param exercises an array of exercise objects
+    /**
+     * Method for saving grops
      */
     const handleSave = () => {
         if(currentName == ""){
@@ -85,6 +84,7 @@ export default function NewGroup({navigation}) {
                 admins: currentMembers,
             };
             saveGroup(newGroup);
+            navigation.navigate('Groups');
         
             // setName("");    
             // setExercises([]);

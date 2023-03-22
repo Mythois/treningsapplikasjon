@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Touchable, TouchableOpacity, Dimensions } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { LocalData } from '../../../LocalData/LocalData';
 
 interface Props {
     name: String,
     text: String,
-    likes: number,
+    likes: string[],
+    updateBookmark: (id: string) => void,
 }
 
 // Gets window width to be used in item width, each item has to be less than half the window width
@@ -15,11 +17,21 @@ const windowWidth = Dimensions.get('window').width;
 // It contains a header, content and a like button
 export default function FeedsListItem(data: Props) {
 
-    // This holds the icon that gets displayed, it can have two different states, 'heart' or 'heart-outline'
-    const [iconState, setIcon] = useState('heart-outline');
+    // This holds the icon that gets displayed, it can have two different states, 'bookmark' or 'bookmark-outline'
+    const [iconState, setIcon] = useState('bookmark-outline');
 
     // This handles the like state, allows the user to increase like count of decrease(unlike)
     const [likeState, setLike] = useState(data.likes);
+
+    // Managing what to save to bookmarked
+    const [bookmarksState, setBookmarks] = useState([]);
+
+    useEffect(() => {
+        if (checkIfUserBookmarked()) {
+            setIcon('bookmark');
+            console.log('checked bookmark');
+        }
+    }, []);
 
     // Runs when the user presses the header of this item
     const handlePressName = () => {
@@ -31,19 +43,33 @@ export default function FeedsListItem(data: Props) {
         alert(data.text)
     }
 
-    // Runs when the user presses the heart icon
+    // Runs when the user presses the bookmark icon
     // Changes the state of the icon
     // Increase in the like count if not already liked, decreases if the opposite
     // Add user to likedBy in the database for the program                         <--------------------- Not implemented yet
     const handlePressLike = () => {
         // Toggle between like and unlike
-        if (iconState === 'heart') {
-            setIcon('heart-outline');
-            setLike(data.likes);
+        if (checkIfUserBookmarked()) {
+            setIcon('bookmark-outline');
+            // remove user from likeState
+            setLike((prevList) => prevList.filter((prevItem) => prevItem != LocalData.currentUser.id));
         } else {
-            setIcon('heart');
-            setLike(data.likes + 1);
+            setIcon('bookmark');
+            setLike(likeState => [...likeState, LocalData.currentUser.id]);
         }
+        // update database
+        data.updateBookmark(LocalData.currentUser.id);
+    }
+
+    function checkIfUserBookmarked() {
+        const user = LocalData.currentUser.id;
+        for (let item of likeState) {
+            if (user == item) {
+                console.log('user has already liked program');
+                return true;
+            }
+        }
+        return false;
     }
 
     return (
@@ -60,7 +86,7 @@ export default function FeedsListItem(data: Props) {
             </TouchableOpacity>
             <Ionicons name={iconState} style={styles.likesIcon} size={20} onPress={handlePressLike} />
             <Text style={styles.likesText}>
-                {likeState}
+                {likeState.length}
             </Text>
         </View>
     );

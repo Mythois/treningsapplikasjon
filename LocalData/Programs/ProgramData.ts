@@ -16,7 +16,6 @@ export class ProgramData {
       this.name = typeof data.name === "string" ? data.name : "";
       this.userID = typeof data.userID === "string" ? data.userID : "";
       this.date = this.getDateFromTimestamp(data.date) ?? new Date();
-      console.log(data.exercises);
       this.programDaysExercise = data.exercises ? new ProgramDayExercise(data.exercises) : this.exercisesData;
 
       if (Array.isArray(data.likedBy)) {

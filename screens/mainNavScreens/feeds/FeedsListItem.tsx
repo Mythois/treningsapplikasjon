@@ -2,12 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Touchable, TouchableOpacity, Dimensions, TouchableHighlight, Modal } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { LocalData } from '../../../LocalData/LocalData';
+import { ProgramData } from '../../../LocalData/Programs/ProgramData';
 
 
 interface Props {
-    name: String,
-    text: String,
+    name: string,
+    text: string,
+    contentText: string,
     likes: string[],
+    date: Date,
+    setItemsList,
+    fullItemsList,
     updateBookmark: (id: string) => void,
 }
 
@@ -57,6 +62,7 @@ export default function FeedsListItem(data: Props) {
             setIcon('bookmark-outline');
             // remove user from likeState
             setLike((prevList) => prevList.filter((prevItem) => prevItem != LocalData.currentUser.id));
+            data.setItemsList(data.fullItemsList);
         } else {
             setIcon('bookmark');
             setLike(likeState => [...likeState, LocalData.currentUser.id]);
@@ -78,12 +84,16 @@ export default function FeedsListItem(data: Props) {
 
     const [modalVisible, setModalVisible] = useState(false);
 
-    function StylableAlert({ visible, title, message }) {
+    function StylableAlert({ visible, title, message, date }) {
 
 
         const handleClose = () => {
             setModalVisible(false);
         };
+
+        function dateToString(date) {
+            return date.toString();
+        }
 
         return (
             <Modal
@@ -95,7 +105,9 @@ export default function FeedsListItem(data: Props) {
                 <View style={modalStyles.modalBackground}>
                     <View style={modalStyles.modalContainer}>
                         <Text style={modalStyles.modalTitle}>{title}</Text>
+                        <Text style={modalStyles.modalIntro}>Your fantastic program!</Text>
                         <Text style={modalStyles.modalMessage}>{message}</Text>
+                        <Text style={modalStyles.modalContentDate}>{date.toString()}</Text>
                         <TouchableHighlight style={modalStyles.modalButton} onPress={handleClose}>
                             <Text style={modalStyles.modalButtonText}>Close</Text>
                         </TouchableHighlight>
@@ -120,7 +132,7 @@ export default function FeedsListItem(data: Props) {
             <Text style={styles.likesText}>
                 {likeState.length}
             </Text>
-            <StylableAlert visible={false} title={data.name} message={data.text}></StylableAlert>
+            <StylableAlert visible={false} title={data.name} message={data.contentText} date={data.date}></StylableAlert>
         </View>
     );
 };
@@ -152,7 +164,7 @@ const styles = StyleSheet.create({
         color: '#e6e6e6',
     },
     likesIcon: {
-        color: '#cccccc',
+        color: '#25A073',
         position: 'absolute',
         right: 30,
         bottom: 8,
@@ -180,7 +192,8 @@ const styles = StyleSheet.create({
     },
 });
 
-
+const windowHeight = Dimensions.get('window').height;
+const windowWidth1 = Dimensions.get('window').width;
 
 
 const modalStyles = StyleSheet.create({
@@ -191,28 +204,48 @@ const modalStyles = StyleSheet.create({
         alignItems: 'center',
     },
     modalContainer: {
-        backgroundColor: 'white',
+        backgroundColor: '#0e0e0e',
         borderRadius: 10,
         padding: 20,
         minWidth: 300,
+        height: windowHeight - 200,
+        width: windowWidth1 * 0.8,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     modalTitle: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
+        color: '#fff',
+    },
+    modalIntro: {
+        fontSize: 16,
+        marginBottom: 20,
+        color: '#fff',
+        textAlign: 'center',
     },
     modalMessage: {
         fontSize: 16,
         marginBottom: 20,
+        color: '#fff',
+        margin: 30,
+        textAlign: 'center',
     },
     modalButton: {
-        backgroundColor: '#2196F3',
+        backgroundColor: '#25A073',
         borderRadius: 5,
         padding: 10,
-        alignSelf: 'flex-end',
+        alignSelf: 'center',
     },
     modalButtonText: {
         color: 'white',
         fontWeight: 'bold',
     },
+    modalContentDate: {
+        fontSize: 12,
+        marginBottom: 20,
+        color: '#aaa',
+        textAlign: 'center',
+    }
 });

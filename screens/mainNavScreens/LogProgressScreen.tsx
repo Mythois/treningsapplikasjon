@@ -1,23 +1,54 @@
-import { View, Text, Dimensions, StyleSheet, SafeAreaView, ScrollView, Alert, ActivityIndicator } from "react-native";
+import { TouchableOpacity, View, Text, Dimensions, StyleSheet, SafeAreaView, ScrollView, Alert, ActivityIndicator, FlatList, TextInput } from "react-native";
 import { Button, Image } from '@rneui/themed';
 import { LineChart } from "react-native-chart-kit";
 import DropDownPicker from 'react-native-dropdown-picker';
 import React, { useState } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { nanoid } from 'nanoid';
+import { LocalData } from '../../LocalData/LocalData';
+import { Dropdown } from 'react-native-element-dropdown';
 
+//Define result interface
+interface result {
+    id: string,
+    reps: number,
+    weight : number,
+    exerciseName: string,
+}
+
+interface results {
+    resultsID: string,
+    userID: string,
+    date: Date,
+    results: results[]
+
+}
 function LogProgressScreen({navigation}) {
 
+    
     //Here's the different exercises the user can choose from in the dropdown-list
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [exercises, setExercises] = useState([
         //TODO Have to replace this example-data with actual data from the user
-        {label: 'Push-ups', value: 'push-ups'},
-        {label: 'Planken', value: 'planken'},
-        {label: 'Sit-ups', value: 'sit-ups'},
-        {label: 'Burpees', value: 'burpees'},
-        {label: 'Utfall', value: 'utfall'}
+        {label: 'Squats', value: 'Squats'},
+        {label: 'Deadlift', value: 'Deadlift'},
+        {label: 'Bench Press', value: 'Bench Press'},
+        {label: 'Military Press', value: 'Military Press'},
+        {label: 'Barbell Row', value: 'Barbell Row'}
     ]);
+    const [selectedValue, setSelectedValue] = useState(null);
+    // Method and variable to set and store the current date respectively
+    const [currentDate, setCurrentDate] = React.useState('');
+    // Finding the current date and setting it
+    React.useEffect(() => {
+      var date = new Date().getDate(); //Current Date
+      var month = new Date().getMonth() + 1; //Current Month
+      var year = new Date().getFullYear(); //Current Year
+      setCurrentDate(
+        date + '.' + month + '.' + year 
+      );
+    }, []);
 
     //Chart configuration and styling
     const chartStyle = {
@@ -44,17 +75,43 @@ function LogProgressScreen({navigation}) {
         legend: ['Results']
     };
 
-    //Adds a new result box where the user can log their result
-    const handleAddExRes = () => {
-        //TODO Have to add a "result-boxs"
-    };
-
     //Save logged exercises
     //TODO Have to actually save the results
     const saveAlert = () =>
     Alert.alert('Results saved');
 
+    const [results, setResults] = useState<result[]>([]);
+    const [reps, setReps] = useState<number>();
+    const [weight, setWeight] = useState<number>();
 
+    /**
+       * A method that deletes a specific result
+       * @param id The id of the result to be deleted
+       */
+     const handleDeleteExercise = (id: string)  => {
+        setResults(prevResults => prevResults.filter(result => result.id !== id));
+      }
+    // Method for adding more results
+    const handleAddExRes = () => {
+        const newResult: result = {
+          id: nanoid(),
+          weight: weight,
+          reps: reps,
+          exerciseName: selectedValue
+        };
+        console.log(newResult)
+        setResults([...results, newResult]);
+        
+      };
+    
+    const handleSaveResults = (results: result[]) => {
+        
+        
+        Alert.alert('Result logged', '', [
+            {text: 'Ok', onPress: () => console.log("Ok")},
+            ]);
+        
+    }
     return (
         <View style={styles.container}>
             <SafeAreaView>
@@ -73,7 +130,7 @@ function LogProgressScreen({navigation}) {
                         color={'#121212'} 
                         title={'Save'} 
                         style={styles.saveText} 
-                        onPress={saveAlert} 
+                        onPress={handleSaveResults} 
                     />
                 </View>
                 <View style={styles.progHeaderContainer}>
@@ -86,7 +143,10 @@ function LogProgressScreen({navigation}) {
                     value={value}
                     items={exercises}
                     setOpen={setOpen}
-                    setValue={setValue}
+                    setValue={(value) => { 
+                        setValue(value); 
+                        setSelectedValue(value); // Update selectedValue here
+                      }}
                     setItems={setExercises}
                     searchable={true}
                     //TODO Have to change graph and info when a new exercise is selected
@@ -127,11 +187,62 @@ function LogProgressScreen({navigation}) {
                     <Text style={styles.logProgHeaderText}> Logged exercises</Text>
                 </View>
             </SafeAreaView>
-            <ScrollView>
+            <View style={{justifyContent:'center'}}>
+                    <FlatList
+                            style={{height:windowHeight-660, flexGrow:0, width:windowWidth}}
+                            data = {results}
+                            keyExtractor={(item) => item.id.toString()}
+                            renderItem={({item}) => 
+                            <View style={{width:300, height:70, backgroundColor:"#303030", borderRadius:10, margin:"1%", flexDirection:"row", left:12, padding:5, marginTop:20, marginBottom:10, alignSelf:"center"}}>
+                                <View style={{width:"40%"}}>
+                                    <TextInput
+                                        style = {{fontSize:20, margin:10, color:"#F0DA5D",top:"12%"}}
+                                        placeholder='Weight'
+                                        placeholderTextColor="#FFFFFF" 
+                                        value = {item.weight}
+                                        onChangeText={(text) => {
+                                            const updateResults = results.map((result) => {
+                                            if (result.id === item.id) {
+                                                return { ...result, weight: text };
+                                            }
+                                            return result;
+                                            });
+                                            setResults(updateResults);
+                                        }}
+                                    />
+                                </View>
+                                <View style={{width:"40%"}}>
+                                    <TextInput
+                                        style = {{fontSize:20, margin:10, color:"#9556CE", top:"12%", marginLeft:"39%"}}
+                                        placeholder='Reps'
+                                        placeholderTextColor="#FFFFFF"
+                                        value = {item.reps}
+                                        onChangeText={(text) => {
+                                            const updateResults = results.map((result) => {
+                                            if (result.id === item.id) {
+                                                return { ...result, reps: text };
+                                            }
+                                            return result;
+                                            });
+                                            setResults(updateResults);
+                                        }}
+                                    />
+                                </View>
+                                <View style={{top:"-1.5%", marginLeft:"13%"}}>
+                                <TouchableOpacity onPress={() => handleDeleteExercise(item.id)}>
+                                            <Ionicons name="trash" size={24} color="red" />
+                                    </TouchableOpacity>
+                                </View>
+                                
+                            </View>    
+                            }
 
-            </ScrollView>
+                        />
+            </View>
             <SafeAreaView>
+            
                 <View style={styles.logExContainer}>
+                    
                     <Button 
                         //Button to log a new exercise result
                         title = 'Log exercise' 
@@ -148,9 +259,10 @@ function LogProgressScreen({navigation}) {
                             fontWeight: 'normal', 
                             color: '#e6e6e6'
                             }}
-                        onPress={() => handleAddExRes()}
+                        onPress={handleAddExRes}
                     />
-                </View>
+            </View>
+                
             </SafeAreaView>
         </View>
     );
@@ -166,6 +278,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#121212',
         alignItems: 'center', 
         justifyContent: 'center',
+        paddingTop:450,
+        marginBottom:-100
     },
     topRowContainer: {
         padding: '1%',
@@ -230,11 +344,54 @@ const styles = StyleSheet.create({
     logExContainer: {
         padding: '1%',
         height: 60,
-        marginBottom: 10,
+        marginBottom: 500,
         width: windowWidth,
         justifyContent: "center",
         alignItems: "center",
     },
+    container2: {
+        flex: 1,
+        backgroundColor: '#533483',
+        padding: 16,
+        justifyContent: 'center',
+        alignContent: 'center',
+      },
+      dropdown: {
+        height: 50,
+        borderColor: 'gray',
+        borderWidth: 0.5,
+        borderRadius: 8,
+        paddingHorizontal: 8,
+        marginBottom: 10,
+      },
+      icon: {
+        marginRight: 5,
+      },
+      label: {
+        position: 'absolute',
+        backgroundColor: 'white',
+        left: 22,
+        top: 8,
+        zIndex: 999,
+        paddingHorizontal: 8,
+        fontSize: 14,
+      },
+      placeholderStyle: {
+        fontSize: 13,
+        color:"#FFFFFF"
+      },
+      selectedTextStyle: {
+        fontSize: 16,
+      },
+      iconStyle: {
+        width: 20,
+        height: 20,
+      },
+      inputSearchStyle: {
+        height: 40,
+        fontSize: 16,
+      },
+  
 })
 
 export default LogProgressScreen;

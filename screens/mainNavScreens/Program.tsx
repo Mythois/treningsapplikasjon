@@ -58,17 +58,17 @@ const windowHeight = Dimensions.get('window').height;
 export default function ProgramScreen({navigation}) {
         // Find current date 
 
-    // Method and variable to set and store the current date respectively
-    const [currentDate, setCurrentDate] = React.useState('');
-    // Finding the current date and setting it
-    React.useEffect(() => {
-      var date = new Date().getDate(); //Current Date
-      var month = new Date().getMonth() + 1; //Current Month
-      var year = new Date().getFullYear(); //Current Year
-      setCurrentDate(
-        date + '.' + month + '.' + year 
-      );
-    }, []);
+        // Method and variable to set and store the current date respectively
+        const [currentDate, setCurrentDate] = React.useState('');
+        // Finding the current date and setting it
+        React.useEffect(() => {
+        var date = new Date().getDate(); //Current Date
+        var month = new Date().getMonth() + 1; //Current Month
+        var year = new Date().getFullYear(); //Current Year
+        setCurrentDate(
+            date + '.' + month + '.' + year 
+        );
+        }, []);
 
     const [exercises, setExercises] = React.useState<exercise[]>([]);
     const [exerciseName, setExerciseName] = React.useState(''); // What about this?

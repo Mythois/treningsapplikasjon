@@ -237,7 +237,7 @@ export default function ProgramScreen({navigation}) {
                     />
                 </View>
             </View>
-            <View style={{top:"10%"}}>
+            <View>
                 <View style={{paddingTop:10, flexDirection:"row", paddingBottom:10, paddingLeft:10}}>
                 <View style={{ position: 'relative', zIndex: 9999 }}>
                     <SelectList
@@ -421,7 +421,7 @@ export default function ProgramScreen({navigation}) {
                             }
 
                         />
-                    <View style={{alignItems: 'center', marginTop:"-2%"}}>
+                    <View style={{alignItems: 'center', marginTop:"-10%"}}>
                         <Button 
                         title= "Add new exercise"
                         color = "#303030"

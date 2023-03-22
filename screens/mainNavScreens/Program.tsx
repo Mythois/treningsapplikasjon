@@ -16,7 +16,7 @@
 
 // Imports
 import * as React from 'react';
-import { View, FlatList, TextInput, StyleSheet, Alert, ActivityIndicator, Dimensions} from 'react-native';
+import { View, FlatList, TextInput, StyleSheet, Alert, ActivityIndicator, Dimensions, SafeAreaView} from 'react-native';
 import { Button, Text , Image} from '@rneui/themed';
 import { SelectList } from 'react-native-dropdown-select-list'
 import { isTemplateSpan } from 'typescript';
@@ -27,9 +27,8 @@ import { LocalData } from '../../LocalData/LocalData';
 import { exercisesArrayToExercisesMap, groupExercisesByDay, saveProgram} from '../../save/programSave';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Dropdown } from 'react-native-element-dropdown';
+import SmallHeaderContent from './profile/SmallHeaderContent';
 
-
-// Interfaces
 interface exercise {
     id: string;
     day: number;
@@ -37,7 +36,6 @@ interface exercise {
     sets: number;
     reps: number;
 }
-
 
 interface program{
     name: string;
@@ -48,7 +46,6 @@ interface program{
 
     likedBy: string[];
 }
-
 
 interface programDay{
     weekday: number;
@@ -85,6 +82,9 @@ export default function ProgramScreen({navigation}) {
         { label: "Barbell Row", value: "Barbell Row" }
     ]
     //Defining states
+
+    const childRef: any = React.useRef();
+
     const [exercises, setExercises] = React.useState<exercise[]>([]);
     const [exerciseName, setExerciseName] = React.useState(''); // What about this?
     const [sets, setSets] = React.useState<number>();
@@ -218,9 +218,12 @@ export default function ProgramScreen({navigation}) {
 
     return(
         <View style={{backgroundColor: "#121212", flex:1}}>
-            <View style={{flexDirection:"row", width: "100%", top:"20%", left:"5%"}}>
+            <SafeAreaView>
+            <SmallHeaderContent user={LocalData.currentUser} ref={childRef} navigation={navigation}></SmallHeaderContent>
+            </SafeAreaView>
+            <View style={{flexDirection:"row", width: "100%", top:"0%", left:"5%"}}>
                 <View>
-                    <Text style={{color:"#FFFFFF", fontSize:18, top:"20%"}}>
+                    <Text style={{color:"#FFFFFF", fontSize:18, top:"25%"}}>
                         {currentDate}
                     </Text>
                 </View>

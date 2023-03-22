@@ -16,14 +16,17 @@
 
 // Imports
 import * as React from 'react';
-import { View, FlatList, TextInput, ScrollView, Alert, ActivityIndicator, Dimensions, SafeAreaView} from 'react-native';
+import { View, FlatList, TextInput, StyleSheet, Alert, ActivityIndicator, Dimensions, SafeAreaView} from 'react-native';
 import { Button, Text , Image} from '@rneui/themed';
+import { SelectList } from 'react-native-dropdown-select-list'
 import { isTemplateSpan } from 'typescript';
 import { AuthErrorCodes } from 'firebase/auth';
 import 'react-native-get-random-values';
 import { nanoid } from 'nanoid'
 import { LocalData } from '../../LocalData/LocalData';
 import { exercisesArrayToExercisesMap, groupExercisesByDay, saveProgram} from '../../save/programSave';
+import DropDownPicker from 'react-native-dropdown-picker';
+import { Dropdown } from 'react-native-element-dropdown';
 import SmallHeaderContent from './profile/SmallHeaderContent';
 
 interface exercise {
@@ -39,6 +42,7 @@ interface program{
 
     userID: string;
     date: Date; // The date at which the training program is created
+    category: string;
 
     likedBy: string[];
 }
@@ -68,6 +72,16 @@ export default function ProgramScreen({navigation}) {
         date + '.' + month + '.' + year 
       );
     }, []);
+    //States for dropdownlist
+    const [isFocus, setIsFocus] = React.useState(false);
+    const exerciseNameList = [
+        { label: "Squat", value: "Squat" },
+        { label: "Deadlift", value: "Deadlift" },
+        { label: "Bench Press", value: "Bench Press" },
+        { label: "Military Press", value: "Military Press" },
+        { label: "Barbell Row", value: "Barbell Row" }
+    ]
+    //Defining states
 
     const childRef: any = React.useRef();
 
@@ -77,6 +91,8 @@ export default function ProgramScreen({navigation}) {
     const [reps, setReps] = React.useState<number>();
     const [selectedDay, setSelectedDay] = React.useState<number>(0);
     const [name, setName] = React.useState('');
+    
+
 
     /**
      * A method to add new exercises to the list of exercises
@@ -109,12 +125,24 @@ export default function ProgramScreen({navigation}) {
     const handleDayPress = (day: number) => {
         setSelectedDay(day);
     }
+    const [category, setCategory] = React.useState("");
 
+    React.useEffect(() => {
+    console.log(category);
+    }, [category]);
+
+    const handleCategorySwitch = (cat:string) => {
+    setCategory(cat);
+    }
     /**
      * The set of exercises that pertain to the day the user selects
      */
     const filteredExercises = exercises.filter((exercise) => exercise.day === selectedDay);
-    
+    const categories = [
+        {key:1, value:"Full Body"},
+        {key:2, value:"Lower Body"},
+        {key:3, value:"Upper Body"}
+    ]
 
 
 
@@ -134,7 +162,7 @@ export default function ProgramScreen({navigation}) {
               ]);
             const newProgram = {name: name,
             userID: LocalData.currentUser.id,
-            date: new Date(),
+            date: new Date(), category: category,
             likedBy:["test"]};
             const programDays: programDay[] = [];
 
@@ -209,18 +237,34 @@ export default function ProgramScreen({navigation}) {
                     />
                 </View>
             </View>
-            <View style={{top:"0%"}}>
-                <View style={{paddingTop:10}}>
-                    <TextInput
-                    style = {{fontWeight:"bold", fontSize:30, color:"#DC6247", textAlign:"center", paddingBottom:5}}
-                    placeholder = "Program Name"
-                    value={name}
-                    placeholderTextColor = "#DC6247"
-                    onChangeText={(text) => setName(text)}
+            <View>
+                <View style={{paddingTop:10, flexDirection:"row", paddingBottom:10, paddingLeft:10}}>
+                <View style={{ position: 'relative', zIndex: 9999 }}>
+                    <SelectList
+                        setSelected={handleCategorySwitch}
+                        data={categories} 
+                        search={false}
+                        save="value"
+                        placeholder='Category'
+                        inputStyles={{ fontSize: 15, color: '#FFFFFF' }}
+                        boxStyles={{ width: 130 }}
+                        dropdownTextStyles={{ color: '#FFFFFF' }}
                     />
+                    </View>
+                    <View>
+                    <TextInput
+                        style = {{fontWeight:"bold", fontSize:25, color:"#DC6247", textAlign:"center", paddingBottom:5, paddingLeft:40, paddingTop:10}}
+                        placeholder = "Program Name"
+                        value={name}
+                        placeholderTextColor = "#DC6247"
+                        onChangeText={(text) => setName(text)}
+                    />
+                    </View>
+                    
+                    
                 </View>
                 
-                <View style = {{flexDirection:'row', justifyContent:'center'}}>
+                <View style = {{flexDirection:'row', justifyContent:'center', zIndex:1}}>
                     
                     <View style = {{padding:2}}>
                         <Button 
@@ -300,24 +344,35 @@ export default function ProgramScreen({navigation}) {
                             keyExtractor={(item) => item.id.toString()}
                             renderItem={({item}) => 
                             <View style={{width:335, height:70, backgroundColor:"#303030", borderRadius:10, margin:"1%", flexDirection:"row", left:12, padding:5, marginTop:20, marginBottom:10}}>
-                                <View style={{width:"40%"}}>
-                                    <TextInput
-                                        style = {{fontSize:20, margin:10, color:"#FFFFFF", top:"12%"}}
-                                        placeholder='Exercise'
-                                        placeholderTextColor="#FFFFFF"
-                                        value = {item.exerciseName}
-                                        onChangeText={(text) => {
-                                            const updatedExercises = exercises.map((exercise) => {
+                                <View style={{width:"30%", marginTop:5, marginLeft:"5%"}}>
+                                    <Dropdown
+                                       style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
+                                       placeholderStyle={styles.placeholderStyle}
+                                       selectedTextStyle={styles.selectedTextStyle}
+                                       inputSearchStyle={styles.inputSearchStyle}
+                                       iconStyle={styles.iconStyle}
+                                       data={exerciseNameList}
+                                       maxHeight={300}
+                                       labelField="label"
+                                       valueField="value"
+                                       placeholder={!isFocus ? 'Exercise' : '...'}
+                                       searchPlaceholder="Search..."
+                                       value={exerciseName}
+                                       onFocus={() => setIsFocus(true)}
+                                       onBlur={() => setIsFocus(false)}
+                                       onChange={(text) => {
+                                        const updatedExercises = exercises.map((exercise) => {
                                             if (exercise.id === item.id) {
                                                 return { ...exercise, exerciseName: text };
                                             }
                                             return exercise;
-                                            });
-                                            setExercises(updatedExercises);
-                                        }}
+                                        });
+                                        setExercises(updatedExercises);
+                                        setExerciseName(text.value);
+                                    }}
                                     />
                                 </View>
-                                <View style={{width:"24%"}}>
+                                <View style={{width:"24%", marginLeft:"5%"}}>
                                     <TextInput
                                         style = {{fontSize:20, margin:10, color:"#F0DA5D",top:"12%"}}
                                         placeholder='Sets'
@@ -366,7 +421,7 @@ export default function ProgramScreen({navigation}) {
                             }
 
                         />
-                    <View style={{alignItems: 'center', marginTop:"0%"}}>
+                    <View style={{alignItems: 'center', marginTop:"-10%"}}>
                         <Button 
                         title= "Add new exercise"
                         color = "#303030"
@@ -379,3 +434,48 @@ export default function ProgramScreen({navigation}) {
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#533483',
+      padding: 16,
+      justifyContent: 'center',
+      alignContent: 'center',
+    },
+    dropdown: {
+      height: 50,
+      borderColor: 'gray',
+      borderWidth: 0.5,
+      borderRadius: 8,
+      paddingHorizontal: 8,
+      marginBottom: 10,
+    },
+    icon: {
+      marginRight: 5,
+    },
+    label: {
+      position: 'absolute',
+      backgroundColor: 'white',
+      left: 22,
+      top: 8,
+      zIndex: 999,
+      paddingHorizontal: 8,
+      fontSize: 14,
+    },
+    placeholderStyle: {
+      fontSize: 13,
+      color:"#FFFFFF"
+    },
+    selectedTextStyle: {
+      fontSize: 16,
+    },
+    iconStyle: {
+      width: 20,
+      height: 20,
+    },
+    inputSearchStyle: {
+      height: 40,
+      fontSize: 16,
+    },
+  });

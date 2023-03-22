@@ -30,7 +30,7 @@ interface program{
 
     userID: string;
     date: Date; // The date at which the training program got created.
-
+    category: string;
     likedBy: string[];
 }
 
@@ -92,10 +92,10 @@ export const saveProgram = async(program:program, programDays: programDay[]): Pr
     console.log(LocalData.currentUser.id);
     
     // Saving the program
-    const {name, userID, date, likedBy} = program;
+    const {name, userID, date, category, likedBy} = program;
     const programID = uuid();
     const programRef = doc(db, "programs", programID);
-    const programData = {name, userID, date, likedBy};
+    const programData = {name, userID, date, category, likedBy};
     await setDoc(programRef, {
         programData
     })

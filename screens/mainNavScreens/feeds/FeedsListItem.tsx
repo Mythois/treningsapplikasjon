@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Touchable, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Touchable, TouchableOpacity, Dimensions, TouchableHighlight, Modal } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { LocalData } from '../../../LocalData/LocalData';
+import { ProgramData } from '../../../LocalData/Programs/ProgramData';
+
 
 interface Props {
-    name: String,
-    text: String,
+    name: string,
+    text: string,
+    contentText: string,
     likes: string[],
+    date: Date,
+    setItemsList,
+    fullItemsList,
     updateBookmark: (id: string) => void,
 }
+
+
 
 // Gets window width to be used in item width, each item has to be less than half the window width
 const windowWidth = Dimensions.get('window').width;
@@ -35,7 +43,8 @@ export default function FeedsListItem(data: Props) {
 
     // Runs when the user presses the header of this item
     const handlePressName = () => {
-        alert(data.name)
+        //alert(data.name)
+        setModalVisible(true);
     };
 
     // Runs when the user presses the content of this item
@@ -53,6 +62,7 @@ export default function FeedsListItem(data: Props) {
             setIcon('bookmark-outline');
             // remove user from likeState
             setLike((prevList) => prevList.filter((prevItem) => prevItem != LocalData.currentUser.id));
+            data.setItemsList(data.fullItemsList);
         } else {
             setIcon('bookmark');
             setLike(likeState => [...likeState, LocalData.currentUser.id]);
@@ -72,6 +82,40 @@ export default function FeedsListItem(data: Props) {
         return false;
     }
 
+    const [modalVisible, setModalVisible] = useState(false);
+
+    function StylableAlert({ visible, title, message, date }) {
+
+
+        const handleClose = () => {
+            setModalVisible(false);
+        };
+
+        function dateToString(date) {
+            return date.toString();
+        }
+
+        return (
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={handleClose}
+            >
+                <View style={modalStyles.modalBackground}>
+                    <View style={modalStyles.modalContainer}>
+                        <Text style={modalStyles.modalTitle}>{title}</Text>
+                        <Text style={modalStyles.modalIntro}>Your fantastic program!</Text>
+                        <Text style={modalStyles.modalMessage}>{message}</Text>
+                        <Text style={modalStyles.modalContentDate}>{date.toString()}</Text>
+                        <TouchableHighlight style={modalStyles.modalButton} onPress={handleClose}>
+                            <Text style={modalStyles.modalButtonText}>Close</Text>
+                        </TouchableHighlight>
+                    </View>
+                </View>
+            </Modal>
+        );
+    }
     return (
         <View style={[styles.container, styles.elevation]}>
             <TouchableOpacity onPress={handlePressName} style={styles.top}>
@@ -88,6 +132,7 @@ export default function FeedsListItem(data: Props) {
             <Text style={styles.likesText}>
                 {likeState.length}
             </Text>
+            <StylableAlert visible={false} title={data.name} message={data.contentText} date={data.date}></StylableAlert>
         </View>
     );
 };
@@ -119,7 +164,7 @@ const styles = StyleSheet.create({
         color: '#e6e6e6',
     },
     likesIcon: {
-        color: '#cccccc',
+        color: '#25A073',
         position: 'absolute',
         right: 30,
         bottom: 8,
@@ -145,4 +190,62 @@ const styles = StyleSheet.create({
         elevation: 20,
         shadowColor: '#000000',
     },
+});
+
+const windowHeight = Dimensions.get('window').height;
+const windowWidth1 = Dimensions.get('window').width;
+
+
+const modalStyles = StyleSheet.create({
+    modalBackground: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalContainer: {
+        backgroundColor: '#0e0e0e',
+        borderRadius: 10,
+        padding: 20,
+        minWidth: 300,
+        height: windowHeight - 200,
+        width: windowWidth1 * 0.8,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        color: '#fff',
+    },
+    modalIntro: {
+        fontSize: 16,
+        marginBottom: 20,
+        color: '#fff',
+        textAlign: 'center',
+    },
+    modalMessage: {
+        fontSize: 16,
+        marginBottom: 20,
+        color: '#fff',
+        margin: 30,
+        textAlign: 'center',
+    },
+    modalButton: {
+        backgroundColor: '#25A073',
+        borderRadius: 5,
+        padding: 10,
+        alignSelf: 'center',
+    },
+    modalButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+    },
+    modalContentDate: {
+        fontSize: 12,
+        marginBottom: 20,
+        color: '#aaa',
+        textAlign: 'center',
+    }
 });

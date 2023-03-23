@@ -41,6 +41,9 @@ function HomeScreen({ navigation }) {
           <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab('myOwn'))}>
             <Text style={styles.feedTabText}>My own</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={styles.feedTab} onPress={() => (handlePressTopTab('bookmarked'))}>
+            <Text style={styles.feedTabText}>Bookmarked</Text>
+          </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
       {/* This is the feed section */}

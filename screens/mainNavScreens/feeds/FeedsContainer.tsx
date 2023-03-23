@@ -15,6 +15,7 @@ interface Filters {
 // Default filters has the type of 'all'
 const defaultFilters: Filters = { typeOfFeed: 'all', isImage: false };
 let currentUserID: string = '';
+let loaded: boolean = false;
 
 // This is container for the whole feed section
 // It contain functions to filter the feeds, get new feeds from loaded programs
@@ -40,7 +41,7 @@ function FeedsContainer(props, ref) {
     }, []);
 
     useEffect(() => {
-        setCurrentItems(itemsState);
+        //setCurrentItems(itemsState);
         setCurrentItems(resultAfterFilter());
     }, [filterState]);
 
@@ -57,10 +58,11 @@ function FeedsContainer(props, ref) {
         LocalData.programCollection.load(() => {
             setItems(LocalData.programCollection.getPrograms()); // <------------------------ Put everything here
             currentUserID = LocalData.currentUser.id;
-            setCurrentItems(LocalData.programCollection.getPrograms());
+            if (!loaded) {
+                setCurrentItems(LocalData.programCollection.getPrograms());
+                loaded = true;
+            }
             console.log(type);
-            console.log(filterState);
-            console.log(currentItemsState);
         });
 
         // Set filterState based on input from parent component
@@ -93,64 +95,64 @@ function FeedsContainer(props, ref) {
         }
     }
 
-    function loadTenInitialItemsFromFilteredItems() {
-        console.log('starts to load inital items');
-        let items: ProgramData[] = [];
-        for (let i = 0; i < 11; i++) {
-            console.log(items.length);
-            for (const item of filteredItemsState) {
+    // function loadTenInitialItemsFromFilteredItems() {
+    //     console.log('starts to load inital items');
+    //     let items: ProgramData[] = [];
+    //     for (let i = 0; i < 11; i++) {
+    //         console.log(items.length);
+    //         for (const item of filteredItemsState) {
 
-                if (!items.some((i) => i.id === item.id)) {
+    //             if (!items.some((i) => i.id === item.id)) {
 
 
-                    items.push(item);
-                    i = i + 1;
-                }
-            }
+    //                 items.push(item);
+    //                 i = i + 1;
+    //             }
+    //         }
 
-        }
-        return items;
-    }
+    //     }
+    //     return items;
+    // }
 
     // Unused function
     // Get new program from programCollection without deleting the existing ones
-    function loadNewItems() {
+    // function loadNewItems() {
 
-        setCurrentItems(currentItems => [...currentItems, findOneMissingProgram(itemsState, currentItemsState)]);
+    //     setCurrentItems(currentItems => [...currentItems, findOneMissingProgram(itemsState, currentItemsState)]);
 
-        // Check if the item fulfils the requirements from filter
+    //     // Check if the item fulfils the requirements from filter
 
-        // findOneMissingProgram(currentItemsState, itemsState);
+    //     // findOneMissingProgram(currentItemsState, itemsState);
 
-        // console.log('ho');
-        // console.log(currentItemsState);
-        // for (const item of itemsState) {
-        //     if (!currentItemsState.includes(item)) {
+    //     // console.log('ho');
+    //     // console.log(currentItemsState);
+    //     // for (const item of itemsState) {
+    //     //     if (!currentItemsState.includes(item)) {
 
-        //     }
+    //     //     }
 
 
 
-        //     if (item && item instanceof ProgramData && item.id) {
+    //     //     if (item && item instanceof ProgramData && item.id) {
 
-        //         if (currentItemsState !== undefined && currentItemsState.length != 0) {
-        //             for (var currentItem of currentItemsState) {
-        //                 if (item.id != currentItem.id) {
-        //                     setCurrentItems(currentItems => [...currentItems, item]);
-        //                     console.log('loaded new item');
-        //                     break
-        //                 }
-        //             }
-        //         } else {
-        //             setCurrentItems([item]);
+    //     //         if (currentItemsState !== undefined && currentItemsState.length != 0) {
+    //     //             for (var currentItem of currentItemsState) {
+    //     //                 if (item.id != currentItem.id) {
+    //     //                     setCurrentItems(currentItems => [...currentItems, item]);
+    //     //                     console.log('loaded new item');
+    //     //                     break
+    //     //                 }
+    //     //             }
+    //     //         } else {
+    //     //             setCurrentItems([item]);
 
-        //         }
+    //     //         }
 
-        //     }
-        // }
+    //     //     }
+    //     // }
 
-        // If nothing is returned, then tell the user that there are no more feeds
-    }
+    //     // If nothing is returned, then tell the user that there are no more feeds
+    // }
 
     function updateBookmarksInDatabase(id: string) {
         console.log('updateDatabase');
@@ -162,14 +164,31 @@ function FeedsContainer(props, ref) {
             for (var item of itemsState) {
                 if (item.userID == currentUserID) {
                     filteredItems.push(item);
-                    console.log('filtered an item');
                 }
             }
+        } else if (filterState.typeOfFeed == 'bookmarked') {
+
         } else {
             filteredItems = itemsState;
         }
         return filteredItems;
         //setFilteredItems(filteredItems);
+    }
+
+    function listItemText(item: ProgramData) {
+        if (item.programDaysExercise.name.length > 0) {
+            let text = item.programDaysExercise.name + ': ' + item.programDaysExercise.reps + ' reps, ' + item.programDaysExercise.sets + ' sets';
+            return text;
+        }
+        return "";
+    }
+
+    function listItemContentText(item: ProgramData) {
+        if (item.programDaysExercise.name.length > 0) {
+            let text = item.programDaysExercise.name + ': ' + item.programDaysExercise.reps + ' repititions, ' + item.programDaysExercise.sets + ' sets';
+            return text;
+        }
+        return "";
     }
 
     function isCloseToBottom({ contentOffset, contentSize, layoutMeasurement }) {
@@ -195,7 +214,7 @@ function FeedsContainer(props, ref) {
                     //height: windowHeight 
                 }}>
                     <FlatList style={styles.list} data={currentItemsState} numColumns={2} renderItem={({ item }) => (
-                        <FeedsListItem name={item.name} text={item.date.toString()} likes={item.likedBy} updateBookmark={updateBookmarksInDatabase}></FeedsListItem>
+                        <FeedsListItem name={item.name} text={listItemText(item)} contentText={listItemContentText(item)} date={item.date} likes={item.likedBy} updateBookmark={updateBookmarksInDatabase} setItemsList={setItems} fullItemsList={itemsState}></FeedsListItem>
                     )} />
                 </View>
 

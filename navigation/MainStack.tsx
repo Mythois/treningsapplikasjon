@@ -11,6 +11,7 @@ import ProgramScreen from '../screens/mainNavScreens/Program';
 import Groups from '../screens/mainNavScreens/Groups';
 import NewGroup from '../screens/mainNavScreens/NewGroup';  
 import LogProgressScreen from '../screens/mainNavScreens/LogProgressScreen';
+import { SafeAreaView } from 'react-native';
 
 // Screen Names
 const homeName:any = "Home";
@@ -26,7 +27,12 @@ const Stack: any = createStackNavigator();
 
 export default function MainStack() {
     return (
-        <NavigationContainer>
+        <SafeAreaView style={{
+            backgroundColor: "rgba(10, 10, 10, 1)",
+            width: "100%",
+            height:"100%"
+            }}>
+            <NavigationContainer>
             <Tab.Navigator
                 initialRouteName={homeName}
                 screenOptions={({ route }) => ({
@@ -95,6 +101,7 @@ export default function MainStack() {
 
             </Tab.Navigator>
         </NavigationContainer>
+        </SafeAreaView>
     );
 }
 

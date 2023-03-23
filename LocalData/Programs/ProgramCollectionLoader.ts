@@ -1,4 +1,4 @@
-import { collection, getDocs, query, serverTimestamp } from "firebase/firestore";
+import { collection, doc, getDocs, query, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase";
 import { ProgramData } from "./ProgramData";
 
@@ -27,7 +27,7 @@ export default class ProgramCollectionLoader {
      * @param completion 
      */
     async load(completion: (documents: ProgramData[]) => void) {
-        if (this.loaded) { return; }              // <---------------------- Not sure if we need this
+        //if (this.loaded) { return; }              // <---------------------- Not sure if we need this
         this.programs = [];
         // Creating a loading query
         const q = query(this.collectionRef);
@@ -47,4 +47,5 @@ export default class ProgramCollectionLoader {
             console.log("Loaded programs:", this.programs);
         });
     }
+
 }

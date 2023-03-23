@@ -33,12 +33,20 @@ export default function FriendProfileScreen({ route, navigation }: { route: Frie
           },
               {text: 'Unfollow', onPress: () => user.unFollowUser(() => {setFollows(user.isFollowingUser())}) },
       ]);
+      const handleBack = () => {
+        navigation.navigate('SearchScreen')
+    }
+
 
   return (
     <View style={styles.container}>
       {/* This is the header area */}
       <SafeAreaView>
+        
         <View style={styles.topRowContainer}>
+        <View style={{ flex: 1, width: "100%", alignContent:"flex-end"}}>
+                <Icon type='font-awesome' name="chevron-left" size={20} color={'#e6e6e6'} onPress={handleBack}/>
+          </View>
             {/*<Icon type='font-awesome' name="chevron-left" size={20} color="white"/>*/}
           {/*Logo */}
           <Image
